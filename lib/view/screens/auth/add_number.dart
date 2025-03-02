@@ -1,3 +1,4 @@
+import 'package:Whatsback/view/screens/auth/profile.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -139,6 +140,7 @@ class _AddNumberState extends State<AddNumber> {
                  // const SizedBox(height: 4), // Space between dropdown and line
 
                    SizedBox(height: h * (3/100)),
+
                   TextFieldsLogin(label: localizations.email, controller: _emailController,hidden:  false,localizations: localizations),
                   TextFieldsLogin(label: localizations.password, controller: _passwordController,hidden:true,localizations: localizations),
                   TextFieldsLogin(label: localizations.confirmPassword, controller: _confirmPasswordController,hidden:true,localizations: localizations),
@@ -235,7 +237,9 @@ class _AddNumberState extends State<AddNumber> {
                   GeneralButton(localizations.continue_button,(){
     if (_formKey.currentState!.validate()) {
       if(_passwordController.text==_confirmPasswordController.text){
-        Get.to(const VerifyNumber());
+        //instead of verify phone to fit new api
+       //    Get.to(const VerifyNumber());
+        Get.to( YourProfile(email: _emailController.text,password: _passwordController.text,confirmPassword: _confirmPasswordController.text,));
       }else{
         SnackBarWidget(localizations,localizations.passwordsNotMatch);
       }

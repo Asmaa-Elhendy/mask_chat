@@ -113,6 +113,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
             cursorColor: redCheck, // Cursor color when focused
             validator: (value){
               if (value == null || value.isEmpty) {
+
                 if(widget.label==localizations.email){
                   return localizations.pleaseEnterEmail;
                 }else if(widget.label==localizations.password||widget.label==localizations.confirmPassword){

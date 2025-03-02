@@ -35,11 +35,15 @@ class AuthController extends GetxController {
   Future<void> register(String name,String email, String password,String password_confirm,localizations) async {
     isLoading.value = true;
 
-    final result = await _authService.login(email, password);
+    final result = await _authService.register(name,email,password,password_confirm);
     log(result!);
-    if (result != null) {
-      id = result;
-      print("id: $id");
+    if (result =='error') {
+      SnackBarWidget(localizations,localizations.invalidCredentials);
+    }else
+    if (result =='success') {
+      // log('jjj');
+      // id = result;
+      // print("id: $id");
       Get.offAll(Login());// Navigate to home
     } else {
       SnackBarWidget(localizations,localizations.invalidCredentials);

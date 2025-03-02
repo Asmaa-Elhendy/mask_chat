@@ -44,15 +44,20 @@ String baseUrl="https://apichat.nanoegypt.com/public/api/";
           "password_confirmation": password_confirm
         }),
       );
-      log(response.body+response.statusCode.toString());
+      log("nowwwwwwwwww");
+      log(response.body+response.statusCode.toString()+'here');
       if (response.statusCode == 201) {
 
         final data = jsonDecode(response.body);
 
-        return data['data']['id']; // Return token
-      } else {
-        return null; // Login failed
+        return 'success'; // Return token
+      } else
+        if (response.statusCode==401||response.statusCode==200||response.statusCode==302) {
+        log("error");
+        return 'error';
       }
+        return null; // Login failed
+
     } catch (e) {
       return null; // Handle API call failure
     }
