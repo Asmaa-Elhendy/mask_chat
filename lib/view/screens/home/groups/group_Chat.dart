@@ -287,10 +287,10 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                               ],
                             ),
                             SizedBox(
-                              height: h * .028,
+                              height: h * .023,
                             ),
                             Container(
-                              height: (35 / baseHeight) * h,
+                              height: (30 / baseHeight) * h,
                               padding: EdgeInsets.symmetric(
                                   vertical: (2.5 / baseHeight) * h,
                                   horizontal: (4 / baseWidth) * w),

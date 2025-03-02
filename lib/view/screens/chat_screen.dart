@@ -46,6 +46,7 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> with TickerProviderStateMixin {
   final native_picker.FlutterNativeContactPicker _contactPicker = native_picker.FlutterNativeContactPicker();
+  final ScrollController _scrollController = ScrollController();
 
   late TabController _tabController;
   bool file = false;
@@ -353,7 +354,7 @@ print(contact);
                                   height: h * .023,
                                 ),
                                 Container(
-                                  height: (35 / baseHeight) * h,
+                                  height: (30 / baseHeight) * h,
                                   padding: EdgeInsets.symmetric(
                                       vertical: (2.5 / baseHeight) * h,
                                       horizontal: (4 / baseWidth) * w),
@@ -367,6 +368,7 @@ print(contact);
                                     dividerColor: Colors.transparent,
                                     indicatorPadding: EdgeInsets.zero,
                                     labelPadding: EdgeInsets.zero,
+
 
 
                                     indicator:
@@ -447,6 +449,9 @@ print(contact);
                               ),
                             ),
                             child: ListView.builder(
+                              controller: _scrollController,
+
+                                shrinkWrap: true,
                                 itemCount: controller.messages.length,
                                 itemBuilder: (context, index) {
                                   final Messages currentMessage = controller.messages[index];
@@ -495,11 +500,14 @@ print(contact);
                                             vertical: (10 /
                                                 baseHeight) *
                                                 h,
-                                            horizontal: (15 /
+                                            horizontal: (10 /
                                                 baseWidth) *
                                                 w),
                                                   constraints: BoxConstraints(
-                                                      maxWidth: (200 / baseWidth) * w),
+                                                     maxWidth: (200 / baseWidth) * w,
+                                                  //  minWidth: (50 / baseWidth) * w
+
+                                                  ),
 
                                                   decoration: isMe
                                                       ? BoxDecoration(
@@ -522,21 +530,25 @@ print(contact);
                                                       bottomLeft: Radius.circular(0),
                                                     ),
                                                   ),
-                                                  child: Center(
-                                                    child:
-                                                    Text(
-                                                      controller.messages[index].message,
-                                                      style: TextStyle(
-                                                        fontFamily: 'Roboto-Regular',
-                                                        color: isMe
-                                                            ? blackBoldText
-                                                            : Colors.white,
-                                                        fontSize: (15 / baseWidth) * w,
-                                                        fontWeight: FontWeight.w400,
-                                                        fontStyle: FontStyle.normal,
-                                                      ),
-                                                    )
-                                                  ),
+
+                                                    child: Center(
+                                                      child:
+                                                      Text(
+                                                        softWrap: true,
+                                                       // overflow: TextOverflow.visible,
+                                                        controller.messages[index].message,
+                                                        style: TextStyle(
+                                                          fontFamily: 'Roboto-Regular',
+                                                          color: isMe
+                                                              ? blackBoldText
+                                                              : Colors.white,
+                                                          fontSize: (15 / baseWidth) * w,
+                                                          fontWeight: FontWeight.w400,
+                                                          fontStyle: FontStyle.normal,
+                                                        ),
+                                                      )
+                                                    ),
+                                                  //),
                                                 ):controller.messages[index].messageType==Type.image?
                                       Container(
                                         width: 200,
@@ -920,6 +932,7 @@ print(contact);
                                         child: IconButton(
                                           icon: Icon(Icons.send, color: Colors.white),
                                           onPressed: () {
+
                                             // Send message functionality
                                             if(_controller.text!="") {
                                               controller.addMessage(
@@ -945,12 +958,17 @@ print(contact);
                                                           DateTime.now())}")
                                               );
                                               _controller.clear();
+
                                               setState(() {
                                                 file = false;
                                                 _attachment = null;
                                               });
-                                              FocusScope.of(context).unfocus();
-                                              FocusScope.of(context).unfocus();
+                                              if (_scrollController.hasClients) {
+                                                final position = _scrollController.position.maxScrollExtent;
+                                                _scrollController.jumpTo(position);
+                                              }
+                                              // FocusScope.of(context).unfocus();
+                                              // FocusScope.of(context).unfocus();
                                             } },
                                         ),
                                       ),
@@ -987,7 +1005,7 @@ print(contact);
               borderRadius: BorderRadius.circular(20),
             )
           : null,
-      padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 4),
+      padding: const EdgeInsets.symmetric(vertical:2.5, horizontal: 4),
       child: Row(
         //  mainAxisSize: MainAxisSize.min,
         children: [

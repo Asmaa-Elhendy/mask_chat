@@ -115,7 +115,7 @@ selectedContactsAddtoGroup=[];
       Group(fav: false,
           id: (groupsList[groupsList.length-1].id+1),
 
-          image: _image??"assets/images/group (2).png",
+          image: _image??"assets/images/categories/Closed friend.png",
           groupContacts: groupContacts,
           subject: name)
     );

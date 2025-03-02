@@ -171,7 +171,7 @@ class _YourProfileState extends State<YourProfile> {
           children: [
             ListTile(
               leading: Icon(Icons.photo),
-              title: localizations.gallery,
+              title: Text(localizations.gallery),
               onTap: () {
                 Navigator.of(context).pop();
                 _pickImage(ImageSource.gallery);
@@ -179,7 +179,7 @@ class _YourProfileState extends State<YourProfile> {
             ),
             ListTile(
               leading: Icon(Icons.camera),
-              title: localizations.camera,
+              title: Text(localizations.camera),
               onTap: () {
                 Navigator.of(context).pop();
                 _pickImage(ImageSource.camera);

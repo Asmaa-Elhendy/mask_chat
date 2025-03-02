@@ -76,7 +76,7 @@ class _ContactsListState extends State<ContactsList> {
                         fontStyle: FontStyle.normal,
                       )),
                   Spacer(),
-                   AddContacts(localizations: localizations,),
+                  // AddContacts(localizations: localizations,),
                 ],
               ),
             ),
