@@ -93,7 +93,12 @@
    "group": "group",
    "email": "Email",
    "pleaseEnterEmail": "please Enter Email",
-   "pleaseEnterPassword": "please Enter Password"
+   "pleaseEnterPassword": "please Enter Password",
+   "confirmPassword": "confirm Password",
+   "passwordsNotMatch": "Passwords Don't Match !",
+   "errorMessage": "Error",
+   "invalidCredentials": "Invalid Credentials !"
+
 }
 
 

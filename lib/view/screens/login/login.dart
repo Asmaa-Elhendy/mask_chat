@@ -177,7 +177,7 @@ class _LoginState extends State<Login> {
 
         String email = _emailController.text.trim();
         String password = _passwordController.text.trim();
-        authController.login(email, password); // Call login
+        authController.login(email, password,localizations); // Call login
 
       //  Get.offAll(Home());
       }

@@ -71,7 +71,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
 
             color: ColorsPlatte().secondary.textFieldColor,
 
-            fontSize: (18 / baseWidth) * w,
+            fontSize: (17 / baseWidth) * w,//18
 
             fontWeight: FontWeight.w400,
 
@@ -115,7 +115,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
               if (value == null || value.isEmpty) {
                 if(widget.label==localizations.email){
                   return localizations.pleaseEnterEmail;
-                }else if(widget.label==localizations.password){
+                }else if(widget.label==localizations.password||widget.label==localizations.confirmPassword){
                   return localizations.pleaseEnterPassword;
                 }
 
