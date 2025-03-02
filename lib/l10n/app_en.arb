@@ -90,7 +90,10 @@
    "friends": "Friends",
    "workmates": "Workmates",
    "family": "Family",
-   "group": "group"
+   "group": "group",
+   "email": "Email",
+   "pleaseEnterEmail": "please Enter Email",
+   "pleaseEnterPassword": "please Enter Password"
 }
 
 

@@ -90,5 +90,8 @@
   "friends": "Arkadaşlar",
   "workmates": "İş Arkadaşları",
   "family": "Aile",
-  "group": "grup"
+  "group": "grup",
+  "email":"e-posta",
+  "pleaseEnterEmail": "lütfen E-posta Girin",
+  "pleaseEnterPassword": "lütfen Şifre Girin"
 }

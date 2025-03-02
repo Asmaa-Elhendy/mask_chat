@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../const/colors.dart';
 import '../../const/sizes.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TextFieldsLogin extends StatefulWidget {
   String label;
       var controller;
       bool hidden;
       var localizations;
+
    TextFieldsLogin({required this.localizations,required this.hidden,required this.label,this.controller});
 
   @override
@@ -20,6 +21,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
+    final localizations = AppLocalizations.of(context)!;
     return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,15 +45,15 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
         // ),
         SizedBox(
           height: h*.12,
-          child: TextField(
+          child: TextFormField(
 
             controller: widget.controller,
-            keyboardType: widget.hidden?TextInputType.text:TextInputType.phone,
+      //      keyboardType: widget.hidden?TextInputType.text:TextInputType.phone,
             obscureText: widget.hidden,
 
 
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: (12/baseHeight)*h),
+              contentPadding: EdgeInsets.symmetric(vertical: (10/baseHeight)*h),//12
 
               labelText: widget.label,
               hintText: widget.label,
@@ -109,6 +111,18 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
               ),
             ),
             cursorColor: redCheck, // Cursor color when focused
+            validator: (value){
+              if (value == null || value.isEmpty) {
+                if(widget.label==localizations.email){
+                  return localizations.pleaseEnterEmail;
+                }else if(widget.label==localizations.password){
+                  return localizations.pleaseEnterPassword;
+                }
+
+              }
+              return null;
+            },
+
           ),
         ),
       ],

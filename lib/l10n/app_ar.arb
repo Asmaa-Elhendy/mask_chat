@@ -91,7 +91,10 @@
   "friends": "أصدقاء",
   "workmates": "زملاء العمل",
   "family": "عائلة",
-  "group": "مجموعة"
+  "group": "مجموعة",
+  "email":"البريد الإلكتروني",
+  "pleaseEnterEmail": "يرجي إدخال البريد الإلكتروني",
+  "pleaseEnterPassword":"يرجي إدخال كلمة المرور"
 
 
 }
