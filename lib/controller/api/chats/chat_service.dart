@@ -6,7 +6,7 @@ import '../../../model/contacts.dart';
 
 class ChatService {
   //get chats not handeled yet, then handle with chat controller like group controller and adjust ui like them in empty and loading
-  static Future<List<Contacts>> getContacts(String token) async {
+  static Future<List<Contacts>> getChats(String token) async {
     try {
       final String url = "${baseUrl}chats"; // Adjust endpoint as needed
       final response = await http.get(

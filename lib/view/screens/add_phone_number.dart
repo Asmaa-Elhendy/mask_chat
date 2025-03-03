@@ -76,7 +76,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                     top: h * .042,
                     left: w * .039,
                     right: w * .05,
-                    bottom: h * .038),
+                    bottom: h * .038),// .038
                 child: Row(
                   children: [
                     InkWell(
@@ -111,7 +111,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                     Container(
                       padding: EdgeInsets.only(top: h*.079,left: w * .053, right: w * .044),
                       width: w,
-                      height: h*.85,
+                      height: h*.85,//.85  edit height
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(35),
@@ -127,7 +127,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                   return localizations.please_enter_name;
                                 }
                                 return null;
-                              },
+                              },enabled: false,
                               style: TextStyle(
                                 fontFamily: 'Roboto-Medium',
 
@@ -207,12 +207,11 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                 labelText: localizations.phoneNumber,
 
 
-
                                 labelStyle: TextStyle(
 
                                   fontFamily: 'Roboto-Medium',
 
-                                  color: lightText,
+                                  color: Colors.black,//lightText,
 
                                   fontSize: (16 / baseWidth) * w,
 
@@ -240,6 +239,10 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
 
                               ),
                               cursorColor: controller.workWithChat? redCheck:controller.selectedMask.mainColor!,
+                              onChanged: (value){
+                               bool validMobileNumber = isValidPhoneNumber(value);
+                               //here send search mobile number request
+                              },
                               // Cursor color when focuse
                             ),
 
@@ -295,7 +298,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                       } },
                     child: Container(
                       width: w,
-                      height: (45/baseHeight) *h,
+                      height: (45/baseHeight) *h, //45
                       decoration:   BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(24.0), // Adjust radius as needed
@@ -337,5 +340,9 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
       }
     );
 
+  }
+  bool isValidPhoneNumber(String phoneNumber) {
+    RegExp regex = RegExp(r'^\+?[1-9]\d{6,14}$'); // E.164 format
+    return regex.hasMatch(phoneNumber);
   }
 }

@@ -225,6 +225,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
                                             setState(() {
                                             item.isSelected = value!;
                                             if(value){
+
                                               _selectedContacts.add(item);
                                           //    log(item.contact!.phones!.first.value.toString());
                                             }else{
