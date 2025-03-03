@@ -27,9 +27,9 @@ class MessagesController extends GetxController{
   getGroupMessage(Group group){
     chatGroup = group;
     List<Messages> allMessages = [
-      Messages(messageType: Type.text, message: "Hi!!", isRead: true, sender: group.groupContacts[0], time: "Feb 08,3.10 pm"),
-      Messages( messageType: Type.text,message: "new group", isRead: true, sender: group.groupContacts[1], time: "Feb 08,3.10 pm"),
-      Messages(messageType: Type.text,message: "hi", isRead: false, sender: Contacts(isSelected: false, id: -1, tag: "tag", name: "owner", image: "image", closed: false, numOfMessage: "numOfMessage"), time: "Feb 08, 4.30 pm")
+      // Messages(messageType: Type.text, message: "Hi!!", isRead: true, sender: group.groupContacts[0], time: "Feb 08,3.10 pm"),
+      // Messages( messageType: Type.text,message: "new group", isRead: true, sender: group.groupContacts[1], time: "Feb 08,3.10 pm"),
+      // Messages(messageType: Type.text,message: "hi", isRead: false, sender: Contacts(isSelected: false, id: -1, tag: "tag", name: "owner", image: "image", closed: false, numOfMessage: "numOfMessage"), time: "Feb 08, 4.30 pm")
     ];
     messages = allMessages;
     update();

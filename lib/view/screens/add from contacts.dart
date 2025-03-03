@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
@@ -224,6 +226,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
                                             item.isSelected = value!;
                                             if(value){
                                               _selectedContacts.add(item);
+                                          //    log(item.contact!.phones!.first.value.toString());
                                             }else{
                                               _selectedContacts.remove(item);
                                             }

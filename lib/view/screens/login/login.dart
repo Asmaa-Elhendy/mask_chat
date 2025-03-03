@@ -146,25 +146,25 @@ class _LoginState extends State<Login> {
           SizedBox(height: (7/baseHeight)*h,),
           TextFieldsLogin(label: localizations.email, controller: _emailController,hidden:  false,localizations: localizations),
           TextFieldsLogin(label: localizations.password, controller: _passwordController,hidden:true,localizations: localizations),
-          SizedBox(height: 16,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: (){},
-                child: Text(localizations.forgetPassword,
-                style:  TextStyle(
-                  color: ColorsPlatte().primary.redIcons,
-                  fontFamily: "Roboto-Regular",
-                  fontWeight: FontWeight.w400,
-                  fontSize: (14/baseWidth) * w
-                ),
-                ),
-
-              ),
-
-            ],
-          ),
+          // SizedBox(height: 16,),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     InkWell(
+          //       onTap: (){},
+          //       child: Text(localizations.forgetPassword,
+          //       style:  TextStyle(
+          //         color: ColorsPlatte().primary.redIcons,
+          //         fontFamily: "Roboto-Regular",
+          //         fontWeight: FontWeight.w400,
+          //         fontSize: (14/baseWidth) * w
+          //       ),
+          //       ),
+          //
+          //     ),
+          //
+          //   ],
+          // ),
           SizedBox(height: (25/baseHeight)*h,),
       Obx(() => authController.isLoading.value
           ? CircularProgressIndicator(color: redCheck,) // Show loading

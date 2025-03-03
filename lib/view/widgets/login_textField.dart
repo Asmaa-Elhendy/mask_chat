@@ -120,7 +120,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
                   validatePassword:  (value) {
 
     return null;
-    },
+    },autovalidateMode: AutovalidateMode.onUserInteraction,
 
 
 

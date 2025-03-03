@@ -7,38 +7,58 @@ import 'package:get/get.dart';
 import '../model/contacts.dart';
 import '../model/gtroup.dart';
 import '../model/messages.dart';
+import 'api/auth/auth_service.dart';
+import 'api/groups/group_service.dart';
 
 class GroupController extends GetxController {
+  var loading = false.obs; // Observable loading state
   List<Contact> contacts = [];
   List<Contacts> azItems = [];
   int idCounter = 1;
   List<Contacts> selectedContactsAddtoGroup=[];
-  List<Group> groupsList = [
-    Group(
-        id: 0,
-        fav: false,
-        image: "",
-        groupContacts: [
-          Contacts(
-              id: 5,
-              name: "Tasneem Elattar",
-              image: "assets/images/profile.png",
-              closed: false,
-              numOfMessage: "0",
-              tag: "t",
-              isSelected: false),
-          Contacts(name: "Armen R. Kane",
-              image: "assets/images/profile.png",
-              closed: false,
-              numOfMessage: "0",
-              tag: "A",
-              id: 2,
-              isSelected: false),
-        ],
+  // List<Group> groupsList = [
+  //   Group(
+  //       id: 0,
+  //       fav: false,
+  //       image: "",
+  //       groupContacts: [
+  //         Contacts(
+  //             id: 5,
+  //             name: "Tasneem Elattar",
+  //             image: "assets/images/profile.png",
+  //             closed: false,
+  //             numOfMessage: "0",
+  //             tag: "t",
+  //             isSelected: false),
+  //         Contacts(name: "Armen R. Kane",
+  //             image: "assets/images/profile.png",
+  //             closed: false,
+  //             numOfMessage: "0",
+  //             tag: "A",
+  //             id: 2,
+  //             isSelected: false),
+  //       ],
+  //
+  //       subject: "New Group For Test")
+  // ];
+  List<Group> groupsList=[];
+  final GroupService _groupService = GroupService();
+  void onInit() {
+    super.onInit();
+    fetchGroups(token.value);
+  }
 
-        subject: "New Group For Test")
-  ];
-
+  Future<void> fetchGroups(String token) async {
+    try {
+      loading.value = true; // Start loading
+      groupsList = await _groupService.fetchGroups(token);
+    } catch (e) {
+      print("Error fetching groups: $e");
+    } finally {
+      loading.value = false; // Stop loading
+    }
+    update();
+  }
 
   toggleClosed(int id) {
     int index = groupsList.indexWhere((contact) => contact.id == id);

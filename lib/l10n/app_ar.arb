@@ -102,7 +102,8 @@
   "enterValidEmailAddress": "أدخل عنوان بريد إلكتروني صالحًا",
   "passwordMustStartWithLetter": "يجب أن تبدأ كلمة المرور بحرف",
   "passwordMustBeAtLeast8charactersLong": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
-  "passwordMustContainAtLeastOneNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل"
+  "passwordMustContainAtLeastOneNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+  "noGroupsAvailable": "لا توجد مجموعات متاحة"
 
 
 }

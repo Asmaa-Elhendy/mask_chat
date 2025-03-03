@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-class AuthService {
 String baseUrl="https://apichat.nanoegypt.com/public/api/";
+ValueNotifier<String> token= ValueNotifier<String>("");
+class AuthService {
+
   Future<String?> login(String email, String password) async {
     final url = Uri.parse("${baseUrl}login");
 
@@ -20,7 +23,7 @@ String baseUrl="https://apichat.nanoegypt.com/public/api/";
       if (response.statusCode == 200) {
 
         final data = jsonDecode(response.body);
-
+        token.value=data['data']['token'];
         return data['data']['token']; // Return token
       } else {
         return null; // Login failed

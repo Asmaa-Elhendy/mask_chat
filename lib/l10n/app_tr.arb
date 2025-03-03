@@ -101,5 +101,6 @@
   "enterValidEmailAddress": "Geçerli bir e-posta adresi girin",
   "passwordMustStartWithLetter": "Parola bir harfle başlamalıdır",
   "passwordMustBeAtLeast8charactersLong": "Parola en az 8 karakter uzunluğunda olmalıdır",
-  "passwordMustContainAtLeastOneNumber": "Parola en az bir rakam içermelidir"
+  "passwordMustContainAtLeastOneNumber": "Parola en az bir rakam içermelidir",
+  "noGroupsAvailable": "Kullanılabilir Grup Yok"
 }

@@ -101,7 +101,8 @@
   "enterValidEmailAddress": "Введите действительный адрес электронной почты",
   "passwordMustStartWithLetter": "Пароль должен начинаться с буквы",
   "passwordMustBeAtLeast8charactersLong": "Пароль должен быть длиной не менее 8 символов",
-  "passwordMustContainAtLeastOneNumber": "Пароль должен содержать хотя бы одну цифру"
+  "passwordMustContainAtLeastOneNumber": "Пароль должен содержать хотя бы одну цифру",
+  "noGroupsAvailable": "нет доступных групп"
 
 
 
