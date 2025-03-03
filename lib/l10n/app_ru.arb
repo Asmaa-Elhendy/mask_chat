@@ -104,7 +104,10 @@
   "passwordMustContainAtLeastOneNumber": "Пароль должен содержать хотя бы одну цифру",
   "noGroupsAvailable": "нет доступных групп",
   "failedToDeleteGroupFromServer": "Не удалось удалить группу с сервера.",
-  "somethingWentWrong": "Что-то пошло не так"
+  "somethingWentWrong": "Что-то пошло не так",
+  "failedToDeleteChat": "Не удалось удалить чат",
+  "chatDeletedSuccessfully": "Чат успешно удален",
+  "success": "Успех"
 
 
 

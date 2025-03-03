@@ -25,7 +25,7 @@ class AuthController extends GetxController {
       print("Token: $token");
       Get.offAll(Home());// Navigate to home
     } else {
-      SnackBarWidget(localizations,localizations.invalidCredentials);
+      SnackBarErrorWidget(localizations,localizations.invalidCredentials);
 
     }
 
@@ -38,7 +38,7 @@ class AuthController extends GetxController {
     final result = await _authService.register(name,email,password,password_confirm);
     log(result!);
     if (result =='error') {
-      SnackBarWidget(localizations,localizations.invalidCredentials);
+      SnackBarErrorWidget(localizations,localizations.invalidCredentials);
     }else
     if (result =='success') {
       // log('jjj');
@@ -46,7 +46,7 @@ class AuthController extends GetxController {
       // print("id: $id");
       Get.offAll(Login());// Navigate to home
     } else {
-      SnackBarWidget(localizations,localizations.invalidCredentials);
+      SnackBarErrorWidget(localizations,localizations.invalidCredentials);
 
     }
 
@@ -54,9 +54,10 @@ class AuthController extends GetxController {
   }
 }
 
-SnackbarController SnackBarWidget(localizations,String description){
+SnackbarController SnackBarErrorWidget(localizations,String description,
+    {bool error = true}){
  return Get.snackbar(
-   localizations.errorMessage,
+  error? localizations.errorMessage:localizations.success,
     description,
     snackPosition: SnackPosition.BOTTOM, // Position at bottom
     backgroundColor: redCheck, // Red background

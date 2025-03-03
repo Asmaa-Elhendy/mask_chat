@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../../../model/contacts.dart';
 
 class ChatService {
-  //get chats not handeled yet, then handle with chat controller like group controller and adjust ui like them
+  //get chats not handeled yet, then handle with chat controller like group controller and adjust ui like them in empty and loading
   static Future<List<Contacts>> getContacts(String token) async {
     try {
       final String url = "${baseUrl}chats"; // Adjust endpoint as needed
@@ -49,5 +49,23 @@ class ChatService {
     }
 
     return []; // Return an empty list on failure
+  }
+
+  //delete chat without backend  , handle the delete chat controller
+  static Future<bool> deleteChat(int id, String token) async {
+    final String url = "${baseUrl}chats/$id"; // API endpoint
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Pass the user's token
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true; // Chat deleted successfully
+    } else {
+      return false; // Failed to delete chat
+    }
   }
 }

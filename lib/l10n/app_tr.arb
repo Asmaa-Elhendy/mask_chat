@@ -104,5 +104,8 @@
   "passwordMustContainAtLeastOneNumber": "Parola en az bir rakam içermelidir",
   "noGroupsAvailable": "Kullanılabilir Grup Yok",
   "failedToDeleteGroupFromServer": "Grup sunucudan silinemedi.",
-  "somethingWentWrong": "Bir şeyler ters gitti"
+  "somethingWentWrong": "Bir şeyler ters gitti",
+  "failedToDeleteChat": "Sohbet silinemedi",
+  "chatDeletedSuccessfully": "Sohbet başarıyla silindi",
+  "success": "Başarılı"
 }

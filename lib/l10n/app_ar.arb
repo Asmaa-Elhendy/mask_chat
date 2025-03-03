@@ -105,7 +105,10 @@
   "passwordMustContainAtLeastOneNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
   "noGroupsAvailable": "لا توجد مجموعات متاحة",
   "failedToDeleteGroupFromServer": "فشل حذف المجموعة من الخادم.",
-  "somethingWentWrong": "حدث خطأ ما"
+  "somethingWentWrong": "حدث خطأ ما",
+  "failedToDeleteChat": "فشل في حذف الدردشة",
+  "chatDeletedSuccessfully": "تم حذف الدردشة بنجاح",
+  "success": "نجاح"
 
 
 }

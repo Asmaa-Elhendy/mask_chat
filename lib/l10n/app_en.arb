@@ -104,7 +104,10 @@
    "passwordMustContainAtLeastOneNumber":  "Password must contain at least one number",
    "noGroupsAvailable": "no Groups Available",
    "failedToDeleteGroupFromServer": "Failed to delete group from server.",
-   "somethingWentWrong":  "Something went wrong"
+   "somethingWentWrong":  "Something went wrong",
+   "failedToDeleteChat": "Failed to delete Chat",
+   "chatDeletedSuccessfully": "Chat deleted successfully",
+   "success": "Success"
 
 }
 

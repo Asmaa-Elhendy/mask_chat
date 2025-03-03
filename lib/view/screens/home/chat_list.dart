@@ -1,3 +1,4 @@
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -110,7 +111,7 @@ class _chatListState extends State<chatList> {
                                        for(int i =0;i<selectedContacts.length;i++){
 
 
-                                         controller.deleteContact(selectedContacts[i].id);
+                                         controller.deleteContact(localizations,selectedContacts[i].id,user_token.value);
 
 
 
@@ -289,7 +290,7 @@ class _chatListState extends State<chatList> {
                                                             child: ElevatedButton(
                                                               onPressed: () {
                                                                 Get.back();
-                                                               controller.deleteContact(controller.contacts[index].id);
+                                                               controller.deleteContact(localizations,controller.contacts[index].id,user_token.value);
                                                               },
                                                               style: ElevatedButton.styleFrom(
                                                                 backgroundColor: ColorsPlatte().primary.redIcons,

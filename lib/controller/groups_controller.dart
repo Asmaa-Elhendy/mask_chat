@@ -78,10 +78,10 @@ class GroupController extends GetxController {
           update(); // Notify UI
         }
       } else {
-        SnackBarWidget(localizations, localizations.failedToDeleteGroupFromServer);
+        SnackBarErrorWidget(localizations, localizations.failedToDeleteGroupFromServer);
       }
     } catch (e) {
-      SnackBarWidget(localizations,localizations.somethingWentWrong);
+      SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
     }
   }
 

@@ -241,7 +241,7 @@ class _AddNumberState extends State<AddNumber> {
        //    Get.to(const VerifyNumber());
         Get.to( YourProfile(email: _emailController.text,password: _passwordController.text,confirmPassword: _confirmPasswordController.text,));
       }else{
-        SnackBarWidget(localizations,localizations.passwordsNotMatch);
+        SnackBarErrorWidget(localizations,localizations.passwordsNotMatch);
       }
     }
 

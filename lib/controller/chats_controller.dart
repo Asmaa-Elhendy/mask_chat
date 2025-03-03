@@ -1,8 +1,10 @@
 
 
+import 'package:Whatsback/controller/api/auth/auth_controller.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../model/contacts.dart';
+import 'api/chats/chat_service.dart';
 int currentId = 1;
 
 class ChatsController extends GetxController{
@@ -33,16 +35,24 @@ class ChatsController extends GetxController{
   contacts.sort((a, b) => a.name.compareTo(b.name));
   update();
  }
- deleteContact(int id){
-  int index = contacts.indexWhere((contact) => contact.id == id);
-  // If the contact exists, remove it from the list
-  if (index != -1) {
-   contacts.removeAt(index);
-   update();
+ Future<void> deleteContact(localizations,int id, String token) async {
+  bool success = await ChatService.deleteChat(id, token);
+
+  if (success) {
+   int index = contacts.indexWhere((contact) => contact.id == id);
+   if (index != -1) {
+    contacts.removeAt(index);
+    update(); // Notify UI
+   }
+
+   SnackBarErrorWidget(localizations, localizations.chatDeletedSuccessfully,error: false);
+  } else {
+   SnackBarErrorWidget(localizations, localizations.failedToDeleteChat);
   }
-
-
  }
+
+
+
  toggleClosed(int id){
   int index = contacts.indexWhere((contact) => contact.id == id);
   if (index != -1) {
