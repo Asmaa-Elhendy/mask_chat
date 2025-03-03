@@ -104,7 +104,7 @@ class GroupList extends StatelessWidget {
                                     builder: (cont) {
                                       return ElevatedButton(
                                         onPressed: () {
-                                          controller.deleteGroup(controller.groupsList[index].id);
+                                          controller.deleteGroup(localizations,controller.groupsList[index].id);
                                           Slidable.of(cont)!.close();
                                         },
                                         style: ElevatedButton.styleFrom(

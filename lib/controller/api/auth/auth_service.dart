@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 String baseUrl="https://apichat.nanoegypt.com/public/api/";
-ValueNotifier<String> token= ValueNotifier<String>("");
+ValueNotifier<String> user_token= ValueNotifier<String>("");
 class AuthService {
 
   Future<String?> login(String email, String password) async {
@@ -23,7 +23,7 @@ class AuthService {
       if (response.statusCode == 200) {
 
         final data = jsonDecode(response.body);
-        token.value=data['data']['token'];
+        user_token.value=data['data']['token'];
         return data['data']['token']; // Return token
       } else {
         return null; // Login failed

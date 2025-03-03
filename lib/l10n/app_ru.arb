@@ -102,7 +102,9 @@
   "passwordMustStartWithLetter": "Пароль должен начинаться с буквы",
   "passwordMustBeAtLeast8charactersLong": "Пароль должен быть длиной не менее 8 символов",
   "passwordMustContainAtLeastOneNumber": "Пароль должен содержать хотя бы одну цифру",
-  "noGroupsAvailable": "нет доступных групп"
+  "noGroupsAvailable": "нет доступных групп",
+  "failedToDeleteGroupFromServer": "Не удалось удалить группу с сервера.",
+  "somethingWentWrong": "Что-то пошло не так"
 
 
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Whatsback/controller/api/auth/auth_controller.dart';
 import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,7 @@ class GroupController extends GetxController {
   final GroupService _groupService = GroupService();
   void onInit() {
     super.onInit();
-    fetchGroups(token.value);
+    fetchGroups(user_token.value);
   }
 
   Future<void> fetchGroups(String token) async {
@@ -67,16 +68,23 @@ class GroupController extends GetxController {
       update();
     }
   }
-  deleteGroup(int id){
-    int index = groupsList.indexWhere((contact) => contact.id == id);
-    // If the contact exists, remove it from the list
-    if (index != -1) {
-      groupsList.removeAt(index);
-      update();
+  Future<void> deleteGroup(localizations,int id) async {
+    try {
+      bool isDeleted = await GroupService.deleteGroup(id,user_token.value);
+      if (isDeleted) {
+        int index = groupsList.indexWhere((group) => group.id == id);
+        if (index != -1) {
+          groupsList.removeAt(index);
+          update(); // Notify UI
+        }
+      } else {
+        SnackBarWidget(localizations, localizations.failedToDeleteGroupFromServer);
+      }
+    } catch (e) {
+      SnackBarWidget(localizations,localizations.somethingWentWrong);
     }
-
-
   }
+
   fetchContacts() async {
 selectedContactsAddtoGroup=[];
     // Fetch phone contacts

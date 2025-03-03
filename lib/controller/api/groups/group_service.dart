@@ -39,4 +39,22 @@ class GroupService {
 
     return []; // Return an empty list in case of failure
   }
+
+  //delete group no handeled from backend yey:
+  static Future<bool> deleteGroup(int id,String token) async {
+    final String url = "${baseUrl}groups/$id"; // Adjust endpoint as needed
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Replace with actual token
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true; // Deletion successful
+    } else {
+      return false; // Handle failure
+    }
+  }
 }

@@ -102,5 +102,7 @@
   "passwordMustStartWithLetter": "Parola bir harfle başlamalıdır",
   "passwordMustBeAtLeast8charactersLong": "Parola en az 8 karakter uzunluğunda olmalıdır",
   "passwordMustContainAtLeastOneNumber": "Parola en az bir rakam içermelidir",
-  "noGroupsAvailable": "Kullanılabilir Grup Yok"
+  "noGroupsAvailable": "Kullanılabilir Grup Yok",
+  "failedToDeleteGroupFromServer": "Grup sunucudan silinemedi.",
+  "somethingWentWrong": "Bir şeyler ters gitti"
 }
