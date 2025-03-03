@@ -20,6 +20,22 @@ bool talkingAnonymous;
     // TODO: implement getSuspensionTag
     return tag;
   }
+
+  // Convert JSON to Contacts instance
+  factory Contacts.fromJson(Map<String, dynamic> json) {
+    return Contacts(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      image: json['image'] as String,
+      numOfMessage: json['numOfMessage'] as String,
+      closed: json['closed'] as bool,
+      tag: json['tag'] as String,
+      isSelected: json['isSelected'] as bool,
+      needInvite: json['needInvite'] as bool? ?? false,
+      talkingAnonymous: json['talkingAnonymous'] as bool? ?? false,
+      contact: json['contact'] != null ? Contact.fromMap(json['contact']) : null,
+    );
+  }
 }
 
 

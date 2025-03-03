@@ -9,7 +9,7 @@ class ChatsController extends GetxController{
  late Contacts savedChatPerson;
  List<Contacts> contacts =  [
   Contacts(
-      id: 5,name: "Tasneem", image: "assets/images/Oval.png", closed: false,
+      id: 1,name: "Tasneem", image: "assets/images/Oval.png", closed: false,
       numOfMessage: "0",tag: "t",isSelected: false),
   Contacts(name: "Armen R. Kane", image: "assets/images/Oval2.png", closed: false,
       numOfMessage: "0",tag: "A",id: 2,isSelected: false),
@@ -26,9 +26,6 @@ class ChatsController extends GetxController{
       numOfMessage: "0",tag: "B",id:6, isSelected: false),
   Contacts(name: "Catt Corby", image: "assets/images/Oval2.png", closed: true,
       numOfMessage: "0",tag: "C",id: 7,isSelected: false),
-
-
-
 
  ];
  List<String>  names = ["s","a"];
