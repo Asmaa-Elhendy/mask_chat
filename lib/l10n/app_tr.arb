@@ -97,5 +97,9 @@
   "confirmPassword":"Şifreyi onayla",
   "PasswordsNotMatch": "Пароли не совпадают!",
   "Error": "Ошибка",
-  "InvalidCredentials": "Неверные учетные данные!"
+  "InvalidCredentials": "Неверные учетные данные!",
+  "enterValidEmailAddress": "Geçerli bir e-posta adresi girin",
+  "passwordMustStartWithLetter": "Parola bir harfle başlamalıdır",
+  "passwordMustBeAtLeast8charactersLong": "Parola en az 8 karakter uzunluğunda olmalıdır",
+  "passwordMustContainAtLeastOneNumber": "Parola en az bir rakam içermelidir"
 }

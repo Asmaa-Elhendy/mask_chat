@@ -97,7 +97,11 @@
    "confirmPassword": "confirm Password",
    "passwordsNotMatch": "Passwords Don't Match !",
    "errorMessage": "Error",
-   "invalidCredentials": "Invalid Credentials !"
+   "invalidCredentials": "Invalid Credentials !",
+   "enterValidEmailAddress": "Enter a valid email address",
+   "passwordMustStartWithLetter": "Password must start with a letter",
+   "passwordMustBeAtLeast8charactersLong": "Password must be at least 8 characters long",
+   "passwordMustContainAtLeastOneNumber":  "Password must contain at least one number"
 
 }
 
