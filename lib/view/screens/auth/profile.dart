@@ -19,7 +19,8 @@ class YourProfile extends StatefulWidget {
   String email;
   String password;
   String confirmPassword;
-   YourProfile({required this.email,required this.password,required this.confirmPassword});
+  String phone;
+   YourProfile({required this.email,required this.password,required this.confirmPassword,required this.phone});
 
   @override
   State<YourProfile> createState() => _YourProfileState();
@@ -165,10 +166,10 @@ class _YourProfileState extends State<YourProfile> {
                 ),
                 SizedBox(height: h * .27,),
         Obx(() => authController.isLoading.value
-            ? CircularProgressIndicator(color: redCheck,) // Show loading
+            ? Center(child: CircularProgressIndicator(color: redCheck,)) // Show loading
             :   Center(child: GeneralButton(localizations.continue_button, (){
                 if (_formKey.currentState!.validate()) {
-                  authController.register(_userName.text, widget.email, widget.password, widget.confirmPassword, localizations);
+                  authController.register(_userName.text, widget.email, widget.password, widget.confirmPassword,widget.phone ,localizations);
                   //  Get.offAll(const Starting()); instead ogf this go to login to solve to fit api in register function in controller
 
                 }

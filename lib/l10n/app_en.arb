@@ -107,7 +107,8 @@
    "somethingWentWrong":  "Something went wrong",
    "failedToDeleteChat": "Failed to delete Chat",
    "chatDeletedSuccessfully": "Chat deleted successfully",
-   "success": "Success"
+   "success": "Success",
+   "searchCountry": "Search country"
 
 }
 

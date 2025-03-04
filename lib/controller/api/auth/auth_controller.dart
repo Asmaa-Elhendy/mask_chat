@@ -32,10 +32,10 @@ class AuthController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> register(String name,String email, String password,String password_confirm,localizations) async {
+  Future<void> register(String name,String email, String password,String password_confirm,String phone,localizations) async {
     isLoading.value = true;
 
-    final result = await _authService.register(name,email,password,password_confirm);
+    final result = await _authService.register(name,email,password,password_confirm,phone);
     log(result!);
     if (result =='error') {
       SnackBarErrorWidget(localizations,localizations.invalidCredentials);

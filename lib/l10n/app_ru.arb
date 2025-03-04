@@ -107,7 +107,8 @@
   "somethingWentWrong": "Что-то пошло не так",
   "failedToDeleteChat": "Не удалось удалить чат",
   "chatDeletedSuccessfully": "Чат успешно удален",
-  "success": "Успех"
+  "success": "Успех",
+  "searchCountry": "Поиск страны"
 
 
 

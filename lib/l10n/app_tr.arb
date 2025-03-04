@@ -107,5 +107,6 @@
   "somethingWentWrong": "Bir şeyler ters gitti",
   "failedToDeleteChat": "Sohbet silinemedi",
   "chatDeletedSuccessfully": "Sohbet başarıyla silindi",
-  "success": "Başarılı"
+  "success": "Başarılı",
+  "searchCountry": "Ülke ara"
 }

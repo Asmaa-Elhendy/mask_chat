@@ -17,6 +17,7 @@ class AuthService {
         body: jsonEncode({
           "email": email,
           "password": password,
+
         }),
       );
       log(response.body+response.statusCode.toString());
@@ -33,7 +34,7 @@ class AuthService {
     }
   }
 
-  Future<String?> register(String name,String email, String password,String password_confirm) async {
+  Future<String?> register(String name,String email, String password,String password_confirm,String phone) async {
     final url = Uri.parse("${baseUrl}register");
 
     try {
@@ -44,7 +45,8 @@ class AuthService {
           "name":name,
           "email": email,
           "password": password,
-          "password_confirmation": password_confirm
+          "password_confirmation": password_confirm,
+          "phone": phone
         }),
       );
       log("nowwwwwwwwww");

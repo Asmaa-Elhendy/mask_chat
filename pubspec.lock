@@ -813,6 +813,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
+  phone_text_field:
+    dependency: "direct main"
+    description:
+      name: phone_text_field
+      sha256: fe9af368899daca22a7768bc39ea579435ef8479534bed8f4e24358912cc92eb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   platform:
     dependency: transitive
     description:

@@ -108,7 +108,8 @@
   "somethingWentWrong": "حدث خطأ ما",
   "failedToDeleteChat": "فشل في حذف الدردشة",
   "chatDeletedSuccessfully": "تم حذف الدردشة بنجاح",
-  "success": "نجاح"
+  "success": "نجاح",
+  "searchCountry": "بحث عن البلد"
 
 
 }
