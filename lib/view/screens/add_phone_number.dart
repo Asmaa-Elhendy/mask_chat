@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -8,9 +11,11 @@ import 'package:phone_text_field/phone_text_field.dart';
 
 import '../../const/colors.dart';
 import '../../const/sizes.dart';
+import '../../controller/api/phone/phone_cotroller.dart';
 import '../../controller/language.dart';
 import '../../controller/masks_controller.dart';
 import '../../controller/requests_controller.dart';
+import '../../model/retrieve_contact.dart';
 import 'home/home.dart';
 
 class AddPhoneNumber extends StatefulWidget {
@@ -28,6 +33,8 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final languageController = Get.find<LanguageController>();
+  final PhoneController phoneController = Get.put(PhoneController());
+
   @override
   void initState() {
     super.initState();
@@ -182,6 +189,24 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                 cursorColor: controller.workWithChat? redCheck:controller.selectedMask.mainColor!,
                                 // Cursor color when focuse
                               ),
+                              Obx(() {
+                                if (phoneController.isLoading.value) {
+                                  return Center(child: CircularProgressIndicator(color: redCheck,));
+                                } else if (phoneController.contactsList.isEmpty) {
+                                  return Text('');
+                                } else {
+                                  return Column(
+                                    children: phoneController.contactsList.map<Widget>((ContactModel contact) {
+                                      return ListTile(
+                                        title: Text(contact.name),
+                                        subtitle: Text(contact.phone),
+                                        leading: Icon(Icons.person, color: Colors.blue),
+                                      );
+                                    }).toList(), // ✅ Ensure conversion to List<Widget>
+                                  );
+                                }
+                              }),
+
                               SizedBox(
                                 height: h*.064,
                               ),
@@ -248,8 +273,9 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                               //   },
                               //   // Cursor color when focuse
                               // ),
+
                               PhoneTextField(
-                                locale: Get
+                                locale:  Get
                                     .find<LanguageController>()
                                     .locale,
                                 showCountryCodeAsIcon:true,
@@ -320,11 +346,12 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                 initialCountryCode: "AE",
                                 onChanged: (phone) {
                                   debugPrint(phone.completeNumber);
-                                  print(phone.completeNumber);
                                   _phoneNumberController.text=phone.completeNumber;
+
+                                  log(_phoneNumberController.text);
+                                  phoneController.checkPhoneNumber(_phoneNumberController.text,user_token.value);
                                 },
                               ),
-
                             ],
                           ),
                         ),
