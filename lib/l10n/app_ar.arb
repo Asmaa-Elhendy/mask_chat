@@ -109,7 +109,10 @@
   "failedToDeleteChat": "فشل في حذف الدردشة",
   "chatDeletedSuccessfully": "تم حذف الدردشة بنجاح",
   "success": "نجاح",
-  "searchCountry": "بحث عن البلد"
+  "searchCountry": "بحث عن البلد",
+  "chatCreatedSuccessfully": "تم إنشاء الدردشة بنجاح",
+  "failedToCreateChat": "فشل في إنشاء الدردشة",
+  "chatAlreadyExist": "الدردشة موجودة بالفعل"
 
 
 }

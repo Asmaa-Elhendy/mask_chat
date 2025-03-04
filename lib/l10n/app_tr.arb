@@ -108,5 +108,8 @@
   "failedToDeleteChat": "Sohbet silinemedi",
   "chatDeletedSuccessfully": "Sohbet başarıyla silindi",
   "success": "Başarılı",
-  "searchCountry": "Ülke ara"
+  "searchCountry": "Ülke ara",
+  "chatCreatedSuccessfully": "Sohbet Başarıyla Oluşturuldu",
+  "failedToCreateChat": "Sohbet Oluşturulamadı",
+  "chatAlreadyExist": "sohbet Zaten Var"
 }

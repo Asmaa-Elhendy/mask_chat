@@ -65,6 +65,6 @@ SnackbarController SnackBarErrorWidget(localizations,String description,
     borderRadius: 8,
     margin: EdgeInsets.all(10),
     duration: Duration(seconds: 2), // Auto dismiss after 2 seconds
-    icon: Icon(Icons.error, color: Colors.white), // Add an icon
+    icon: Icon( error?Icons.error:Icons.verified_outlined, color: Colors.white), // Add an icon
   );
 }

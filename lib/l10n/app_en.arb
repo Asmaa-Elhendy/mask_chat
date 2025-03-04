@@ -108,7 +108,10 @@
    "failedToDeleteChat": "Failed to delete Chat",
    "chatDeletedSuccessfully": "Chat deleted successfully",
    "success": "Success",
-   "searchCountry": "Search country"
+   "searchCountry": "Search country",
+   "chatCreatedSuccessfully": "Chat Created Successfully",
+   "failedToCreateChat": "Failed To Create Chat",
+   "chatAlreadyExist": "chat Already Exist"
 
 }
 

@@ -108,7 +108,10 @@
   "failedToDeleteChat": "Не удалось удалить чат",
   "chatDeletedSuccessfully": "Чат успешно удален",
   "success": "Успех",
-  "searchCountry": "Поиск страны"
+  "searchCountry": "Поиск страны",
+  "chatCreatedSuccessfully": "Чат создан успешно",
+  "failedToCreateChat": "Не удалось создать чат",
+  "chatAlreadyExist": "чат уже существует"
 
 
 

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../../model/contacts.dart';
+import '../../../model/retrieve_contact.dart';
 
 class ChatService {
   //get chats not handeled yet, then handle with chat controller like group controller and adjust ui like them in empty and loading
@@ -68,4 +71,23 @@ class ChatService {
       return false; // Failed to delete chat
     }
   }
-}
+
+  static Future<String> createChat(ContactModel contact,String token) async {
+    final url = Uri.parse("${baseUrl}chats");
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json',    'Authorization': 'Bearer $token',},
+      body: jsonEncode({
+        "contact_id": contact.id
+      }),
+    );
+    log(response.statusCode.toString());
+    log(response.body);
+    if (response.statusCode == 201) {
+      return '201';
+    }else if(response.statusCode==200){
+      return '200';
+    }
+    return 'other';
+  }}
