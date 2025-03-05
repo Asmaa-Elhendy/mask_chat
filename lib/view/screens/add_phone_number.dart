@@ -30,7 +30,7 @@ class AddPhoneNumber extends StatefulWidget {
 
 class _AddPhoneNumberState extends State<AddPhoneNumber> {
   final _formKey = GlobalKey<FormState>();
-  int groupvValue = 1;
+  int groupValue = 0;
   // Controllers for text fields
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -353,8 +353,8 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                   log(_phoneNumberController.text);
                                   phoneController.checkPhoneNumber(_phoneNumberController.text,user_token.value);
                                 },
-                              ),
-                              Row(
+                              ),SizedBox(height: h*.04,),
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Container(
                                     width: w * .4,
@@ -363,9 +363,9 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                         w,
                                         h,
                                         0,
-                                        groupvValue, (value) {
+                                        groupValue, (value) {
                                       setState(() {
-                                        groupvValue = 0;
+                                        groupValue = 0;
                                       });
                                     }),
                                   ),
@@ -376,9 +376,9 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                         w,
                                         h,
                                         1,
-                                        groupvValue, (value) {
+                                        groupValue, (value) {
                                       setState(() {
-                                        groupvValue = 1;
+                                        groupValue = 1;
                                       });
                                     }),
                                   ),
@@ -481,7 +481,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                 GetBuilder<ChatsController>(
                     init: ChatsController(),
                     builder: (chat_controller) {
-                      if (chat_controller.loading==true) {
+                      if (chat_controller.createChatloading==true) {
                         return Center(child: CircularProgressIndicator(color: Colors.white,));
                       }
 
@@ -497,7 +497,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                               if(controller.workWithChat){
                                 //here handle create new chat
                                 log("first 2");
-                                chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0]);
+                                chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
                                 Get.back();
                                 if ((_formKey.currentState!.validate())) {
                                   //not understand

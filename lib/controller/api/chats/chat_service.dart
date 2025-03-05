@@ -62,14 +62,15 @@ class ChatService {
     }
   }
 
-  static Future<String> createChat(ContactModel contact,String token) async {
+  static Future<String> createChat(ContactModel contact,String token,int groupValue) async {
     final url = Uri.parse("${baseUrl}chats");
 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json',    'Authorization': 'Bearer $token',},
       body: jsonEncode({
-        "contact_id": contact.id
+        "contact_id": contact.id,
+        "is_masked":groupValue==0?'0':'1'
       }),
     );
     log(response.statusCode.toString());

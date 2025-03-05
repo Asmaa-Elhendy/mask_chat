@@ -15,6 +15,7 @@ int currentId = 1;
 class ChatsController extends GetxController {
  final ChatService _chatService = ChatService();
  var loading = false.obs;
+ var createChatloading = false.obs;
  late ChatContact savedChatPerson;
  List<ChatContact> contacts =  [
   // ChatContacts(
@@ -56,10 +57,10 @@ class ChatsController extends GetxController {
   update();
  }
 
- Future<void> createChat(localizations,String token,ContactModel contact) async {
+ Future<void> createChat(localizations,String token,ContactModel contact,int groupValue) async {
   try {
-   loading.value = true;
-   String statusCode = await ChatService.createChat(contact, token);
+   createChatloading.value = true;
+   String statusCode = await ChatService.createChat(contact, token, groupValue);
    if (statusCode=='201') {
     SnackBarErrorWidget(localizations, localizations.chatCreatedSuccessfully,error: false);
    } else  if (statusCode=='200') {
@@ -71,7 +72,7 @@ class ChatsController extends GetxController {
   } catch (e) {
    SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
   }finally {
-   loading.value = false; // Stop loading
+   createChatloading.value = false; // Stop loading
   }
  }
 
