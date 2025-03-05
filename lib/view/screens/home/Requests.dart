@@ -61,7 +61,7 @@ class Requests extends StatelessWidget {
             child: GetBuilder<RequestsController>(
               init: RequestsController(),
               builder: (controller) {
-                return controller.requests.isEmpty?
+                return controller.loading==true?Center(child: CircularProgressIndicator(color: redCheck,)):controller.requests.isEmpty?
 
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -134,7 +134,7 @@ class Requests extends StatelessWidget {
                         child: Image.asset(request.image),
                         ),
                         title: Text(
-                        request.name,
+                        localizations.anonymous,
                             style: TextStyle(
 
                               fontFamily: 'Roboto-Medium',

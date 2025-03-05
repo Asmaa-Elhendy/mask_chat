@@ -114,7 +114,8 @@
   "failedToCreateChat": "فشل في إنشاء الدردشة",
   "chatAlreadyExist": "الدردشة موجودة بالفعل",
   "anonymous":"مجهول",
-  "noChatsAvailable": "لا توجد محادثات متاحة"
+  "noChatsAvailable": "لا توجد محادثات متاحة",
+  "pleaseEnterAvalidPhone": "الرجاء إدخال رقم هاتف صالح"
 
 
 }

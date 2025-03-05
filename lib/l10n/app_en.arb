@@ -113,7 +113,8 @@
    "failedToCreateChat": "Failed To Create Chat",
    "chatAlreadyExist": "chat Already Exist",
    "anonymous":"Anonymous",
-   "noChatsAvailable": "no Chats Available"
+   "noChatsAvailable": "no Chats Available",
+   "pleaseEnterAvalidPhone": "Please Enter a Valid Phone"
 }
 
 

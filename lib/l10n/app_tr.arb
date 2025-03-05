@@ -113,5 +113,6 @@
   "failedToCreateChat": "Sohbet Oluşturulamadı",
   "chatAlreadyExist": "sohbet Zaten Var",
   "anonymous":"Anonim",
-  "noChatsAvailable": "Mevcut Sohbet Yok"
+  "noChatsAvailable": "Mevcut Sohbet Yok",
+  "pleaseEnterAvalidPhone": "Lütfen geçerli bir telefon numarası girin"
 }

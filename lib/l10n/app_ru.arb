@@ -113,7 +113,8 @@
   "failedToCreateChat": "Не удалось создать чат",
   "chatAlreadyExist": "чат уже существует",
   "anonymous":"Анонимный",
-  "noChatsAvailable": "нет доступных чатов"
+  "noChatsAvailable": "нет доступных чатов",
+  "pleaseEnterAvalidPhone": "Пожалуйста, введите действительный номер телефона"
 
 
 

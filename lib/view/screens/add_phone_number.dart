@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:Whatsback/controller/api/auth/auth_controller.dart';
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -391,7 +392,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                       )
                     ],
                   ),
-                ),
+                ),SizedBox(height: h*.01,),
                //  Align(
                //      alignment: Alignment.bottomCenter,
                //      child: InkWell(
@@ -497,8 +498,13 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                               if(controller.workWithChat){
                                 //here handle create new chat
                                 log("first 2");
-                                chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
-                                Get.back();
+                                if(phoneController.contactsList.length==0){
+                                  SnackBarErrorWidget(localizations, localizations.pleaseEnterAvalidPhone);
+                                }else{
+                                  chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
+                                  Get.back();
+                                }
+
                                 if ((_formKey.currentState!.validate())) {
                                   //not understand
                                   // controller.addContactsToClass(controller.selectedMask
@@ -538,7 +544,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                               } },
                             child: Container(
                               width: w,
-                              height: (45/baseHeight) *h, //45
+                              height: (50/baseHeight) *h, //45
                               decoration:   BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(24.0), // Adjust radius as needed
