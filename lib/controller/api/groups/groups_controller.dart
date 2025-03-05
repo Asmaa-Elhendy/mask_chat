@@ -5,18 +5,18 @@ import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:get/get.dart';
 
-import '../model/contacts.dart';
-import '../model/gtroup.dart';
-import '../model/messages.dart';
-import 'api/auth/auth_service.dart';
-import 'api/groups/group_service.dart';
+import '../../../model/contacts.dart';
+import '../../../model/gtroup.dart';
+import '../../../model/messages.dart';
+import '../auth/auth_service.dart';
+import 'group_service.dart';
 
 class GroupController extends GetxController {
   var loading = false.obs; // Observable loading state
   List<Contact> contacts = [];
-  List<Contacts> azItems = [];
+  List<ChatContact> azItems = [];
   int idCounter = 1;
-  List<Contacts> selectedContactsAddtoGroup=[];
+  List<ChatContact> selectedContactsAddtoGroup=[];
   // List<Group> groupsList = [
   //   Group(
   //       id: 0,
@@ -92,13 +92,14 @@ selectedContactsAddtoGroup=[];
     await ContactsService.getContacts(withThumbnails: true);
 
     // Convert contacts to AZItems
-    List<Contacts> items = fetchedContacts.map((contact) {
+    List<ChatContact> items = fetchedContacts.map((contact) {
       String displayName = contact.displayName ?? "Unnamed";
       String tag = displayName[0].toUpperCase(); // First letter of the name
 
-      return Contacts(
+      return ChatContact(
         id:  idCounter++,
         name: displayName,
+        userId: '0',contactId: '0',isMasked: '0',
         tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",
         closed: false,
         image: "assets/images/profile.png",
@@ -116,8 +117,8 @@ selectedContactsAddtoGroup=[];
 
     contacts = fetchedContacts.toList();
     azItems = items;
-    azItems[0].needInvite=true;
-    azItems[5].needInvite=true;
+    // azItems[0].needInvite=true;
+    // azItems[5].needInvite=true;
     update();
 
   }
@@ -137,7 +138,7 @@ selectedContactsAddtoGroup=[];
     }
 
   }
-  addNewGroup(String name,List<Contacts> groupContacts, File? _image){
+  addNewGroup(String name,List<ChatContact> groupContacts, File? _image){
 
     groupsList.add(
       Group(fav: false,

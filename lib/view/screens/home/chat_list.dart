@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:Whatsback/const/sizes.dart';
-import 'package:Whatsback/controller/chats_controller.dart';
+import 'package:Whatsback/controller/api/chats/chats_controller.dart';
 import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:Whatsback/controller/messages_controller.dart';
 import '../../../const/colors.dart';
@@ -25,7 +25,7 @@ class chatList extends StatefulWidget {
 }
 
 class _chatListState extends State<chatList> {
-  List<Contacts> selectedContacts = [];
+  List<ChatContact> selectedContacts = [];
   bool isSelectionMode = false;
 
   @override
@@ -38,7 +38,10 @@ class _chatListState extends State<chatList> {
 
     return GetBuilder<ChatsController>(
         init: ChatsController(),
+        key: UniqueKey(),
         builder: (controller) {
+
+
           return SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
@@ -159,7 +162,7 @@ class _chatListState extends State<chatList> {
                 ),
               ),
               SizedBox(height: h * .02,),
-              Container(
+    Container(
                 padding:  EdgeInsets.only(left: w *.035,right: w*.035,bottom: (13/baseHeight)*h,top: (13/baseHeight)*h),
 
                 width: w,
@@ -175,7 +178,8 @@ class _chatListState extends State<chatList> {
 
               ),
               child: SizedBox(
-                child: AzListView(
+                child:controller.loading==true?Center(child: CircularProgressIndicator(color: redCheck,)):
+                    controller.contacts.isNotEmpty?  AzListView(
                   padding: EdgeInsets.zero,
 
                   indexBarMargin: EdgeInsets.zero,
@@ -414,7 +418,7 @@ class _chatListState extends State<chatList> {
 
                                                   ),
                       SizedBox(width: (15/baseWidth)*w,),
-                      Text(controller.contacts[index].name,
+                      Text(controller.contacts[index].isMasked=='1'?localizations.anonymous:controller.contacts[index].name,
 
                       style: TextStyle(
                       fontFamily: 'Roboto-Regular',
@@ -448,6 +452,14 @@ class _chatListState extends State<chatList> {
                     }
 
 
+                ):Center(
+                  child: Text(
+                    localizations.noChatsAvailable,//need to edit
+                    style: TextStyle(
+                      fontSize: (18 / baseWidth) * w,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               )
 

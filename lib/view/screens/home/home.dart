@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:Whatsback/controller/chats_controller.dart';
+import 'package:Whatsback/controller/api/chats/chats_controller.dart';
 import 'package:Whatsback/view/screens/home/Requests.dart';
 import 'package:Whatsback/view/screens/login/three_dots_slides.dart';
 
 import '../../../const/colors.dart';
 import '../../../const/sizes.dart';
-import '../../../controller/groups_controller.dart';
+import '../../../controller/api/groups/groups_controller.dart';
 import 'chat_list.dart';
 import 'groups/group_list.dart';
 

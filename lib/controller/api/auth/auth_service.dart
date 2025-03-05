@@ -24,8 +24,8 @@ class AuthService {
       if (response.statusCode == 200) {
 
         final data = jsonDecode(response.body);
-        user_token.value=data['data']['token'];
-        return data['data']['token']; // Return token
+        user_token.value=data['token'];
+        return data['token']; // Return token
       } else {
         return null; // Login failed
       }

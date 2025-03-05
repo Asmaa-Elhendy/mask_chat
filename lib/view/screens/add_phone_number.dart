@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
-import 'package:Whatsback/controller/api/chats/chat_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -12,15 +11,17 @@ import 'package:phone_text_field/phone_text_field.dart';
 
 import '../../const/colors.dart';
 import '../../const/sizes.dart';
+import '../../controller/api/chats/chats_controller.dart';
 import '../../controller/api/phone/phone_cotroller.dart';
 import '../../controller/language.dart';
 import '../../controller/masks_controller.dart';
 import '../../controller/requests_controller.dart';
 import '../../model/retrieve_contact.dart';
+import '../widgets/type_radio_button.dart';
 import 'home/home.dart';
 
 class AddPhoneNumber extends StatefulWidget {
-  Contacts? unKnown;
+  ChatContact? unKnown;
   AddPhoneNumber({this.unKnown,super.key});
 
   @override
@@ -29,7 +30,7 @@ class AddPhoneNumber extends StatefulWidget {
 
 class _AddPhoneNumberState extends State<AddPhoneNumber> {
   final _formKey = GlobalKey<FormState>();
-
+  int groupvValue = 1;
   // Controllers for text fields
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -353,6 +354,36 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                   phoneController.checkPhoneNumber(_phoneNumberController.text,user_token.value);
                                 },
                               ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: w * .4,
+                                    child: TypeRadioButton(
+                                        "regular",
+                                        w,
+                                        h,
+                                        0,
+                                        groupvValue, (value) {
+                                      setState(() {
+                                        groupvValue = 0;
+                                      });
+                                    }),
+                                  ),
+                                  Container(
+                                    width: w * .4,
+                                    child: TypeRadioButton(
+                                        "mask",
+                                        w,
+                                        h,
+                                        1,
+                                        groupvValue, (value) {
+                                      setState(() {
+                                        groupvValue = 1;
+                                      });
+                                    }),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -447,8 +478,8 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                //          ),
                //        ),
                //      )),
-                GetBuilder<ChatController>(
-                    init: ChatController(),
+                GetBuilder<ChatsController>(
+                    init: ChatsController(),
                     builder: (chat_controller) {
                       if (chat_controller.loading==true) {
                         return Center(child: CircularProgressIndicator(color: Colors.white,));
@@ -490,7 +521,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                 log("first 3");
                                 if ((_formKey.currentState!.validate())) {
                                   controller.addContactsToClass(controller.selectedMask
-                                      .id, Contacts(isSelected: false,
+                                      .id, ChatContact(isSelected: false,userId: '0',contactId: '0',isMasked: '0',
                                       id: controller.selectedMask.contacts.isEmpty
                                           ? 0
                                           : (controller.selectedMask.contacts[controller

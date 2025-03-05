@@ -10,7 +10,7 @@ import 'package:Whatsback/model/contacts.dart';
 class ClassController extends GetxController {
 
   List<Contact> contacts = [];
-  List<Contacts> azItems = [];
+  List<ChatContact> azItems = [];
   int idCounter = 1;
 
   bool workWithChat=true;
@@ -55,57 +55,57 @@ class ClassController extends GetxController {
 
     Class(
       id: 3,
-      contacts: [   Contacts(
+      contacts: [   ChatContact(
             id: 5,
             name: "Tasneem Elattar",
             image: "assets/images/Oval2.png",
             closed: false,
             numOfMessage: "0",
             tag: "t",
-            isSelected: false),
-        Contacts(name: "Armen R. Kane",
+            isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
+        ChatContact(name: "Armen R. Kane",
             image: "assets/images/Oval.png",
             closed: false,
             numOfMessage: "0",
             tag: "A",
             id: 2,
-            isSelected: false),
-        Contacts(name: "Tasneem Elattar",
+            isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
+        ChatContact(name: "Tasneem Elattar",
             image: "assets/images/Oval4.png",
             closed: false,
             numOfMessage: "0",
             tag: "T",
             id: 3,
-            isSelected: false),
-        Contacts(name: "Catt Corby",
+            isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
+        ChatContact(name: "Catt Corby",
             image: "assets/images/Oval3.png",
             closed: true,
             numOfMessage: "0",
             tag: "C",
             id: 4,
-            isSelected: false),
+            isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
 
-        Contacts(name: "batt Corby",
+        ChatContact(name: "batt Corby",
             image: "assets/images/Oval5.png",
             closed: true,
             numOfMessage: "0",
             tag: "B",
             id: 5,
-            isSelected: false),
-        Contacts(name: "batt Corby",
+            isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
+        ChatContact(name: "batt Corby",
             image: "assets/images/Oval2.png",
             closed: true,
             numOfMessage: "0",
             tag: "B",
             id: 6,
-            isSelected: false),
-        Contacts(name: "Catt Corby",
+            isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
+        ChatContact(name: "Catt Corby",
             image: "assets/images/Oval.png",
             closed: true,
             numOfMessage: "0",
             tag: "C",
             id: 7,
-            isSelected: false),
+            isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
       ],
       contactsNum: 0,
       name: 'workmates'.tr,
@@ -218,14 +218,14 @@ class ClassController extends GetxController {
    await ContactsService.getContacts(withThumbnails: true);
 
    // Convert contacts to AZItems with indices
-   List<Contacts> items = fetchedContacts.asMap().entries.map((entry) {
+   List<ChatContact> items = fetchedContacts.asMap().entries.map((entry) {
      int index = entry.key; // Index of the contact
      Contact contact = entry.value;
      String displayName = contact.displayName ?? "Unnamed";
      String tag = displayName[0].toUpperCase(); // First letter of the name
      print("$index $displayName\n ");
-      return Contacts(
-          id:  idCounter++,
+      return ChatContact(
+          id:  idCounter++,userId: '0',contactId: '0',isMasked: '0',
           name: displayName,
           tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",
           closed: false,
@@ -255,7 +255,7 @@ class ClassController extends GetxController {
    update();
 
   }
-  addContactsToClass(int classId, Contacts contactToAdd){
+  addContactsToClass(int classId, ChatContact contactToAdd){
     int index = masks.indexWhere((contact) => contact.id == classId);
     masks[index].contacts.add(contactToAdd);
     update();

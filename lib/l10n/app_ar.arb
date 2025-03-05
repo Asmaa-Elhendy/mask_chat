@@ -112,7 +112,9 @@
   "searchCountry": "بحث عن البلد",
   "chatCreatedSuccessfully": "تم إنشاء الدردشة بنجاح",
   "failedToCreateChat": "فشل في إنشاء الدردشة",
-  "chatAlreadyExist": "الدردشة موجودة بالفعل"
+  "chatAlreadyExist": "الدردشة موجودة بالفعل",
+  "anonymous":"مجهول",
+  "noChatsAvailable": "لا توجد محادثات متاحة"
 
 
 }

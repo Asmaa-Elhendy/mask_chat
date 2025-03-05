@@ -7,7 +7,7 @@ import 'package:Whatsback/view/screens/home/groups/group_Chat.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
-import '../../../../controller/groups_controller.dart';
+import '../../../../controller/api/groups/groups_controller.dart';
 import '../../../../controller/messages_controller.dart';
 import '../../../widgets/add_group.dart';
 

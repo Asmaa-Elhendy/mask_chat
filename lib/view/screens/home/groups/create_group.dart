@@ -11,7 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
-import '../../../../controller/groups_controller.dart';
+import '../../../../controller/api/groups/groups_controller.dart';
 import '../../../widgets/back_icon.dart';
 import '../home.dart';
 

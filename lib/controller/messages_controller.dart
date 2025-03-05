@@ -9,16 +9,18 @@ import 'package:Whatsback/model/gtroup.dart';
 import '../model/messages.dart';
 
 class MessagesController extends GetxController{
-  late Contacts chatPerson;
+  late ChatContact chatPerson;
   late Group chatGroup ;
 
   List<Messages> messages = [];
 
-  getMessages (Contacts contact, {bool mask=false}){
+  getMessages (ChatContact contact, {bool mask=false}){
     chatPerson = contact;
     List<Messages> allMessages = [
       Messages( messageType: Type.text,message: "Hi!!", isRead: true, sender: contact, time: "Feb 08,3.10 pm"),
-      Messages(messageType: Type.text,message: "hi", isRead: false, sender: Contacts(isSelected: false, id: -1, tag: "tag", name: "name", image: "image", closed: false, numOfMessage: "numOfMessage"), time: "Feb 08, 4.30 pm")
+      Messages(messageType: Type.text,message: "hi", isRead: false, sender: ChatContact(
+          isSelected: false, id: -1, tag: "tag", userId: '0',contactId: '0',isMasked: '0',
+          name: "name", image: "image", closed: false, numOfMessage: "numOfMessage"), time: "Feb 08, 4.30 pm")
     ];
     messages =mask?[]:allMessages;
     update();

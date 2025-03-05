@@ -111,5 +111,7 @@
   "searchCountry": "Ülke ara",
   "chatCreatedSuccessfully": "Sohbet Başarıyla Oluşturuldu",
   "failedToCreateChat": "Sohbet Oluşturulamadı",
-  "chatAlreadyExist": "sohbet Zaten Var"
+  "chatAlreadyExist": "sohbet Zaten Var",
+  "anonymous":"Anonim",
+  "noChatsAvailable": "Mevcut Sohbet Yok"
 }

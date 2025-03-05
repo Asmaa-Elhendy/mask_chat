@@ -45,8 +45,8 @@ class AddFromContactes extends StatefulWidget {
 
 class _AddFromContactesState extends State<AddFromContactes> {
   List<Contact> contacts = [];
-  List<Contacts> azItems = [];
-  List<Contacts> _selectedContacts = [];
+  List<ChatContact> azItems = [];
+  List<ChatContact> _selectedContacts = [];
   int idCounter = 1;
 
   @override
@@ -60,10 +60,10 @@ class _AddFromContactesState extends State<AddFromContactes> {
       await ContactsService.getContacts(withThumbnails: true);
 
       // Convert contacts to AZItems
-      List<Contacts> items = fetchedContacts.map((contact) {
+      List<ChatContact> items = fetchedContacts.map((contact) {
         String displayName = contact.displayName ?? "Unnamed";
         String tag = displayName[0].toUpperCase(); // First letter of the name
-        return Contacts(
+        return ChatContact(userId: '0',contactId: '0',isMasked: '0',
           id:  idCounter++,
           name: displayName,
           tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",
@@ -202,7 +202,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
                             data: azItems,
                                       itemCount: azItems.length,
                                       itemBuilder: (context, index) {
-                                        Contacts item = azItems[index];
+                                        ChatContact item = azItems[index];
                                         return Column(
                                           children: [
                                             SizedBox(height: h*.01,),
@@ -273,7 +273,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
 
                            for(int i =0;i<_selectedContacts.length;i++){
                              controller.addContactsToClass(controller.selectedMask.id,
-                                 Contacts(
+                                 ChatContact(userId: '0',contactId: '0',isMasked: '0',
                                    id: _selectedContacts[i].id,
                                    name: _selectedContacts[i].name,
                                    tag: _selectedContacts[i].name[0].toUpperCase(),

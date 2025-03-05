@@ -9,7 +9,8 @@ import '../../../model/retrieve_contact.dart';
 
 class ChatService {
   //get chats not handeled yet, then handle with chat controller like group controller and adjust ui like them in empty and loading
-  static Future<List<Contacts>> getChats(String token) async {
+   Future<List<ChatContact>> getChats(String token) async {
+     log("in get chats api");
     try {
       final String url = "${baseUrl}chats"; // Adjust endpoint as needed
       final response = await http.get(
@@ -24,28 +25,17 @@ class ChatService {
         Map<String, dynamic> data = json.decode(response.body);
 
         if (data['success'] == true) {
-          List<dynamic> contactsJson = data['data'];
+          List<dynamic> contactsJson = data['chats'];
           return contactsJson.map((json) {
-            try {
-              return Contacts.fromJson(json);
-            } catch (e) {
-              print("Error parsing contact: $e");
-              return Contacts(
-                id: 0,
-                name: "Unknown",
-                image: "",
-                numOfMessage: "0",
-                closed: false,
-                tag: "",
-                isSelected: false,
-              ); // Fallback contact object
-            }
+
+              return ChatContact.fromJson(json);
+
           }).toList();
         } else {
           print("Error: API response was unsuccessful");
         }
       } else {
-        print("Error: Failed to fetch contacts, Status Code: ${response.statusCode}");
+        print("Error: Failed to fetch chats, Status Code: ${response.statusCode}");
       }
     } catch (e) {
       print("Exception occurred while fetching contacts: $e");

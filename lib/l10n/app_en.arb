@@ -111,8 +111,9 @@
    "searchCountry": "Search country",
    "chatCreatedSuccessfully": "Chat Created Successfully",
    "failedToCreateChat": "Failed To Create Chat",
-   "chatAlreadyExist": "chat Already Exist"
-
+   "chatAlreadyExist": "chat Already Exist",
+   "anonymous":"Anonymous",
+   "noChatsAvailable": "no Chats Available"
 }
 
 

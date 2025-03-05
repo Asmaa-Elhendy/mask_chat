@@ -111,7 +111,9 @@
   "searchCountry": "Поиск страны",
   "chatCreatedSuccessfully": "Чат создан успешно",
   "failedToCreateChat": "Не удалось создать чат",
-  "chatAlreadyExist": "чат уже существует"
+  "chatAlreadyExist": "чат уже существует",
+  "anonymous":"Анонимный",
+  "noChatsAvailable": "нет доступных чатов"
 
 
 

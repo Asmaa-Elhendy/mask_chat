@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:Whatsback/controller/chats_controller.dart';
+import 'package:Whatsback/controller/api/chats/chats_controller.dart';
 import 'package:Whatsback/controller/messages_controller.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:open_file/open_file.dart';
@@ -35,7 +35,7 @@ import '../widgets/bootom_sheet_attachment.dart';
 import 'add_phone_number.dart';
 
 class Chat extends StatefulWidget {
-  Contacts person;
+  ChatContact person;
   bool newMask;
   bool unKnown;
   Chat({this.unKnown = false,this.newMask=false,required this.person,});
@@ -396,20 +396,21 @@ print(contact);
                                         if( _tabController.index == 1){
                                           Get.find<ChatsController>().saveChatPerson(controller.chatPerson);
                                           Get.find<ChatsController>().addContact(
-                                            Contacts(isSelected: false,
+                                            ChatContact(userId: '0',contactId: '0',isMasked: '0',isSelected: false,
                                                 id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
                                                 tag: "tag", name: controller.chatPerson.name,
                                                 image: controller.chatPerson.image,
                                                 closed: false, numOfMessage: "")
                                           );
                                           Get.off(Chat(newMask: true,
-                                            person:  Contacts(isSelected: false,
+                                            person:  ChatContact(userId: '0',contactId: '0',isMasked: '0',isSelected: false,
                                                 id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
                                                 tag: "tag", name: controller.chatPerson.name,
                                                 image: controller.chatPerson.image,
                                                 closed: false, numOfMessage: ""),
                                           ));
-                                          Get.find<MessagesController>().getMessages(Contacts(isSelected: false,
+                                          Get.find<MessagesController>().getMessages(ChatContact(isSelected: false,userId: '0',
+                                              contactId: '0',isMasked: '0',
                                               id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
                                               tag: "tag", name: controller.chatPerson.name,
                                               image: controller.chatPerson.image,
@@ -821,7 +822,7 @@ print(contact);
                                                 Messages(
                                                     messageType: Type.voiceNote,
                                                     message: m, isRead: false,
-                                                    sender: Contacts(
+                                                    sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
                                                         isSelected: false,
                                                         id: -1,
                                                         tag: "tag",
@@ -859,7 +860,7 @@ print(contact);
 
 
                                                       isRead: false,
-                                                      sender: Contacts(
+                                                      sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
                                                           isSelected: false,
                                                           id: -1,
                                                           tag: "tag",
@@ -945,7 +946,7 @@ print(contact);
 
 
                                                       isRead: false,
-                                                      sender: Contacts(
+                                                      sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
                                                           isSelected: false,
                                                           id: -1,
                                                           tag: "tag",

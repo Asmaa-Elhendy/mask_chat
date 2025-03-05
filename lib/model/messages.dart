@@ -12,7 +12,7 @@ enum Type{
 
 class Messages {
 Type messageType;
-  Contacts sender;
+  ChatContact sender;
   final String time;
   final bool isRead;
    var message;

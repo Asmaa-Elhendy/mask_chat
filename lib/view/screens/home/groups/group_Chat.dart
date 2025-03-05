@@ -745,7 +745,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                             isRead: false,
 
                                             file: file,
-                                            sender: Contacts(
+                                            sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
                                                 isSelected: false,
                                                 id: -1,
                                                 tag: "tag",
@@ -817,7 +817,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                               message: _controller.text,
                                               file: file,
                                               isRead: false,
-                                              sender: Contacts(
+                                              sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
                                                   isSelected: false,
                                                   id: 1,
                                                   tag: "tag",

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:Whatsback/controller/groups_controller.dart';
+import 'package:Whatsback/controller/api/groups/groups_controller.dart';
 
 import '../screens/home/groups/add_group_participants.dart';
 
