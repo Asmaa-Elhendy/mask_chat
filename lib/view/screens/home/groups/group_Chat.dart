@@ -400,7 +400,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                             itemBuilder: (context, index) {
                               final Messages currentMessage =
                                   controller.messages[index];
-                              bool isMe = currentMessage.sender.id == -1;
+                              bool isMe = currentMessage.senderId == -1;
                               String m = controller.messages[index].message;
 
                               return Container(
@@ -417,7 +417,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                 children: [
                                                   Text(
                                                    _tabController.index==1? localizations.anonymous:controller.messages[index]
-                                                        .sender.name,
+                                                        .senderName,
                                                     style: TextStyle(
                                                       fontFamily:
                                                           'Roboto-Regular',
@@ -549,17 +549,19 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                 children: [
                                                   CircleAvatar(
                                                     backgroundImage: AssetImage(
-                                                        controller
-                                                                    .messages[
-                                                                        index]
-                                                                    .sender
-                                                                    .image ==
-                                                                "image"
-                                                            ? "assets/images/profile.png"
-                                                            : controller
-                                                                .messages[index]
-                                                                .sender
-                                                                .image),
+                                                        // controller
+                                                        //             .messages[
+                                                        //                 index]
+                                                        //             .senderId
+                                                        //             .image ==
+                                                        //         "image"
+                                                            // ?
+                                                      "assets/images/profile.png"
+                                                            // : controller
+                                                            //     .messages[index]
+                                                            //     .senderId
+                                                            //     .image
+                                                    ),
                                                   ),
                                                   _tabController.index == 1?
                                                       Image.asset("assets/images/mask.png")
@@ -574,14 +576,16 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                             children: [
                                               CircleAvatar(
                                                 backgroundImage: AssetImage(
-                                                    controller.messages[index]
-                                                                .sender.image ==
-                                                            "image"
-                                                        ? "assets/images/profile.png"
-                                                        : controller
-                                                            .messages[index]
-                                                            .sender
-                                                            .image),
+                                                    // controller.messages[index]
+                                                    //             .senderId.image ==
+                                                    //         "image"
+                                                    //     ?
+                                                    "assets/images/profile.png"
+                                                        // : controller
+                                                        //     .messages[index]
+                                                        //     .senderId
+                                                        //     .image
+                                                ),
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -589,7 +593,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                 children: [
                                                   Text(
                                                     controller.messages[index]
-                                                        .sender.name,
+                                                        .senderName,
                                                     style: TextStyle(
                                                       fontFamily:
                                                           'Roboto-Regular',
@@ -747,16 +751,17 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                             isRead: false,
 
                                             file: file,
-                                            sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                isSelected: false,
-                                                id: -1,
-                                                tag: "tag",
-                                                name: "name",
-                                                image: "image",
-                                                closed: false,
-                                                numOfMessage: "numOfMessage"),
+                                            senderId: '0',
+                                            // ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                            //     isSelected: false,
+                                            //     id: -1,
+                                            //     tag: "tag",
+                                            //     name: "name",
+                                            //     image: "image",
+                                            //     closed: false,
+                                            //     numOfMessage: "numOfMessage"),
                                             time:
-                                                "${outputFormat.format(DateTime.now())}"));
+                                                "${outputFormat.format(DateTime.now())}", senderName: ''));
                                         _controller.clear();
                                         setState(() {
                                         file = false;
@@ -819,14 +824,15 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                               message: _controller.text,
                                               file: file,
                                               isRead: false,
-                                              sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                  isSelected: false,
-                                                  id: 1,
-                                                  tag: "tag",
-                                                  name: "name",
-                                                  image: "image",
-                                                  closed: false,
-                                                  numOfMessage: "numOfMessage"),
+                                              senderId:'0',senderName: '',
+                                              // ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                              //     isSelected: false,
+                                              //     id: 1,
+                                              //     tag: "tag",
+                                              //     name: "name",
+                                              //     image: "image",
+                                              //     closed: false,
+                                              //     numOfMessage: "numOfMessage"),
                                               time:
                                               "${outputFormat.format(
                                                   DateTime.now())}"));

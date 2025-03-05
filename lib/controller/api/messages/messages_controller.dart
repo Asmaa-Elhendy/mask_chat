@@ -28,7 +28,7 @@ class MessagesController extends GetxController{
    // messages =mask?[]:allMessages;
     try {
       loading.value = true; // Start loading
-      List<Messages> chatMessages = await _messageService.getChatMesssages(token,contact.contactId);
+      List<Messages> chatMessages = await _messageService.getChatMesssages(token,contact.id.toString());
       messages=chatMessages;
     } catch (e) {
       print("Error fetching chat messages: $e");
@@ -51,8 +51,8 @@ class MessagesController extends GetxController{
 
   }
   addMessage(Messages message){
-    message.sender.id=-1;
-    message.sender.name="me";
+    // message.sender.id=-1;
+    // message.sender.name="me";
     messages.add(message);
     update();
   }

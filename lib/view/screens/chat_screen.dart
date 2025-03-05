@@ -450,14 +450,15 @@ print(contact);
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            child: ListView.builder(
+                            child:controller.loading==true?Center(child: CircularProgressIndicator(color: redCheck,)):
+                            ListView.builder(
                               controller: _scrollController,
 
                                 shrinkWrap: true,
                                 itemCount: controller.messages.length,
                                 itemBuilder: (context, index) {
                                   final Messages currentMessage = controller.messages[index];
-                                  bool isMe = currentMessage.sender.id == -1;
+                                  // bool isMe = currentMessage.sender.id == -1;
                                   // if(controller.messages[index].messageType==Type.document){
                                   // //  String m = controller.messages[index].message;
                                   // //
@@ -470,7 +471,7 @@ print(contact);
                                   return Container(
                                     child: Column(
                                       children: [
-                                       isMe?
+                                       true? //isme need to handle sender id with user id
                                        Row(
                                         //  margin: EdgeInsets.only(top: h*.065,left: w*.022),
                                           mainAxisAlignment: MainAxisAlignment.end,
@@ -481,7 +482,7 @@ print(contact);
                                               children: [
                                                 Text(
                                                   _tabController.index==1? "${localizations.anonymous}":controller.messages[index]
-                                                      .sender.name,
+                                                      .senderName,
                                                   style: TextStyle(
                                                     fontFamily:
                                                     'Roboto-Regular',
@@ -511,7 +512,7 @@ print(contact);
 
                                                   ),
 
-                                                  decoration: isMe
+                                                  decoration: true  //isme need to handle sender id with user id
                                                       ? BoxDecoration(
                                                     color:  ColorsPlatte().primary.chat,
                                                     borderRadius: const BorderRadius.only(
@@ -541,7 +542,7 @@ print(contact);
                                                         controller.messages[index].message,
                                                         style: TextStyle(
                                                           fontFamily: 'Roboto-Regular',
-                                                          color: isMe
+                                                          color: true// isme need to edit is me sender id with user id
                                                               ? blackBoldText
                                                               : Colors.white,
                                                           fontSize: (15 / baseWidth) * w,
@@ -672,10 +673,12 @@ print(contact);
                                                 backgroundImage: AssetImage( "assets/images/mask.png",)
 
                                               ):CircleAvatar(
-                                                    backgroundImage: AssetImage(controller
-                                                        .messages[index].sender.image=="image"?
-                                                    "assets/images/profile.png":controller
-                                                    .messages[index].sender.image,
+                                                    backgroundImage: AssetImage(
+                                                      // controller
+                                                      //   .messages[index].senderId.image=="image"?
+                                                    "assets/images/profile.png"
+                                                    //     :controller
+                                                    // .messages[index].senderId.image,
                                                     )),
 
 
@@ -687,8 +690,7 @@ print(contact);
 
 
                                                CircleAvatar(
-                                             backgroundImage: AssetImage(controller
-                                                 .messages[index].sender.image),
+                                             backgroundImage: AssetImage("assets/images/profile.png"),
                                            ),
                                            Column(
 
@@ -697,7 +699,7 @@ print(contact);
                                              children: [
                                                Text(
                                                  controller.messages[index]
-                                                     .sender.name,
+                                                     .senderName,
                                                  style: TextStyle(
                                                    fontFamily:
                                                    'Roboto-Regular',
@@ -723,7 +725,7 @@ print(contact);
                                                  constraints: BoxConstraints(
                                                      maxWidth: (200 / baseWidth) * w),
 
-                                                 decoration: isMe
+                                                 decoration: true//isMe  edit is me sender id with my id
                                                      ? BoxDecoration(
                                                    color:  ColorsPlatte().primary.chat,
                                                    borderRadius: const BorderRadius.only(
@@ -753,7 +755,7 @@ print(contact);
 
                                                      style: TextStyle(
                                                        fontFamily: 'Roboto-Regular',
-                                                       color: isMe
+                                                       color: true// need edit is me sender id with my id
                                                            ? blackBoldText
                                                            : Colors.white,
                                                        fontSize: (15 / baseWidth) * w,
@@ -826,17 +828,18 @@ print(contact);
                                                 Messages(
                                                 //    messageType: Type.voiceNote,
                                                     message: m, isRead: false,
-                                                    sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                        isSelected: false,
-                                                        id: -1,
-                                                        tag: "tag",
-                                                        name: "name",
-                                                        image: "image",
-                                                        closed: false,
-                                                        numOfMessage: "numOfMessage"),
+                                                  senderId: '0',
+                                                  //ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                                    //     isSelected: false,
+                                                    //     id: -1,
+                                                    //     tag: "tag",
+                                                    //     name: "name",
+                                                    //     image: "image",
+                                                    //     closed: false,
+                                                    //     numOfMessage: "numOfMessage"),
                                                     time: "${outputFormat
                                                         .format(
-                                                        DateTime.now())}")
+                                                        DateTime.now())}", senderName: '')
                                               );
 
                                             }else{
@@ -864,17 +867,18 @@ print(contact);
 
 
                                                       isRead: false,
-                                                      sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                          isSelected: false,
-                                                          id: -1,
-                                                          tag: "tag",
-                                                          name: "name",
-                                                          image: "image",
-                                                          closed: false,
-                                                          numOfMessage: "numOfMessage"),
+                                                       senderId:'0',
+                                                      // ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                                      //     isSelected: false,
+                                                      //     id: -1,
+                                                      //     tag: "tag",
+                                                      //     name: "name",
+                                                      //     image: "image",
+                                                      //     closed: false,
+                                                      //     numOfMessage: "numOfMessage"),
                                                       time: "${outputFormat
                                                           .format(
-                                                          DateTime.now())}")
+                                                          DateTime.now())}", senderName: '')
                                               );
                                               _controller.clear();
                                               setState(() {
@@ -950,14 +954,16 @@ print(contact);
 
 
                                                       isRead: false,
-                                                      sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                          isSelected: false,
-                                                          id: -1,
-                                                          tag: "tag",
-                                                          name: "name",
-                                                          image: "image",
-                                                          closed: false,
-                                                          numOfMessage: "numOfMessage"),
+                                                      senderId:'0',
+                                                      senderName: '',
+                                                      //ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                                      //     isSelected: false,
+                                                      //     id: -1,
+                                                      //     tag: "tag",
+                                                      //     name: "name",
+                                                      //     image: "image",
+                                                      //     closed: false,
+                                                      //     numOfMessage: "numOfMessage"),
                                                       time: "${outputFormat
                                                           .format(
                                                           DateTime.now())}")

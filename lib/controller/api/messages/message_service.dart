@@ -20,12 +20,13 @@ class MessageService {
           'Authorization': 'Bearer $token',
         },
       );
-
+    log(chatId+response.body+token);
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
 
         if (data['success'] == true) {
           List<dynamic> messagesJson = data['data'];
+
           return messagesJson.map((json) {
             return Messages.fromJson(json);
           }).toList();
