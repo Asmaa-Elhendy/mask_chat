@@ -1,3 +1,4 @@
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Whatsback/const/colors.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 import '../../../const/sizes.dart';
-import '../../../controller/messages_controller.dart';
+import '../../../controller/api/messages/messages_controller.dart';
 import '../chat_screen.dart';
 
 class Requests extends StatelessWidget {
@@ -118,7 +119,7 @@ class Requests extends StatelessWidget {
                         ListTile(
                         contentPadding: const EdgeInsets.all(0),
                         onTap: (){
-                          Get.find<MessagesController>().getMessages(controller.requests[index]);
+                          Get.find<MessagesController>().getMessages(controller.requests[index],user_token.value);
                           Get.to(Chat(person: controller.requests[index],newMask: controller.requests[index].talkingAnonymous,
                           unKnown: true,
                           ));

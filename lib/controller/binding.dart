@@ -8,7 +8,7 @@ import 'api/chats/chats_controller.dart';
 import 'api/groups/groups_controller.dart';
 import 'language.dart';
 import 'masks_controller.dart';
-import 'messages_controller.dart';
+import 'api/messages/messages_controller.dart';
 
 class MyBinding implements  Bindings {
   @override

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart' as native_picker;
@@ -13,7 +14,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:Whatsback/controller/api/chats/chats_controller.dart';
-import 'package:Whatsback/controller/messages_controller.dart';
+import 'package:Whatsback/controller/api/messages/messages_controller.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -93,91 +94,91 @@ class _ChatState extends State<Chat> with TickerProviderStateMixin {
 
 
   // Function to pick an image from the gallery
-  Future<void> _pickImageFromGallery() async {
-    final XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      print('Image selected: ${pickedImage.path}');
-      _imageFile = pickedImage;
-      _controller.text=pickedImage.path;
-      file=true;
-      _attachment = Type.image;
-      setState(() {
-
-      });
-      // Add your upload or processing logic here
-    }
-  }
+  // Future<void> _pickImageFromGallery() async {
+  //   final XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+  //   if (pickedImage != null) {
+  //     print('Image selected: ${pickedImage.path}');
+  //     _imageFile = pickedImage;
+  //     _controller.text=pickedImage.path;
+  //     file=true;
+  //     _attachment = Type.image;
+  //     setState(() {
+  //
+  //     });
+  //     // Add your upload or processing logic here
+  //   }
+  // }
 
   //Function to take a photo using the camera
-  Future<void> _takePhoto() async {
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    if (photo != null) {
-      print('Photo taken: ${photo.path}');
-      _imageFile=photo;
-      _controller.text=photo.path;
-      file=true;
-      _attachment = Type.image;
-      setState(() {
-
-      });
-      // Add your upload or processing logic here
-    }
-  }
+  // Future<void> _takePhoto() async {
+  //   final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+  //   if (photo != null) {
+  //     print('Photo taken: ${photo.path}');
+  //     _imageFile=photo;
+  //     _controller.text=photo.path;
+  //     file=true;
+  //     _attachment = Type.image;
+  //     setState(() {
+  //
+  //     });
+  //     // Add your upload or processing logic here
+  //   }
+  // }
 
   // Function to pick a document
-  Future<void> _pickDocument() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,
-        allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'txt',
-          'zip', 'json', 'jpg', 'jpeg', 'png', 'gif', 'svg']);
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      fileDocument = file;
-      _controller.text=result.files.single.path!;
-      _attachment = Type.document;
-      setState(() {
-
-      });
-      // Add your upload or processing logic here
-    }
-  }
+  // Future<void> _pickDocument() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,
+  //       allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'txt',
+  //         'zip', 'json', 'jpg', 'jpeg', 'png', 'gif', 'svg']);
+  //   if (result != null) {
+  //     File file = File(result.files.single.path!);
+  //     fileDocument = file;
+  //     _controller.text=result.files.single.path!;
+  //     _attachment = Type.document;
+  //     setState(() {
+  //
+  //     });
+  //     // Add your upload or processing logic here
+  //   }
+  // }
   //
   // Function to pick an audio file
-  Future<void> _pickAudio() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.audio,
-    );
-
-    if (result != null) {
-      _attachment = Type.audio;
-      String filePath = result.files.single.path!;
-      print('Selected audio file: $filePath');
-      _controller.text=filePath;
-      // Send this file path in the chat or upload it to a server
-    } else {
-      print('No file selected');
-    }
-  }
+  // Future<void> _pickAudio() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.audio,
+  //   );
+  //
+  //   if (result != null) {
+  //     _attachment = Type.audio;
+  //     String filePath = result.files.single.path!;
+  //     print('Selected audio file: $filePath');
+  //     _controller.text=filePath;
+  //     // Send this file path in the chat or upload it to a server
+  //   } else {
+  //     print('No file selected');
+  //   }
+  // }
 
   // Function to get current location
-  Future<void> _getCurrentLocation() async {
-
-
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    String locationUrl = 'https://www.google.com/maps?q=${position.latitude},${position.longitude}';
-    _controller.text = locationUrl;
-    _attachment = Type.location;
-
-    // Now send this `locationUrl` as a message in your chat
-    print('Location URL: $locationUrl');
-  }
-  Future<void> openLocation(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not open location';
-    }
-  }
+  // Future<void> _getCurrentLocation() async {
+  //
+  //
+  //   Position position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   String locationUrl = 'https://www.google.com/maps?q=${position.latitude},${position.longitude}';
+  //   _controller.text = locationUrl;
+  //   _attachment = Type.location;
+  //
+  //   // Now send this `locationUrl` as a message in your chat
+  //   print('Location URL: $locationUrl');
+  // }
+  // Future<void> openLocation(String url) async {
+  //   if (await canLaunchUrl(Uri.parse(url))) {
+  //     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  //   } else {
+  //     throw 'Could not open location';
+  //   }
+  // }
 
   Future<void> _pickContact() async {
     try {
@@ -199,14 +200,14 @@ print(contact);
       print('Error picking contact: $e');
     }
     }
-  Future<void> _toggleAudio(path) async {
-    if (audioController.isPlaying) {
-      await audioController.stop();
-    } else {
-      await audioController.play(path);
-    }
-    setState(() {});
-  }
+  // Future<void> _toggleAudio(path) async {
+  //   if (audioController.isPlaying) {
+  //     await audioController.stop();
+  //   } else {
+  //     await audioController.play(path);
+  //   }
+  //   setState(() {});
+  // }
 
 
   @override
@@ -414,7 +415,7 @@ print(contact);
                                               id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
                                               tag: "tag", name: controller.chatPerson.name,
                                               image: controller.chatPerson.image,
-                                              closed: false, numOfMessage: ""),mask: true);
+                                              closed: false, numOfMessage: ""),user_token.value,mask: true);
 
 
                                         }else{
@@ -423,7 +424,7 @@ print(contact);
                                             person: Get.find<ChatsController>().savedChatPerson ),
                                           );
                                           Get.find<MessagesController>().getMessages(
-                                              Get.find<ChatsController>().savedChatPerson);
+                                              Get.find<ChatsController>().savedChatPerson,user_token.value);
 
                                         }
 
@@ -457,15 +458,15 @@ print(contact);
                                 itemBuilder: (context, index) {
                                   final Messages currentMessage = controller.messages[index];
                                   bool isMe = currentMessage.sender.id == -1;
-                                  if(controller.messages[index].messageType==Type.document){
-                                  //  String m = controller.messages[index].message;
+                                  // if(controller.messages[index].messageType==Type.document){
+                                  // //  String m = controller.messages[index].message;
+                                  // //
+                                  // //
                                   //
                                   //
-
-
-
-
-                                  }
+                                  //
+                                  //
+                                  // }
                                   return Container(
                                     child: Column(
                                       children: [
@@ -493,7 +494,7 @@ print(contact);
                                                     FontStyle.normal,
                                                   ),
                                                 ),
-                                      controller.messages[index].messageType==Type.text?
+                                    //  controller.messages[index].messageType==Type.text?
                                       Container(
                                                   margin: EdgeInsets.only(left: w*.022),
                                         padding:
@@ -550,116 +551,119 @@ print(contact);
                                                       )
                                                     ),
                                                   //),
-                                                ):controller.messages[index].messageType==Type.image?
-                                      Container(
-                                        width: 200,
-                                        height: 200,
-                                        child: Image.file(File(controller.messages[index].message)),
-                                      ):controller.messages[index].messageType==Type.document?
-
-
-                                        GestureDetector(
-
-                                            onTap: () {
-                                              OpenFile.open(controller.messages[index].message);
-                                            },
-
-                                          child: Container(
-                                            margin: EdgeInsets.symmetric(horizontal: w*.1),
-                                            // width: 50,
-                                            // height: 50,
-                                            color: Colors.white,
-                                            child:Row(
-                                              children: [
-                                                Icon(Icons.insert_drive_file, color: Colors.blue),
-                                                SizedBox(width: w*.014,),
-                                                SizedBox(
-                                                  width: w*.2,
-                                                  child: Text("${path.basename(controller.messages[index].message)}",
-
-                                                    overflow: TextOverflow.ellipsis,
-
-                                                  ),
                                                 )
+                                      //     :controller.messages[index].messageType==Type.image?
+                                      // Container(
+                                      //   width: 200,
+                                      //   height: 200,
+                                      //   child: Image.file(File(controller.messages[index].message)),
+                                      // )
+                                      //     :controller.messages[index].messageType==Type.document?
+                                      //
+                                      //
+                                      //   GestureDetector(
+                                      //
+                                      //       onTap: () {
+                                      //         OpenFile.open(controller.messages[index].message);
+                                      //       },
+                                      //
+                                      //     child: Container(
+                                      //       margin: EdgeInsets.symmetric(horizontal: w*.1),
+                                      //       // width: 50,
+                                      //       // height: 50,
+                                      //       color: Colors.white,
+                                      //       child:Row(
+                                      //         children: [
+                                      //           Icon(Icons.insert_drive_file, color: Colors.blue),
+                                      //           SizedBox(width: w*.014,),
+                                      //           SizedBox(
+                                      //             width: w*.2,
+                                      //             child: Text("${path.basename(controller.messages[index].message)}",
+                                      //
+                                      //               overflow: TextOverflow.ellipsis,
+                                      //
+                                      //             ),
+                                      //           )
+                                      //
+                                      //         ],
+                                      //       )
+                                      //
+                                      //     ),
+                                      //   )
+                                      //
+                                      //       :controller.messages[index].messageType==Type.location?
+                                      //   TextButton(
+                                      //     onPressed: () => openLocation(controller.messages[index].message),
+                                      //     child: Text(localizations.shared_location_click_to_view),
+                                      //   )
+                                      //
+                                      //       :controller.messages[index].messageType==Type.audio?
+                                      //   Row(
+                                      //     children: [
+                                      //       IconButton(
+                                      //         icon: Icon(Icons.headphones),
+                                      //         onPressed: (){
+                                      //           _toggleAudio(controller.messages[index].message);
+                                      //
+                                      //         },
+                                      //       ),
+                                      //       Text(localizations.audio_file),
+                                      //     ],
+                                      //   )
+                                      //     :controller.messages[index].messageType == Type.voiceNote?
+                                      //     StreamBuilder<Object>(
+                                      //         stream: voiceNitePlayer.positionStream,
+                                      //       builder: (context, snapshot) {
+                                      //         final Object? duration = snapshot.data;
+                                      //         return Container(
+                                      //           margin: EdgeInsets.symmetric(horizontal: w*.1),
+                                      //           child: GestureDetector(
+                                      //               onTap: ()async{
+                                      //                 if(voiceNitePlayer.playing){
+                                      //                   voiceNitePlayer.stop();
+                                      //                   setState(() {
+                                      //                     isPlaying == false;
+                                      //                   });
+                                      //
+                                      //                 }else{
+                                      //                   await voiceNitePlayer.setFilePath(controller.messages[index].message);
+                                      //                   voiceNitePlayer.play();
+                                      //                   setState(() {
+                                      //                     isPlaying = true;
+                                      //                   });
+                                      //                  // final duration = Duration(milliseconds: voiceNitePlayer.duration);
+                                      //                   Timer playTimer = Timer(voiceNitePlayer.duration!, () {
+                                      //                     setState(() {
+                                      //                       isPlaying = false;
+                                      //                     });
+                                      //                   });
+                                      //
+                                      //                 }
+                                      //
+                                      //               },
+                                      //               child: isPlaying?
+                                      //                   Row(
+                                      //                     mainAxisAlignment: MainAxisAlignment.center,
+                                      //                     children: [
+                                      //                       Icon(Icons.stop,color: shadow,),
+                                      //                       SizedBox(width: w*.05,),
+                                      //                       Text("Stop Audio")
+                                      //                     ],
+                                      //                   )
+                                      //                   :Row(
+                                      //                 mainAxisAlignment: MainAxisAlignment.center,
+                                      //                 children: [
+                                      //                   Icon(Icons.play_arrow_outlined,color: ColorsPlatte().primary.chat,),
+                                      //                   SizedBox(width: w*.05,),
+                                      //                   Text("Play Audio ")
+                                      //                 ],
+                                      //               )),
+                                      //         );
+                                      //       }
+                                      //     )
 
-                                              ],
-                                            )
 
-                                          ),
-                                        )
-
-                                            :controller.messages[index].messageType==Type.location?
-                                        TextButton(
-                                          onPressed: () => openLocation(controller.messages[index].message),
-                                          child: Text(localizations.shared_location_click_to_view),
-                                        )
-
-                                            :controller.messages[index].messageType==Type.audio?
-                                        Row(
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(Icons.headphones),
-                                              onPressed: (){
-                                                _toggleAudio(controller.messages[index].message);
-
-                                              },
-                                            ),
-                                            Text(localizations.audio_file),
-                                          ],
-                                        ):controller.messages[index].messageType == Type.voiceNote?
-                                          StreamBuilder<Object>(
-                                              stream: voiceNitePlayer.positionStream,
-                                            builder: (context, snapshot) {
-                                              final Object? duration = snapshot.data;
-                                              return Container(
-                                                margin: EdgeInsets.symmetric(horizontal: w*.1),
-                                                child: GestureDetector(
-                                                    onTap: ()async{
-                                                      if(voiceNitePlayer.playing){
-                                                        voiceNitePlayer.stop();
-                                                        setState(() {
-                                                          isPlaying == false;
-                                                        });
-                                              
-                                                      }else{
-                                                        await voiceNitePlayer.setFilePath(controller.messages[index].message);
-                                                        voiceNitePlayer.play();
-                                                        setState(() {
-                                                          isPlaying = true;
-                                                        });
-                                                       // final duration = Duration(milliseconds: voiceNitePlayer.duration);
-                                                        Timer playTimer = Timer(voiceNitePlayer.duration!, () {
-                                                          setState(() {
-                                                            isPlaying = false;
-                                                          });
-                                                        });
-                                              
-                                                      }
-                                              
-                                                    },
-                                                    child: isPlaying?
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: [
-                                                            Icon(Icons.stop,color: shadow,),
-                                                            SizedBox(width: w*.05,),
-                                                            Text("Stop Audio")
-                                                          ],
-                                                        )
-                                                        :Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Icon(Icons.play_arrow_outlined,color: ColorsPlatte().primary.chat,),
-                                                        SizedBox(width: w*.05,),
-                                                        Text("Play Audio ")
-                                                      ],
-                                                    )),
-                                              );
-                                            }
-                                          )
-
-
-                                            :SizedBox()
+                                        //    :SizedBox()
 
                                               ],
                                             ),
@@ -798,8 +802,8 @@ print(contact);
                                 icon: Icon(Icons.attachment_sharp, color: Colors.white,size: w*.07,),
                                 onPressed: () async{
                                   // Attach file functionality
-                                showAttachmentOptions(
-                                  localizations);
+                                // showAttachmentOptions(
+                                //   localizations);
                                 },
                               ),
                               // Input field
@@ -820,7 +824,7 @@ print(contact);
                                               String  m = await stopRecord();
                                               controller.addMessage(
                                                 Messages(
-                                                    messageType: Type.voiceNote,
+                                                //    messageType: Type.voiceNote,
                                                     message: m, isRead: false,
                                                     sender: ChatContact(userId: '0',contactId: '0',isMasked: '0',
                                                         isSelected: false,
@@ -852,8 +856,8 @@ print(contact);
                                             if(_controller.text!="") {
                                               controller.addMessage(
                                                   Messages(
-                                                      messageType: _attachment ??
-                                                          Type.text,
+                                                      // messageType: _attachment ??
+                                                      //     Type.text,
                                                       message:
                                                       _controller.text,
                                                       file: file,
@@ -939,8 +943,8 @@ print(contact);
                                               controller.addMessage(
 
                                                   Messages(
-                                                      messageType: _attachment ??
-                                                          Type.text,
+                                                      // messageType: _attachment ??
+                                                      //     Type.text,
                                                       message: _controller.text,
                                                       file: file,
 
@@ -1026,113 +1030,113 @@ print(contact);
       ),
     );
   }
-  showAttachmentOptions(localizations) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Container(
-          height: 280, // Adjust height based on content
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+  // showAttachmentOptions(localizations) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     backgroundColor: Colors.transparent,
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         height: 280, // Adjust height based on content
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.only(
+  //             topLeft: Radius.circular(20),
+  //             topRight: Radius.circular(20),
+  //           ),
+  //         ),
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(16.0),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //
+  //               Expanded(
+  //                 child: GridView.count(
+  //                   crossAxisCount: 3,
+  //                   mainAxisSpacing: 16,
+  //                   crossAxisSpacing: 16,
+  //                   children: [
+  //                     buildAttachment(
+  //                         Assets.getDocument(), localizations.document,localizations),
+  //                     buildAttachment(
+  //                        Assets.getPhoto(), localizations.gallery,localizations),
+  //                     buildAttachment(
+  //                          Assets.getCamera(), localizations.camera,localizations),
+  //                     buildAttachment(
+  //                        Assets.getaudio(),localizations.audio,localizations),
+  //                     buildAttachment(
+  //                        Assets.getLocation(), localizations.location,localizations),
+  //                     buildAttachment(
+  //                         Assets.getContacts(),localizations.contact,localizations),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-                Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    children: [
-                      buildAttachment(
-                          Assets.getDocument(), localizations.document,localizations),
-                      buildAttachment(
-                         Assets.getPhoto(), localizations.gallery,localizations),
-                      buildAttachment(
-                           Assets.getCamera(), localizations.camera,localizations),
-                      buildAttachment(
-                         Assets.getaudio(),localizations.audio,localizations),
-                      buildAttachment(
-                         Assets.getLocation(), localizations.location,localizations),
-                      buildAttachment(
-                          Assets.getContacts(),localizations.contact,localizations),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  buildAttachment( Widget widget, String label,localizations) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: (){
-            Get.back();
-            // onTap();
-            if(label==localizations.gallery){
-              _pickImageFromGallery();
-
-            }else if(label==localizations.document){
-              _pickDocument();
-
-            }else if(label==localizations.camera){
-              _takePhoto();
-            }else if(label== localizations.audio){
-              _pickAudio();
-            }else if(label== localizations.location){
-              _getCurrentLocation();
-
-            }else{
-              _pickContact();
-            }
-          },
-          child: Container(
-            width: 52,
-            height: 52,
-            child: widget,
-          ),
-        ),
-        SizedBox(height: 8),
-        Text(
-          label,
-          style: TextStyle(    fontFamily: 'Roboto-Regular',
-
-            color: time,
-
-            fontSize: 14,
-
-            fontWeight: FontWeight.w400,
-
-            fontStyle: FontStyle.normal,
-
-
-          ),
-        ),
-      ],
-    );
-  }
-  Future<void> _openPdfLink(String url) async {
-    final Uri pdfUri = Uri.parse(url);
-
-    if (await canLaunchUrl(pdfUri)) {
-      await launchUrl(pdfUri, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  // buildAttachment( Widget widget, String label,localizations) {
+  //   return Column(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       InkWell(
+  //         onTap: (){
+  //           Get.back();
+  //           // onTap();
+  //           if(label==localizations.gallery){
+  //             _pickImageFromGallery();
+  //
+  //           }else if(label==localizations.document){
+  //             _pickDocument();
+  //
+  //           }else if(label==localizations.camera){
+  //             _takePhoto();
+  //           }else if(label== localizations.audio){
+  //             _pickAudio();
+  //           }else if(label== localizations.location){
+  //             _getCurrentLocation();
+  //
+  //           }else{
+  //             _pickContact();
+  //           }
+  //         },
+  //         child: Container(
+  //           width: 52,
+  //           height: 52,
+  //           child: widget,
+  //         ),
+  //       ),
+  //       SizedBox(height: 8),
+  //       Text(
+  //         label,
+  //         style: TextStyle(    fontFamily: 'Roboto-Regular',
+  //
+  //           color: time,
+  //
+  //           fontSize: 14,
+  //
+  //           fontWeight: FontWeight.w400,
+  //
+  //           fontStyle: FontStyle.normal,
+  //
+  //
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+  // Future<void> _openPdfLink(String url) async {
+  //   final Uri pdfUri = Uri.parse(url);
+  //
+  //   if (await canLaunchUrl(pdfUri)) {
+  //     await launchUrl(pdfUri, mode: LaunchMode.externalApplication);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 }
 

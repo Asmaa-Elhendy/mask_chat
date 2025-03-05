@@ -23,7 +23,7 @@ import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
 import '../../../../controller/assets.dart';
 import '../../../../controller/audio_controller.dart';
-import '../../../../controller/messages_controller.dart';
+import '../../../../controller/api/messages/messages_controller.dart';
 import '../../../../model/contacts.dart';
 import '../../../../model/messages.dart';
 
@@ -53,91 +53,91 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
 
 
   // Function to pick an image from the gallery
-  Future<void> _pickImageFromGallery() async {
-    final XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      print('Image selected: ${pickedImage.path}');
-      _imageFile = pickedImage;
-      _controller.text=pickedImage.path;
-      file=true;
-      _attachment = Type.image;
-      setState(() {
-
-      });
-      // Add your upload or processing logic here
-    }
-  }
+  // Future<void> _pickImageFromGallery() async {
+  //   final XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+  //   if (pickedImage != null) {
+  //     print('Image selected: ${pickedImage.path}');
+  //     _imageFile = pickedImage;
+  //     _controller.text=pickedImage.path;
+  //     file=true;
+  //     _attachment = Type.image;
+  //     setState(() {
+  //
+  //     });
+  //     // Add your upload or processing logic here
+  //   }
+  // }
 
   //Function to take a photo using the camera
-  Future<void> _takePhoto() async {
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    if (photo != null) {
-      print('Photo taken: ${photo.path}');
-      _imageFile=photo;
-      _controller.text=photo.path;
-      file=true;
-      _attachment = Type.image;
-      setState(() {
-
-      });
-      // Add your upload or processing logic here
-    }
-  }
+  // Future<void> _takePhoto() async {
+  //   final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+  //   if (photo != null) {
+  //     print('Photo taken: ${photo.path}');
+  //     _imageFile=photo;
+  //     _controller.text=photo.path;
+  //     file=true;
+  //     _attachment = Type.image;
+  //     setState(() {
+  //
+  //     });
+  //     // Add your upload or processing logic here
+  //   }
+  // }
 
   // Function to pick a document
-  Future<void> _pickDocument() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,
-        allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'txt',
-          'zip', 'json', 'jpg', 'jpeg', 'png', 'gif', 'svg']);
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      fileDocument = file;
-      _controller.text=result.files.single.path!;
-      _attachment = Type.document;
-      setState(() {
-
-      });
-      // Add your upload or processing logic here
-    }
-  }
+  // Future<void> _pickDocument() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,
+  //       allowedExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'txt',
+  //         'zip', 'json', 'jpg', 'jpeg', 'png', 'gif', 'svg']);
+  //   if (result != null) {
+  //     File file = File(result.files.single.path!);
+  //     fileDocument = file;
+  //     _controller.text=result.files.single.path!;
+  //     _attachment = Type.document;
+  //     setState(() {
+  //
+  //     });
+  //     // Add your upload or processing logic here
+  //   }
+  // }
   //
   // Function to pick an audio file
-  Future<void> _pickAudio() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.audio,
-    );
-
-    if (result != null) {
-      _attachment = Type.audio;
-      String filePath = result.files.single.path!;
-
-      _controller.text=filePath;
-      // Send this file path in the chat or upload it to a server
-    } else {
-    }
-  }
-
-  // Function to get current location
-  Future<void> _getCurrentLocation() async {
-
-
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    String locationUrl = 'https://www.google.com/maps?q=${position.latitude},${position.longitude}';
-    _controller.text = locationUrl;
-    _attachment = Type.location;
-
-    // Now send this `locationUrl` as a message in your chat
-    print('Location URL: $locationUrl');
-  }
-  Future<void> openLocation(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not open location';
-    }
-  }
-
+  // Future<void> _pickAudio() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.audio,
+  //   );
+  //
+  //   if (result != null) {
+  //     _attachment = Type.audio;
+  //     String filePath = result.files.single.path!;
+  //
+  //     _controller.text=filePath;
+  //     // Send this file path in the chat or upload it to a server
+  //   } else {
+  //   }
+  // }
+  //
+  // // Function to get current location
+  // Future<void> _getCurrentLocation() async {
+  //
+  //
+  //   Position position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   String locationUrl = 'https://www.google.com/maps?q=${position.latitude},${position.longitude}';
+  //   _controller.text = locationUrl;
+  //   _attachment = Type.location;
+  //
+  //   // Now send this `locationUrl` as a message in your chat
+  //   print('Location URL: $locationUrl');
+  // }
+  // Future<void> openLocation(String url) async {
+  //   if (await canLaunchUrl(Uri.parse(url))) {
+  //     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  //   } else {
+  //     throw 'Could not open location';
+  //   }
+  // }
+  //
   Future<void> _pickContact() async {
     try {
       // Open the contact picker
@@ -158,14 +158,14 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
       print('Error picking contact: $e');
     }
   }
-  Future<void> _toggleAudio(path) async {
-    if (audioController.isPlaying) {
-      await audioController.stop();
-    } else {
-      await audioController.play(path);
-    }
-    setState(() {});
-  }
+  // Future<void> _toggleAudio(path) async {
+  //   if (audioController.isPlaying) {
+  //     await audioController.stop();
+  //   } else {
+  //     await audioController.play(path);
+  //   }
+  //   setState(() {});
+  // }
 
 
   @override
@@ -430,7 +430,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                           FontStyle.normal,
                                                     ),
                                                   ),
-                                controller.messages[index].messageType==Type.text?
+                             //   controller.messages[index].messageType==Type.text?
                                 Container(
                                   margin: EdgeInsets.only(left: w*.022),
                                   padding:
@@ -480,66 +480,68 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                         ),
                                       )
                                   ),
-                                ):controller.messages[index].messageType==Type.image?
-                                Container(
-                                  width: 200,
-                                  height: 200,
-                                  child: Image.file(File(controller.messages[index].message)),
-                                ):
-                                controller.messages[index].messageType==Type.document?
-
-                                    GestureDetector(
-
-                                      onTap: () {
-                                        OpenFile.open(controller.messages[index].message);
-                                      },
-
-                                      child: Container(
-                                          margin: EdgeInsets.symmetric(horizontal: w*.1),
-                                          // width: 50,
-                                          // height: 50,
-                                          color: Colors.white,
-                                          child:Row(
-                                            children: [
-                                              Icon(Icons.insert_drive_file, color: Colors.blue),
-                                              SizedBox(width: w*.014,),
-                                              SizedBox(
-                                                width: w*.2,
-                                                child: Text("${path.basename(controller.messages[index].message)}",
-
-                                                  overflow: TextOverflow.ellipsis,
-
-                                                ),
-                                              )
-
-                                            ],
-                                          )
-
-                                      ),
-                                    )
-
-                                        :controller.messages[index].messageType==Type.location?
-                                    TextButton(
-                                      onPressed: () => openLocation(controller.messages[index].message),
-                                      child: Text(localizations.shared_location_click_to_view),
-                                    )
-
-                                        :controller.messages[index].messageType==Type.audio?
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(Icons.headphones),
-                                          onPressed: (){
-                                            _toggleAudio(controller.messages[index].message);
-
-                                          },
-                                        ),
-                                        Text(localizations.audio_file),
-                                      ],
-                                    )
-
-
-                                        :SizedBox()
+                                )
+                                    //:
+                                // controller.messages[index].messageType==Type.image?
+                                // Container(
+                                //   width: 200,
+                                //   height: 200,
+                                //   child: Image.file(File(controller.messages[index].message)),
+                                // ):
+                                // controller.messages[index].messageType==Type.document?
+                                //
+                                //     GestureDetector(
+                                //
+                                //       onTap: () {
+                                //         OpenFile.open(controller.messages[index].message);
+                                //       },
+                                //
+                                //       child: Container(
+                                //           margin: EdgeInsets.symmetric(horizontal: w*.1),
+                                //           // width: 50,
+                                //           // height: 50,
+                                //           color: Colors.white,
+                                //           child:Row(
+                                //             children: [
+                                //               Icon(Icons.insert_drive_file, color: Colors.blue),
+                                //               SizedBox(width: w*.014,),
+                                //               SizedBox(
+                                //                 width: w*.2,
+                                //                 child: Text("${path.basename(controller.messages[index].message)}",
+                                //
+                                //                   overflow: TextOverflow.ellipsis,
+                                //
+                                //                 ),
+                                //               )
+                                //
+                                //             ],
+                                //           )
+                                //
+                                //       ),
+                                //     )
+                                //
+                                //         :controller.messages[index].messageType==Type.location?
+                                //     TextButton(
+                                //       onPressed: () => openLocation(controller.messages[index].message),
+                                //       child: Text(localizations.shared_location_click_to_view),
+                                //     )
+                                //
+                                //         :controller.messages[index].messageType==Type.audio?
+                                //     Row(
+                                //       children: [
+                                //         IconButton(
+                                //           icon: Icon(Icons.headphones),
+                                //           onPressed: (){
+                                //             _toggleAudio(controller.messages[index].message);
+                                //
+                                //           },
+                                //         ),
+                                //         Text(localizations.audio_file),
+                                //       ],
+                                //     )
+                                //
+                                //
+                                //         :SizedBox()
 
                                                 ],
                                               ),
@@ -739,8 +741,8 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                       onSubmitted: (_) {
                                         if(_controller.text!=""){
                                         controller.addMessage(Messages(
-                                            messageType: _attachment ??
-                                                Type.text,
+                                            // messageType: _attachment ??
+                                            //     Type.text,
                                             message: _controller.text,
                                             isRead: false,
 
@@ -812,8 +814,8 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                         // Send message functionality
                                         if(_controller.text!="") {
                                           controller.addMessage(Messages(
-                                              messageType: _attachment ??
-                                                  Type.text,
+                                              // messageType: _attachment ??
+                                              //     Type.text,
                                               message: _controller.text,
                                               file: file,
                                               isRead: false,
@@ -947,22 +949,27 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
           onTap: (){
             Get.back();
             // onTap();
-            if(label==localizations.gallery){
-              _pickImageFromGallery();
-
-            }else if(label==localizations.document){
-              _pickDocument();
-
-            }else if(label==localizations.camera){
-              _takePhoto();
-            }else if(label== localizations.audio){
-              _pickAudio();
-            }else if(label== localizations.location){
-              _getCurrentLocation();
-
-            }else{
+            // if(label==localizations.gallery){
+            //   _pickImageFromGallery();
+            //
+            // }
+            // else if(label==localizations.document){
+            //   _pickDocument();
+            //
+            // }
+            // else if(label==localizations.camera){
+            //   _takePhoto();
+            // }
+            // else if(label== localizations.audio){
+            //   _pickAudio();
+            // }
+            // else if(label== localizations.location){
+            //   _getCurrentLocation();
+            //
+            // }
+            // else{
               _pickContact();
-            }
+         //   }
           },
           child: Container(
             width: 52,

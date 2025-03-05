@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
 import '../../../../controller/api/groups/groups_controller.dart';
-import '../../../../controller/messages_controller.dart';
+import '../../../../controller/api/messages/messages_controller.dart';
 import '../../../widgets/add_group.dart';
 
 class GroupList extends StatelessWidget {

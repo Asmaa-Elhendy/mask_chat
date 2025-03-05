@@ -9,7 +9,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:Whatsback/const/sizes.dart';
 import 'package:Whatsback/controller/api/chats/chats_controller.dart';
 import 'package:azlistview_plus/azlistview_plus.dart';
-import 'package:Whatsback/controller/messages_controller.dart';
+import 'package:Whatsback/controller/api/messages/messages_controller.dart';
 import '../../../const/colors.dart';
 import '../../../model/contacts.dart';
 import '../../widgets/Alert_ask.dart';
@@ -367,7 +367,7 @@ class _chatListState extends State<chatList> {
                                                 }else {
                                                   Get.find<MessagesController>()
                                                       .getMessages(controller
-                                                      .contacts[index]);
+                                                      .contacts[index],user_token.value);
                                                   Get.to(Chat(person: controller
                                                       .contacts[index],
                                                     newMask: controller
