@@ -514,7 +514,7 @@ print(contact);
 
                                                   ),
 
-                                                  decoration:     controller.messages[index].senderId!=widget.userModel?.id  //isme need to handle sender id with user id
+                                                  decoration:     controller.messages[index].senderId.toString()==widget.userModel?.id.toString()  //isme need to handle sender id with user id
                                                       ? BoxDecoration(
                                                     color:  ColorsPlatte().primary.chat,
                                                     borderRadius: const BorderRadius.only(
@@ -544,7 +544,7 @@ print(contact);
                                                         controller.messages[index].message,
                                                         style: TextStyle(
                                                           fontFamily: 'Roboto-Regular',
-                                                          color:     controller.messages[index].senderId!=widget.userModel?.id// isme need to edit is me sender id with user id
+                                                          color:     controller.messages[index].senderId.toString()==widget.userModel?.id.toString()// isme need to edit is me sender id with user id
                                                               ? blackBoldText
                                                               : Colors.white,
                                                           fontSize: (15 / baseWidth) * w,
@@ -700,7 +700,7 @@ print(contact);
                                              CrossAxisAlignment.start,
                                              children: [
                                                Text(
-                                                 controller.messages[index].senderId!=widget.userModel?.id?widget.userModel!.name   :controller.messages[index]
+                                                 controller.messages[index].senderId.toString()==widget.userModel?.id.toString()?widget.userModel!.name   :controller.messages[index]
                                                      .senderName,
                                                  style: TextStyle(
                                                    fontFamily:
@@ -727,7 +727,7 @@ print(contact);
                                                  constraints: BoxConstraints(
                                                      maxWidth: (200 / baseWidth) * w),
 
-                                                 decoration:     controller.messages[index].senderId!=widget.userModel?.id//isMe  edit is me sender id with my id
+                                                 decoration:     controller.messages[index].senderId.toString()==widget.userModel?.id.toString()//isMe  edit is me sender id with my id
                                                      ? BoxDecoration(
                                                    color:  ColorsPlatte().primary.chat,
                                                    borderRadius: const BorderRadius.only(
