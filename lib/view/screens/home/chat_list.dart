@@ -207,7 +207,7 @@ class _chatListState extends State<chatList> {
                             ))
                           : chatcontroller.contacts.isNotEmpty
                               ? AzListView(
-                                  padding: EdgeInsets.zero,
+                                  padding: EdgeInsets.only(bottom: h*.05),
                                   indexBarMargin: EdgeInsets.zero,
                                   data: chatcontroller.contacts,
                                   indexBarAlignment: locale.languageCode == 'ar'
