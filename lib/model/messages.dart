@@ -28,7 +28,7 @@ factory Messages.fromJson(Map<String, dynamic> json) {
   return Messages(
   //  messageType: json['message_type'] as String? ?? 'text', // Default to 'text'
     senderId: json['sender_id'].toString(),
-    senderName: 'test',
+    senderName: json['group_id']==null?'':json['sender_name'],
     time: json['created_at'] as String? ?? '',
     isRead: false,
     message: json['message'],

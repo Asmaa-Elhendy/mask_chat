@@ -1,3 +1,4 @@
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -9,11 +10,32 @@ import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
 import '../../../../controller/api/groups/groups_controller.dart';
 import '../../../../controller/api/messages/messages_controller.dart';
+import '../../../../model/user_model.dart';
 import '../../../widgets/add_group.dart';
 
-class GroupList extends StatelessWidget {
+class GroupList extends StatefulWidget {
   const GroupList({super.key});
 
+  @override
+  State<GroupList> createState() => _GroupListState();
+}
+
+class _GroupListState extends State<GroupList> {
+  UserModel? fetchedUser;
+  getUser() async {
+    final AuthService _userApiService = AuthService();
+    fetchedUser = await _userApiService.fetchUser(user_token.value);
+    setState(() {});
+    print('here' + fetchedUser!.name);
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -124,8 +146,8 @@ class GroupList extends StatelessWidget {
                               ),
                               child: ListTile(
                                 onTap: () {
-                                  Get.find<MessagesController>().getGroupMessage(controller.groupsList[index]);
-                                  Get.to(GroupChat(current_group:controller.groupsList[index]));
+                                  Get.find<MessagesController>().getGroupMessages(user_token.value,controller.groupsList[index].id.toString());
+                                  Get.to(()=>GroupChat(current_group:controller.groupsList[index],userModel: fetchedUser,),);
                                 },
                                 leading: Container(
                                   width: 45,
