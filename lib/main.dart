@@ -13,8 +13,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'controller/api/chats/chats_controller.dart';
 import 'controller/binding.dart';
 import 'controller/language.dart';
+import 'controller/user_controller.dart';
 Future<bool> requestPermission() async {
   PermissionStatus status = await Permission.contacts.request();
 
@@ -24,9 +26,10 @@ Future<bool> requestPermission() async {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Get.lazyPut(() => LanguageController(),fenix: true);
 
-  WidgetsFlutterBinding.ensureInitialized();
+
 
   requestPermission();
   runApp(
@@ -43,6 +46,7 @@ class MyApp extends StatelessWidget {
     return
       Obx(() {
         final languageController = Get.find<LanguageController>();
+
         return GetMaterialApp(
           translations: AppTranslations(), // Load translations
           locale: Get

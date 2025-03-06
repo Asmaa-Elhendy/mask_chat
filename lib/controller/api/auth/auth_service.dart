@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../model/user_model.dart';
+
 String baseUrl="https://apichat.nanoegypt.com/public/api/";
 ValueNotifier<String> user_token= ValueNotifier<String>("");
 class AuthService {
@@ -65,6 +67,23 @@ class AuthService {
 
     } catch (e) {
       return null; // Handle API call failure
+    }
+  }
+  // Fetch user data from API
+  Future<UserModel?> fetchUser() async {
+    try {
+      final response = await http.get(Uri.parse('${baseUrl}user'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return UserModel.fromJson(data);
+      } else {
+        print("Failed to fetch user: ${response.statusCode}");
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching user: $e");
+      return null;
     }
   }
 }

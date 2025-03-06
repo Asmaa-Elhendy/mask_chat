@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../const/colors.dart';
 import '../../../view/screens/home/home.dart';
 import '../../../view/screens/login/login.dart';
+import '../chats/chats_controller.dart';
 import 'auth_service.dart';
 
 
@@ -23,7 +24,10 @@ class AuthController extends GetxController {
     if (result != null) {
       token = result;
       print("Token: $token");
-      Get.offAll(Home());// Navigate to home
+      Get.delete<ChatsController>();
+      Get.offAll(Home(),binding: BindingsBuilder(() {
+        Get.put(ChatsController());
+      }));// Navigate to home
     } else {
       SnackBarErrorWidget(localizations,localizations.invalidCredentials);
 

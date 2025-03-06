@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -35,11 +37,10 @@ class _chatListState extends State<chatList> {
     final localizations = AppLocalizations.of(context)!;
     Locale locale = Localizations.localeOf(context); // Get the current locale
 
-
     return GetBuilder<ChatsController>(
         init: ChatsController(),
         key: UniqueKey(),
-        builder: (controller) {
+        builder: (chatcontroller) {
 
 
           return SingleChildScrollView(
@@ -114,7 +115,7 @@ class _chatListState extends State<chatList> {
                                        for(int i =0;i<selectedContacts.length;i++){
 
 
-                                         controller.deleteContact(localizations,selectedContacts[i].id,user_token.value);
+                                         chatcontroller.deleteContact(localizations,selectedContacts[i].id,user_token.value);
 
 
 
@@ -178,14 +179,14 @@ class _chatListState extends State<chatList> {
 
               ),
               child: SizedBox(
-                child:controller.loading==true?Center(child: CircularProgressIndicator(color: redCheck,)):
-                    controller.contacts.isNotEmpty?  AzListView(
+                child:chatcontroller.chatLoading==true?Center(child: CircularProgressIndicator(color: redCheck,)):
+                    chatcontroller.contacts.isNotEmpty?  AzListView(
                   padding: EdgeInsets.zero,
 
                   indexBarMargin: EdgeInsets.zero,
-                  data: controller.contacts,
+                  data: chatcontroller.contacts,
                     indexBarAlignment: locale.languageCode == 'ar' ?Alignment.topLeft:Alignment.topRight,
-                  itemCount: controller.contacts.length,
+                  itemCount: chatcontroller.contacts.length,
                     indexBarOptions: IndexBarOptions(
 
                       textStyle: TextStyle(
@@ -217,7 +218,7 @@ class _chatListState extends State<chatList> {
 
                                           child:Slidable(
                                             direction: Axis.horizontal,
-                                            key: ValueKey(controller.contacts[index].id), // Unique key for each contact
+                                            key: ValueKey(chatcontroller.contacts[index].id), // Unique key for each contact
                                             endActionPane: ActionPane(
                                               motion: ScrollMotion(
 
@@ -228,7 +229,7 @@ class _chatListState extends State<chatList> {
                                                   builder: (cont) {
                                                     return ElevatedButton(
                                                       onPressed: () {
-                                                        controller.toggleClosed(controller.contacts[index].id);
+                                                        chatcontroller.toggleClosed(chatcontroller.contacts[index].id);
                                                         Slidable.of(cont)!.close();
                                                       },
                                                       style: ElevatedButton.styleFrom(
@@ -251,7 +252,7 @@ class _chatListState extends State<chatList> {
                                                     return ElevatedButton(
                                                       onPressed: () {
                                                       Get.defaultDialog(
-                                                        title:  "${localizations.deleteConfirmationPart21} ${controller.contacts[index].name}${localizations.deleteConfirmationPart22}",
+                                                        title:  "${localizations.deleteConfirmationPart21} ${chatcontroller.contacts[index].name}${localizations.deleteConfirmationPart22}",
                                                         middleText: "",
                                                         titlePadding: EdgeInsets.only(top: h*.04),
                                                         // textConfirm: "Yes",
@@ -294,7 +295,7 @@ class _chatListState extends State<chatList> {
                                                             child: ElevatedButton(
                                                               onPressed: () {
                                                                 Get.back();
-                                                               controller.deleteContact(localizations,controller.contacts[index].id,user_token.value);
+                                                               chatcontroller.deleteContact(localizations,chatcontroller.contacts[index].id,user_token.value);
                                                               },
                                                               style: ElevatedButton.styleFrom(
                                                                 backgroundColor: ColorsPlatte().primary.redIcons,
@@ -339,22 +340,22 @@ class _chatListState extends State<chatList> {
                                               onLongPress: () {
                                                 setState(() {
                                                   isSelectionMode = true;
-                                                  selectedContacts.add(controller.contacts[index]);
-                                                  controller.select(controller.contacts[index]);
+                                                  selectedContacts.add(chatcontroller.contacts[index]);
+                                                  chatcontroller.select(chatcontroller.contacts[index]);
                                                 });
                                               },
 
                                               onTap: (){
                                                 if(isSelectionMode){
                                                   setState(() {
-                                                    if (controller.contacts[index].isSelected) {
-                                                      selectedContacts.remove(controller.contacts[index]);
-                                                      controller.unSelect(controller.contacts[index]);
+                                                    if (chatcontroller.contacts[index].isSelected) {
+                                                      selectedContacts.remove(chatcontroller.contacts[index]);
+                                                      chatcontroller.unSelect(chatcontroller.contacts[index]);
                                                       // selectedContacts.add(controller.contacts[index]);
                                                       // controller.select(controller.contacts[index]);
                                                     } else {
-                                                      selectedContacts.add(controller.contacts[index]);
-                                                       controller.select(controller.contacts[index]);
+                                                      selectedContacts.add(chatcontroller.contacts[index]);
+                                                       chatcontroller.select(chatcontroller.contacts[index]);
                                                     }
 
                                                     if (selectedContacts.isEmpty) {
@@ -366,13 +367,17 @@ class _chatListState extends State<chatList> {
 
                                                 }else {
                                                   Get.find<MessagesController>()
-                                                      .getMessages(controller
+                                                      .getMessages(chatcontroller
                                                       .contacts[index],user_token.value);
-                                                  Get.to(Chat(person: controller
+                                                  Get.to(Chat(person: chatcontroller
                                                       .contacts[index],
-                                                    newMask: controller
-                                                        .contacts[index]
-                                                        .talkingAnonymous,));
+                                                    isMask:chatcontroller.contacts[index].isMasked=='1'?true:false,
+                                                    // chatcontroller
+                                                    //     .contacts[index]
+                                                    //     .talkingAnonymous,
+                                                    contact: chatcontroller
+                                                        .contacts[index],
+                                                  ));
                                                 }  },
 
                                               title:Row(
@@ -382,20 +387,20 @@ class _chatListState extends State<chatList> {
 
                                                     shape: const CircleBorder(),
 
-                                                    side: BorderSide(color: controller.contacts[index].isSelected?redIcons:divider),
+                                                    side: BorderSide(color: chatcontroller.contacts[index].isSelected?redIcons:divider),
                                                     //fillColor: MaterialStateProperty.resolveWith((states) =>  redIcons),
                                                     activeColor: redIcons,
-                                                    value: controller.contacts[index].isSelected,
+                                                    value: chatcontroller.contacts[index].isSelected,
                                                     onChanged: (bool? value) {
 
 
                                                         setState(() {
                                                           if (value!) {
-                                                            selectedContacts.add(controller.contacts[index]);
-                                                            controller.select(controller.contacts[index]);
+                                                            selectedContacts.add(chatcontroller.contacts[index]);
+                                                            chatcontroller.select(chatcontroller.contacts[index]);
                                                           } else {
-                                                            selectedContacts.remove(controller.contacts[index]);
-                                                            controller.unSelect(controller.contacts[index]);
+                                                            selectedContacts.remove(chatcontroller.contacts[index]);
+                                                            chatcontroller.unSelect(chatcontroller.contacts[index]);
 
                                                           }
 
@@ -414,11 +419,11 @@ class _chatListState extends State<chatList> {
                                                         shape: BoxShape.circle,
 
                                                       ),
-                                                      child:Image.asset( controller.contacts[index].image),
+                                                      child:Image.asset( chatcontroller.contacts[index].image),
 
                                                   ),
                       SizedBox(width: (15/baseWidth)*w,),
-                      Text(controller.contacts[index].isMasked=='1'?localizations.anonymous:controller.contacts[index].name,
+                      Text(chatcontroller.contacts[index].isMasked=='1'?localizations.anonymous:chatcontroller.contacts[index].name,
 
                       style: TextStyle(
                       fontFamily: 'Roboto-Regular',
@@ -433,7 +438,7 @@ class _chatListState extends State<chatList> {
                                                 ],
                                               ),
                                               // title:
-                                              trailing: controller.contacts[index].closed?Icon(Icons.star,color: star,):SizedBox(),
+                                              trailing: chatcontroller.contacts[index].closed?Icon(Icons.star,color: star,):SizedBox(),
                                               contentPadding: EdgeInsets.zero,
 
                                             ),

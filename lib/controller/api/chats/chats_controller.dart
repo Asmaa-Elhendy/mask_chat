@@ -14,7 +14,8 @@ int currentId = 1;
 
 class ChatsController extends GetxController {
  final ChatService _chatService = ChatService();
- var loading = false.obs;
+ var chatLoading = false.obs;
+
  var createChatloading = false.obs;
  late ChatContact savedChatPerson;
  List<ChatContact> contacts =  [
@@ -47,12 +48,12 @@ class ChatsController extends GetxController {
  Future<void> fetchChats(String token) async {
   log("in chat controller");
   try {
-   loading.value = true; // Start loading
+   chatLoading.value = true; // Start loading
    contacts = await _chatService.getChats(token);
   } catch (e) {
    print("Error fetching chats: $e");
   } finally {
-   loading.value = false; // Stop loading
+   chatLoading.value = false; // Stop loading
   }
   update();
  }

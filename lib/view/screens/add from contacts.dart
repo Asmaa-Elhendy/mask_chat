@@ -290,7 +290,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
                         },
                         child: Container(
                             width: w,
-                            height: (45/baseHeight) *h,
+                            height: (52/baseHeight) *h,//45 edit height
                             decoration:   BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(24.0), // Adjust radius as needed

@@ -25,7 +25,7 @@ class ChatService {
         Map<String, dynamic> data = json.decode(response.body);
 
         if (data['success'] == true) {
-          List<dynamic> contactsJson = data['chats'];
+          List<dynamic> contactsJson = data['data'];
           return contactsJson.map((json) {
 
               return ChatContact.fromJson(json);

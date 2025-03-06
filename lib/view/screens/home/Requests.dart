@@ -120,7 +120,7 @@ class Requests extends StatelessWidget {
                         contentPadding: const EdgeInsets.all(0),
                         onTap: (){
                           Get.find<MessagesController>().getMessages(controller.requests[index],user_token.value);
-                          Get.to(Chat(person: controller.requests[index],newMask: controller.requests[index].talkingAnonymous,
+                          Get.to(Chat(person: controller.requests[index],isMask: controller.requests[index].talkingAnonymous,
                           unKnown: true,
                           ));
 

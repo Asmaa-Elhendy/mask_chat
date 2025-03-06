@@ -30,6 +30,7 @@ import '../../const/colors.dart';
 import '../../const/sizes.dart';
 import '../../controller/assets.dart';
 import '../../controller/audio_controller.dart';
+import '../../controller/user_controller.dart';
 import '../../model/contacts.dart';
 import '../../model/messages.dart';
 import '../widgets/bootom_sheet_attachment.dart';
@@ -37,9 +38,10 @@ import 'add_phone_number.dart';
 
 class Chat extends StatefulWidget {
   ChatContact person;
-  bool newMask;
+  bool isMask;
   bool unKnown;
-  Chat({this.unKnown = false,this.newMask=false,required this.person,});
+  ChatContact? contact;
+  Chat({this.unKnown = false,this.isMask=false,required this.person, this.contact=null});
 
   @override
   State<Chat> createState() => _ChatState();
@@ -229,7 +231,7 @@ print(contact);
       }
     });
     _tabController = TabController(length: 2, vsync: this);
-    if(widget.newMask){
+    if(widget.isMask){
       setState(() {
         _tabController.index=1;
 
@@ -242,6 +244,9 @@ print(contact);
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     final localizations = AppLocalizations.of(context)!;
+    final UserController userController = Get.find<UserController>();
+    final user = userController.user.value; // Get the user data once
+
     return GestureDetector(
       onTap: (){
         FocusScope.of(context).unfocus();
@@ -308,8 +313,8 @@ print(contact);
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(
-                                          controller.chatPerson.name,
+                                        Text(widget.contact!=null?widget.isMask?localizations.anonymous:widget.contact!.name:'',
+                                         // controller.chatPerson.name,
                                           style: TextStyle(
                                             fontFamily: 'Roboto-Medium',
                                             color: Colors.white,
@@ -403,7 +408,7 @@ print(contact);
                                                 image: controller.chatPerson.image,
                                                 closed: false, numOfMessage: "")
                                           );
-                                          Get.off(Chat(newMask: true,
+                                          Get.off(Chat(isMask: true,
                                             person:  ChatContact(userId: '0',contactId: '0',isMasked: '0',isSelected: false,
                                                 id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
                                                 tag: "tag", name: controller.chatPerson.name,
@@ -420,7 +425,7 @@ print(contact);
 
                                         }else{
                                           Get.off(Chat(
-                                            newMask: false,
+                                            isMask: false,
                                             person: Get.find<ChatsController>().savedChatPerson ),
                                           );
                                           Get.find<MessagesController>().getMessages(

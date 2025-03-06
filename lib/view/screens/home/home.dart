@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -15,7 +17,7 @@ import 'groups/group_list.dart';
 
 class Home extends StatefulWidget {
   int page;
-   Home({this.page=0,super.key});
+   Home({this.page=0,super.key,});
 
   @override
   State<Home> createState() => _HomeState();
@@ -33,6 +35,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Get.find<ChatsController>().sorting();
+
     if(widget.page==0){
 
     }else{
@@ -50,6 +53,7 @@ class _HomeState extends State<Home> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     final localizations = AppLocalizations.of(context)!;
+
     return Container(
       width: w,
       height: h,
@@ -169,6 +173,12 @@ class _HomeState extends State<Home> {
             setState(() {
               _currentIndex = index;
             });
+            if (index == 0) {
+              //solve issue of reinitialize chats controller
+              Get.delete<ChatsController>(); // Remove old instance
+              Get.put(ChatsController()); // Create new instance
+              Get.find<ChatsController>().sorting(); // Call sorting function
+            }
           },
         ):null,
       ),
