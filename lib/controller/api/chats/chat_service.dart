@@ -81,4 +81,5 @@ class ChatService {
       return '200';
     }
     return 'other';
-  }}
+  }
+}

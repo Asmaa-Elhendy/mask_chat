@@ -42,7 +42,7 @@ class AuthService {
     try {
       final response = await http.post(
         url,
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json",},
         body: jsonEncode({
           "name":name,
           "email": email,
@@ -70,10 +70,13 @@ class AuthService {
     }
   }
   // Fetch user data from API
-  Future<UserModel?> fetchUser() async {
+  Future<UserModel?> fetchUser(String token) async {
     try {
-      final response = await http.get(Uri.parse('${baseUrl}user'));
-
+      final response = await http.get(Uri.parse('${baseUrl}user'), headers: {
+        "Authorization": "Bearer ${token}",
+        "Content-Type": "application/json",
+      },);
+  log(response.body);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         return UserModel.fromJson(data);

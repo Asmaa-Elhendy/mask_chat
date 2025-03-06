@@ -114,5 +114,7 @@
   "chatAlreadyExist": "sohbet Zaten Var",
   "anonymous":"Anonim",
   "noChatsAvailable": "Mevcut Sohbet Yok",
-  "pleaseEnterAvalidPhone": "Lütfen geçerli bir telefon numarası girin"
+  "pleaseEnterAvalidPhone": "Lütfen geçerli bir telefon numarası girin",
+  "messageSentSuccessfully": "Mesaj Başarıyla Gönderildi",
+  "failedTosendMessage": "Mesaj Gönderilemedi"
 }

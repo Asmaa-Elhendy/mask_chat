@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
+import 'package:Whatsback/model/user_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart' as native_picker;
@@ -41,7 +43,9 @@ class Chat extends StatefulWidget {
   bool isMask;
   bool unKnown;
   ChatContact? contact;
-  Chat({this.unKnown = false,this.isMask=false,required this.person, this.contact=null});
+  UserModel? userModel;
+  bool fromChatScreen;
+  Chat({this.unKnown = false,this.isMask=false,required this.person, this.contact=null,this.userModel=null,this.fromChatScreen=true});
 
   @override
   State<Chat> createState() => _ChatState();
@@ -231,22 +235,28 @@ print(contact);
       }
     });
     _tabController = TabController(length: 2, vsync: this);
-    if(widget.isMask){
+    _tabController.index=   widget.isMask?1:0;  //handle stop in which tab bar
+    if(widget.isMask) {
       setState(() {
-        _tabController.index=1;
-
+        _tabController.index = 1;
       });
     }
-  }
+
+
+    }
+
+
+  late UserController userController;
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     final localizations = AppLocalizations.of(context)!;
-    final UserController userController = Get.find<UserController>();
-    final user = userController.user.value; // Get the user data once
 
+    // final isMe=widget.userModel!.id==widget.contact!.contactId?true:false;
+    log('${widget.userModel?.id}  and ${widget.contact!.id}');
+    // log("isme $isMe");
     return GestureDetector(
       onTap: (){
         FocusScope.of(context).unfocus();
@@ -255,6 +265,7 @@ print(contact);
       child: GetBuilder<MessagesController>(
           init: MessagesController(),
           builder: (controller) {
+
             return SingleChildScrollView(
               //physics: NeverScrollableScrollPhysics(),
               child: Container(
@@ -375,8 +386,6 @@ print(contact);
                                     indicatorPadding: EdgeInsets.zero,
                                     labelPadding: EdgeInsets.zero,
 
-
-
                                     indicator:
                                         const BoxDecoration(), // Remove default underline
                                     tabs: [
@@ -398,29 +407,13 @@ print(contact);
                                       ),
                                     ],
                                     onTap: (index) {
+                                      if(widget.fromChatScreen==true){ //handle not toggle regular or mask in chat
+                                        return;
+                                      }
                                       setState(() {
                                         if( _tabController.index == 1){
-                                          Get.find<ChatsController>().saveChatPerson(controller.chatPerson);
-                                          Get.find<ChatsController>().addContact(
-                                            ChatContact(userId: '0',contactId: '0',isMasked: '0',isSelected: false,
-                                                id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
-                                                tag: "tag", name: controller.chatPerson.name,
-                                                image: controller.chatPerson.image,
-                                                closed: false, numOfMessage: "")
-                                          );
-                                          Get.off(Chat(isMask: true,
-                                            person:  ChatContact(userId: '0',contactId: '0',isMasked: '0',isSelected: false,
-                                                id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
-                                                tag: "tag", name: controller.chatPerson.name,
-                                                image: controller.chatPerson.image,
-                                                closed: false, numOfMessage: ""),
-                                          ));
-                                          Get.find<MessagesController>().getMessages(ChatContact(isSelected: false,userId: '0',
-                                              contactId: '0',isMasked: '0',
-                                              id: (Get.find<ChatsController>().contacts[(Get.find<ChatsController>().contacts.length-1)].id+1),
-                                              tag: "tag", name: controller.chatPerson.name,
-                                              image: controller.chatPerson.image,
-                                              closed: false, numOfMessage: ""),user_token.value,mask: true);
+                                          log("in mask chat");
+
 
 
                                         }else{
@@ -476,7 +469,7 @@ print(contact);
                                   return Container(
                                     child: Column(
                                       children: [
-                                       true? //isme need to handle sender id with user id
+                                        controller.messages[index].senderId!=widget.userModel?.id? //isme need to handle sender id with user id
                                        Row(
                                         //  margin: EdgeInsets.only(top: h*.065,left: w*.022),
                                           mainAxisAlignment: MainAxisAlignment.end,
@@ -485,9 +478,13 @@ print(contact);
                                               crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                               children: [
-                                                Text(
-                                                  _tabController.index==1? "${localizations.anonymous}":controller.messages[index]
-                                                      .senderName,
+                                                Text(// need to check , here handle directions and name of sender messgae
+                                                  widget.isMask?
+                                                  "${localizations.anonymous}"
+                                                      :
+                                                (  controller.messages[index].senderId.toString()==widget.userModel?.id.toString())?
+                                                      widget.userModel!.name:
+                                                  widget.contact!.name,
                                                   style: TextStyle(
                                                     fontFamily:
                                                     'Roboto-Regular',
@@ -517,7 +514,7 @@ print(contact);
 
                                                   ),
 
-                                                  decoration: true  //isme need to handle sender id with user id
+                                                  decoration:     controller.messages[index].senderId!=widget.userModel?.id  //isme need to handle sender id with user id
                                                       ? BoxDecoration(
                                                     color:  ColorsPlatte().primary.chat,
                                                     borderRadius: const BorderRadius.only(
@@ -547,7 +544,7 @@ print(contact);
                                                         controller.messages[index].message,
                                                         style: TextStyle(
                                                           fontFamily: 'Roboto-Regular',
-                                                          color: true// isme need to edit is me sender id with user id
+                                                          color:     controller.messages[index].senderId!=widget.userModel?.id// isme need to edit is me sender id with user id
                                                               ? blackBoldText
                                                               : Colors.white,
                                                           fontSize: (15 / baseWidth) * w,
@@ -703,7 +700,7 @@ print(contact);
                                              CrossAxisAlignment.start,
                                              children: [
                                                Text(
-                                                 controller.messages[index]
+                                                 controller.messages[index].senderId!=widget.userModel?.id?widget.userModel!.name   :controller.messages[index]
                                                      .senderName,
                                                  style: TextStyle(
                                                    fontFamily:
@@ -730,7 +727,7 @@ print(contact);
                                                  constraints: BoxConstraints(
                                                      maxWidth: (200 / baseWidth) * w),
 
-                                                 decoration: true//isMe  edit is me sender id with my id
+                                                 decoration:     controller.messages[index].senderId!=widget.userModel?.id//isMe  edit is me sender id with my id
                                                      ? BoxDecoration(
                                                    color:  ColorsPlatte().primary.chat,
                                                    borderRadius: const BorderRadius.only(
@@ -800,19 +797,20 @@ print(contact);
 
                           ),
 
-                          SizedBox(height: h*.022,),
+                          SizedBox(height: h*.013,),
 
                           Row(
                             children: [
+                              SizedBox(width: w*.02,),
                               // Attachment Icon
-                              IconButton(
-                                icon: Icon(Icons.attachment_sharp, color: Colors.white,size: w*.07,),
-                                onPressed: () async{
-                                  // Attach file functionality
-                                // showAttachmentOptions(
-                                //   localizations);
-                                },
-                              ),
+                              // IconButton(
+                              //   icon: Icon(Icons.attachment_sharp, color: Colors.white,size: w*.07,),
+                              //   onPressed: () async{
+                              //     // Attach file functionality
+                              //   // showAttachmentOptions(
+                              //   //   localizations);
+                              //   },
+                              // ),
                               // Input field
                               Expanded(
                                 child: Container(
@@ -825,35 +823,35 @@ print(contact);
                                     children: [
                                       // Emoji Icon
                                    //   const Icon(Icons.emoji_emotions_outlined, color: emoji),
-                                      InkWell(
-                                          onTap: ()async{
-                                            if(isrecording){
-                                              String  m = await stopRecord();
-                                              controller.addMessage(
-                                                Messages(
-                                                //    messageType: Type.voiceNote,
-                                                    message: m, isRead: false,
-                                                  senderId: '0',
-                                                  //ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                    //     isSelected: false,
-                                                    //     id: -1,
-                                                    //     tag: "tag",
-                                                    //     name: "name",
-                                                    //     image: "image",
-                                                    //     closed: false,
-                                                    //     numOfMessage: "numOfMessage"),
-                                                    time: "${outputFormat
-                                                        .format(
-                                                        DateTime.now())}", senderName: '')
-                                              );
-
-                                            }else{
-                                              startRecord();
-
-                                            }
-
-                                          },
-                                          child: Icon(isrecording?Icons.stop:Icons.mic_none, color: redIcons)),
+                                   //    InkWell(
+                                   //        onTap: ()async{
+                                   //          if(isrecording){
+                                   //            String  m = await stopRecord();
+                                   //            controller.addMessage(
+                                   //              Messages(
+                                   //              //    messageType: Type.voiceNote,
+                                   //                  message: m, isRead: false,
+                                   //                senderId: '0',
+                                   //                //ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                   //                  //     isSelected: false,
+                                   //                  //     id: -1,
+                                   //                  //     tag: "tag",
+                                   //                  //     name: "name",
+                                   //                  //     image: "image",
+                                   //                  //     closed: false,
+                                   //                  //     numOfMessage: "numOfMessage"),
+                                   //                  time: "${outputFormat
+                                   //                      .format(
+                                   //                      DateTime.now())}", senderName: '')
+                                   //            );
+                                   //
+                                   //          }else{
+                                   //            startRecord();
+                                   //
+                                   //          }
+                                   //
+                                   //        },
+                                   //        child: Icon(isrecording?Icons.stop:Icons.mic_none, color: redIcons)),
                                       SizedBox(width: 8),
 
                                       // TextField
@@ -949,30 +947,32 @@ print(contact);
 
                                             // Send message functionality
                                             if(_controller.text!="") {
-                                              controller.addMessage(
-
-                                                  Messages(
-                                                      // messageType: _attachment ??
-                                                      //     Type.text,
-                                                      message: _controller.text,
-                                                      file: file,
-
-
-                                                      isRead: false,
-                                                      senderId:'0',
-                                                      senderName: '',
-                                                      //ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                      //     isSelected: false,
-                                                      //     id: -1,
-                                                      //     tag: "tag",
-                                                      //     name: "name",
-                                                      //     image: "image",
-                                                      //     closed: false,
-                                                      //     numOfMessage: "numOfMessage"),
-                                                      time: "${outputFormat
-                                                          .format(
-                                                          DateTime.now())}")
-                                              );
+                                              FocusScope.of(context).unfocus();
+                                              controller.createMessage(localizations, widget.contact!, user_token.value, _controller.text!);
+                                              // controller.addMessage(
+                                              //
+                                              //     Messages(
+                                              //         // messageType: _attachment ??
+                                              //         //     Type.text,
+                                              //         message: _controller.text,
+                                              //         file: file,
+                                              //
+                                              //
+                                              //         isRead: false,
+                                              //         senderId:'0',
+                                              //         senderName: '',
+                                              //         //ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                              //         //     isSelected: false,
+                                              //         //     id: -1,
+                                              //         //     tag: "tag",
+                                              //         //     name: "name",
+                                              //         //     image: "image",
+                                              //         //     closed: false,
+                                              //         //     numOfMessage: "numOfMessage"),
+                                              //         time: "${outputFormat
+                                              //             .format(
+                                              //             DateTime.now())}")
+                                              // );
                                               _controller.clear();
 
                                               setState(() {
@@ -991,7 +991,7 @@ print(contact);
                                     ],
                                   ),
                                 ),),
-                              SizedBox(width: w*.044,)
+                             SizedBox(width: w*.02,)
 
                             ],
                           ),
@@ -999,8 +999,9 @@ print(contact);
                                           ]),
                       )),
               ) );
-          }),
-    );
+          }));
+
+
   }
 
   Widget _buildTab(

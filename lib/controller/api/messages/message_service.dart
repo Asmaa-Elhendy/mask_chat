@@ -1,16 +1,18 @@
 import 'dart:developer';
 
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
+import 'package:Whatsback/model/contacts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../../model/messages.dart';
+import '../../../model/retrieve_contact.dart';
 
 
 class MessageService {
 
   Future< List<Messages>> getChatMesssages(String token,String chatId) async {
-    log("in get messages api");
+
     try {
       final String url = "${baseUrl}messages/$chatId";
       final response = await http.get(
@@ -20,7 +22,7 @@ class MessageService {
           'Authorization': 'Bearer $token',
         },
       );
-    log(chatId+response.body+token);
+
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
 
@@ -42,5 +44,26 @@ class MessageService {
     }
 
     return []; // Return an empty list on failure
+  }
+
+   Future<String> sendChatMessage(ChatContact contact,String token,String message) async {
+    final url = Uri.parse("${baseUrl}messages");
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json',    'Authorization': 'Bearer $token',},
+      body: jsonEncode({
+        "chat_id": contact.id,
+        "message": message
+      }),
+    );
+    log(response.statusCode.toString());
+    log(response.body);
+    if (response.statusCode == 201) {
+      return '201';
+    }else if(response.statusCode==200){
+      return '200';
+    }
+    return 'other';
   }
 }

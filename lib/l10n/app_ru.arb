@@ -114,7 +114,9 @@
   "chatAlreadyExist": "чат уже существует",
   "anonymous":"Анонимный",
   "noChatsAvailable": "нет доступных чатов",
-  "pleaseEnterAvalidPhone": "Пожалуйста, введите действительный номер телефона"
+  "pleaseEnterAvalidPhone": "Пожалуйста, введите действительный номер телефона",
+  "messageSentSuccessfully": "Сообщение успешно отправлено",
+  "failedTosendMessage": "Не удалось отправить сообщение"
 
 
 

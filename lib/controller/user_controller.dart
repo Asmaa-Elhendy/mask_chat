@@ -1,9 +1,10 @@
+import 'dart:developer';
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:get/get.dart';
 import '../model/user_model.dart';
 
 class UserController extends GetxController {
-  var user = Rxn<UserModel>(); // Reactive variable
+  UserModel? user; // Non-reactive variable
   var isLoading = true.obs; // Observable boolean
 
   final AuthService _userApiService = AuthService();
@@ -11,15 +12,17 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getUser();
+    getUser(user_token.value);
   }
 
-  Future<void> getUser() async {
+  Future<void> getUser(String token) async {
     isLoading.value = true;
+    log("Fetching user data...");
 
-    UserModel? fetchedUser = await _userApiService.fetchUser();
+    UserModel? fetchedUser = await _userApiService.fetchUser(token);
     if (fetchedUser != null) {
-      user.value = fetchedUser;
+      user = fetchedUser;
+      update(); // Notify UI of the change
     }
 
     isLoading.value = false;

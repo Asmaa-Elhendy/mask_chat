@@ -13,7 +13,9 @@ import 'package:Whatsback/controller/api/chats/chats_controller.dart';
 import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:Whatsback/controller/api/messages/messages_controller.dart';
 import '../../../const/colors.dart';
+import '../../../controller/user_controller.dart';
 import '../../../model/contacts.dart';
+import '../../../model/user_model.dart';
 import '../../widgets/Alert_ask.dart';
 import '../../widgets/popuomeny_add_contacts.dart';
 import '../chat_screen.dart';
@@ -29,7 +31,22 @@ class chatList extends StatefulWidget {
 class _chatListState extends State<chatList> {
   List<ChatContact> selectedContacts = [];
   bool isSelectionMode = false;
+  UserModel? fetchedUser;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  getUser();
 
+  }
+  getUser()async{
+    final AuthService _userApiService = AuthService();
+     fetchedUser = await _userApiService.fetchUser(user_token.value);
+     setState(() {
+
+     });
+    print('here'+fetchedUser!.name);
+  }
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -345,7 +362,7 @@ class _chatListState extends State<chatList> {
                                                 });
                                               },
 
-                                              onTap: (){
+                                              onTap: () async {
                                                 if(isSelectionMode){
                                                   setState(() {
                                                     if (chatcontroller.contacts[index].isSelected) {
@@ -366,6 +383,8 @@ class _chatListState extends State<chatList> {
 
 
                                                 }else {
+
+
                                                   Get.find<MessagesController>()
                                                       .getMessages(chatcontroller
                                                       .contacts[index],user_token.value);
@@ -376,7 +395,7 @@ class _chatListState extends State<chatList> {
                                                     //     .contacts[index]
                                                     //     .talkingAnonymous,
                                                     contact: chatcontroller
-                                                        .contacts[index],
+                                                        .contacts[index],userModel:fetchedUser
                                                   ));
                                                 }  },
 

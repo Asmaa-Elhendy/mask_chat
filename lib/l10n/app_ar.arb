@@ -115,7 +115,9 @@
   "chatAlreadyExist": "الدردشة موجودة بالفعل",
   "anonymous":"مجهول",
   "noChatsAvailable": "لا توجد محادثات متاحة",
-  "pleaseEnterAvalidPhone": "الرجاء إدخال رقم هاتف صالح"
+  "pleaseEnterAvalidPhone": "الرجاء إدخال رقم هاتف صالح",
+  "messageSentSuccessfully": "تم إرسال الرسالة بنجاح",
+  "failedTosendMessage": "فشل في إرسال الرسالة"
 
 
 }

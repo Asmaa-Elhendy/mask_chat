@@ -114,7 +114,9 @@
    "chatAlreadyExist": "chat Already Exist",
    "anonymous":"Anonymous",
    "noChatsAvailable": "no Chats Available",
-   "pleaseEnterAvalidPhone": "Please Enter a Valid Phone"
+   "pleaseEnterAvalidPhone": "Please Enter a Valid Phone",
+   "messageSentSuccessfully": "Message Sent Successfully",
+   "failedTosendMessage":  "Failed To Send Message"
 }
 
 

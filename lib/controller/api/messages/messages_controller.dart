@@ -9,6 +9,8 @@ import 'package:Whatsback/model/contacts.dart';
 import 'package:Whatsback/model/gtroup.dart';
 
 import '../../../model/messages.dart';
+import '../../../model/retrieve_contact.dart';
+import '../auth/auth_controller.dart';
 
 class MessagesController extends GetxController{
   late ChatContact chatPerson;
@@ -56,5 +58,23 @@ class MessagesController extends GetxController{
     messages.add(message);
     update();
   }
-
+  var createChatloading = false.obs;
+  Future<void> createMessage(localizations,ChatContact contact,String token,String message) async {
+    try {
+      createChatloading.value = true;
+      String statusCode = await _messageService.sendChatMessage(contact, token, message);
+      if (statusCode=='201') {
+        SnackBarErrorWidget(localizations, localizations.messageSentSuccessfully,error: false);
+        getMessages(contact, token);
+      }
+      else {
+        SnackBarErrorWidget(localizations, localizations.failedTosendMessage);
+      }
+    } catch (e) {
+      SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
+    }finally {
+      createChatloading.value = false; // Stop loading
+      update();
+    }
+  }
 }
