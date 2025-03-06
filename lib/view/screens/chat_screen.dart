@@ -339,26 +339,26 @@ print(contact);
                                             fontStyle: FontStyle.normal,
                                           ),
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(localizations.lastSeen,
-                                                style: TextStyle(
-                                                  fontFamily: 'Roboto-Regular',
-                                                  color: Colors.white,
-                                                  fontSize: (14 / baseWidth) * w,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontStyle: FontStyle.normal,
-                                                )),
-                                            Text("09.20 PM",
-                                                style: TextStyle(
-                                                  fontFamily: 'Roboto-Regular',
-                                                  color: Colors.white,
-                                                  fontSize: (14 / baseWidth) * w,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontStyle: FontStyle.normal,
-                                                )),
-                                          ],
-                                        )
+                                        // Row(
+                                        //   children: [
+                                        //     Text(localizations.lastSeen,
+                                        //         style: TextStyle(
+                                        //           fontFamily: 'Roboto-Regular',
+                                        //           color: Colors.white,
+                                        //           fontSize: (14 / baseWidth) * w,
+                                        //           fontWeight: FontWeight.w400,
+                                        //           fontStyle: FontStyle.normal,
+                                        //         )),
+                                        //     Text("09.20 PM",
+                                        //         style: TextStyle(
+                                        //           fontFamily: 'Roboto-Regular',
+                                        //           color: Colors.white,
+                                        //           fontSize: (14 / baseWidth) * w,
+                                        //           fontWeight: FontWeight.w400,
+                                        //           fontStyle: FontStyle.normal,
+                                        //         )),
+                                        //   ],
+                                        // )
                                       ],
                                     ),
                                     Spacer(),
