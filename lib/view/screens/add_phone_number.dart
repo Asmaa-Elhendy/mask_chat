@@ -23,7 +23,8 @@ import 'home/home.dart';
 
 class AddPhoneNumber extends StatefulWidget {
   ChatContact? unKnown;
-  AddPhoneNumber({this.unKnown,super.key});
+  ChatContact? oneSelectedContact;
+  AddPhoneNumber({this.unKnown,super.key,this.oneSelectedContact=null});
 
   @override
   State<AddPhoneNumber> createState() => _AddPhoneNumberState();
