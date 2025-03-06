@@ -61,20 +61,20 @@ class MessagesController extends GetxController{
   var createChatloading = false.obs;
   Future<void> createMessage(localizations,ChatContact contact,String token,String message) async {
     try {
-      createChatloading.value = true;
+   //   createChatloading.value = true;
       String statusCode = await _messageService.sendChatMessage(contact, token, message);
       if (statusCode=='201') {
-        SnackBarErrorWidget(localizations, localizations.messageSentSuccessfully,error: false);
+      //  SnackBarErrorWidget(localizations, localizations.messageSentSuccessfully,error: false);
         getMessages(contact, token);
       }
       else {
-        SnackBarErrorWidget(localizations, localizations.failedTosendMessage);
+     //   SnackBarErrorWidget(localizations, localizations.failedTosendMessage);
       }
     } catch (e) {
-      SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
+  //    SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
     }finally {
-      createChatloading.value = false; // Stop loading
-      update();
+  //    createChatloading.value = false; // Stop loading
+    //  update();
     }
   }
 }

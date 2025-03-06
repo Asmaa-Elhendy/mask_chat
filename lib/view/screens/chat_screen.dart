@@ -265,7 +265,12 @@ print(contact);
       child: GetBuilder<MessagesController>(
           init: MessagesController(),
           builder: (controller) {
-
+            Future.delayed(Duration(milliseconds: 100), () {
+              _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+              );});
             return SingleChildScrollView(
               //physics: NeverScrollableScrollPhysics(),
               child: Container(
@@ -858,38 +863,38 @@ print(contact);
                                     Expanded(
                                         child: TextField(
                                           controller: _controller,
-                                          onSubmitted: (_){
-                                            if(_controller.text!="") {
-                                              controller.addMessage(
-                                                  Messages(
-                                                      // messageType: _attachment ??
-                                                      //     Type.text,
-                                                      message:
-                                                      _controller.text,
-                                                      file: file,
-
-
-                                                      isRead: false,
-                                                       senderId:'0',
-                                                      // ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                                      //     isSelected: false,
-                                                      //     id: -1,
-                                                      //     tag: "tag",
-                                                      //     name: "name",
-                                                      //     image: "image",
-                                                      //     closed: false,
-                                                      //     numOfMessage: "numOfMessage"),
-                                                      time: "${outputFormat
-                                                          .format(
-                                                          DateTime.now())}", senderName: '')
-                                              );
-                                              _controller.clear();
-                                              setState(() {
-                                                file = false;
-                                                _attachment = null;
-                                              });
-                                              FocusScope.of(context).unfocus();
-                                            }},
+                                          // onSubmitted: (_){
+                                          //   if(_controller.text!="") {
+                                          //     controller.addMessage(
+                                          //         Messages(
+                                          //             // messageType: _attachment ??
+                                          //             //     Type.text,
+                                          //             message:
+                                          //             _controller.text,
+                                          //             file: file,
+                                          //
+                                          //
+                                          //             isRead: false,
+                                          //              senderId:'0',
+                                          //             // ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                          //             //     isSelected: false,
+                                          //             //     id: -1,
+                                          //             //     tag: "tag",
+                                          //             //     name: "name",
+                                          //             //     image: "image",
+                                          //             //     closed: false,
+                                          //             //     numOfMessage: "numOfMessage"),
+                                          //             time: "${outputFormat
+                                          //                 .format(
+                                          //                 DateTime.now())}", senderName: '')
+                                          //     );
+                                          //     _controller.clear();
+                                          //     setState(() {
+                                          //       file = false;
+                                          //       _attachment = null;
+                                          //     });
+                                          //     FocusScope.of(context).unfocus();
+                                          //   }},
                                           decoration: InputDecoration(
                                             hintText: localizations.typeMessage,
                                             border: InputBorder.none,
@@ -947,7 +952,7 @@ print(contact);
 
                                             // Send message functionality
                                             if(_controller.text!="") {
-                                              FocusScope.of(context).unfocus();
+
                                               controller.createMessage(localizations, widget.contact!, user_token.value, _controller.text!);
                                               // controller.addMessage(
                                               //
@@ -973,16 +978,18 @@ print(contact);
                                               //             .format(
                                               //             DateTime.now())}")
                                               // );
+                                              FocusScope.of(context).unfocus();
                                               _controller.clear();
 
-                                              setState(() {
-                                                file = false;
-                                                _attachment = null;
-                                              });
-                                              if (_scrollController.hasClients) {
-                                                final position = _scrollController.position.maxScrollExtent;
-                                                _scrollController.jumpTo(position);
-                                              }
+
+                                              // setState(() {
+                                              //   file = false;
+                                              //   _attachment = null;
+                                              // });
+                                              // if (_scrollController.hasClients) {
+                                              //   final position = _scrollController.position.maxScrollExtent;
+                                              //   _scrollController.jumpTo(position);
+                                              // }
                                               // FocusScope.of(context).unfocus();
                                               // FocusScope.of(context).unfocus();
                                             } },
