@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../../model/GroupMember.dart';
 import '../../../model/gtroup.dart';
 import '../auth/auth_service.dart';
 
@@ -56,5 +57,35 @@ class GroupService {
     } else {
       return false; // Handle failure
     }
+  }
+
+  Future<List<GroupMember>> fetchGroupMembers(String token, String groupId) async {
+    try {
+      final response = await http.get(
+        Uri.parse("${baseUrl}groups/$groupId/members"),
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success'] == true) {
+          List<GroupMember> members = (data['data'] as List).map((member) {
+            return GroupMember.fromJson(member);
+          }).toList();
+          return members;
+        } else {
+          print("Error: API response was unsuccessful");
+        }
+      } else {
+        print("Error: Failed to fetch group members, status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Exception occurred while fetching group members: $e");
+    }
+
+    return []; // Return an empty list in case of failure
   }
 }

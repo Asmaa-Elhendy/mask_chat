@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Whatsback/controller/api/auth/auth_controller.dart';
+import 'package:Whatsback/model/GroupMember.dart';
 import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:get/get.dart';
@@ -43,6 +44,7 @@ class GroupController extends GetxController {
   //       subject: "New Group For Test")
   // ];
   List<Group> groupsList=[];
+
   final GroupService _groupService = GroupService();
   void onInit() {
     super.onInit();

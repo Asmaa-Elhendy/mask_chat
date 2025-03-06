@@ -13,7 +13,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../const/colors.dart';
 import '../../const/sizes.dart';
 import '../../controller/masks_controller.dart';
-import 'add_phone_number.dart';
 import 'home/home.dart';
 
 Future<bool> requestPermission() async {
@@ -48,7 +47,6 @@ class _AddFromContactesState extends State<AddFromContactes> {
   List<Contact> contacts = [];
   List<ChatContact> azItems = [];
   List<ChatContact> _selectedContacts = [];
-  ChatContact? oneSelectedContact;
   int idCounter = 1;
 
   @override
@@ -224,26 +222,16 @@ class _AddFromContactesState extends State<AddFromContactes> {
                                             activeColor: controller.workWithChat?redIcons:controller.selectedMask.mainColor!,
                                             value: item.isSelected,
                                             onChanged: (bool? value) {
-                                              for (var contact in azItems) {
-                                                contact.isSelected = false;
-                                              }
-
-                                              // Select the new one
-                                              item.isSelected = value!;
-                                              if (value) {
-                                                oneSelectedContact = item;
-                                              }
                                             setState(() {
-                                              // item.isSelected = value!;
-                                              // if (value) {
+                                            item.isSelected = value!;
+                                            if(value){
 
-                                                //     _selectedContacts.add(item);
-                                                // //    log(item.contact!.phones!.first.value.toString());
-                                                //   }else{
-                                                //     _selectedContacts.remove(item);
-                                                //   }
+                                              _selectedContacts.add(item);
+                                          //    log(item.contact!.phones!.first.value.toString());
+                                            }else{
+                                              _selectedContacts.remove(item);
+                                            }
 
-                                           //   }
                                             });
                                             },
                                             ),
@@ -281,29 +269,28 @@ class _AddFromContactesState extends State<AddFromContactes> {
                       alignment: Alignment.bottomCenter,
                       child: InkWell(
                         onTap: (){
-                          Get.to( AddPhoneNumber(oneSelectedContact:oneSelectedContact));
-                          // if(controller.workWithChat){}else {
-                          //
-                          //  for(int i =0;i<_selectedContacts.length;i++){
-                          //    controller.addContactsToClass(controller.selectedMask.id,
-                          //        ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                          //          id: _selectedContacts[i].id,
-                          //          name: _selectedContacts[i].name,
-                          //          tag: _selectedContacts[i].name[0].toUpperCase(),
-                          //          image: "assets/images/profile.png",
-                          //          isSelected: false,
-                          //          closed: false,
-                          //          numOfMessage: "",
-                          //          needInvite: false,
-                          //
-                          //        ));
-                          //  }
-                          // }
+                          if(controller.workWithChat){}else {
+
+                           for(int i =0;i<_selectedContacts.length;i++){
+                             controller.addContactsToClass(controller.selectedMask.id,
+                                 ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                   id: _selectedContacts[i].id,
+                                   name: _selectedContacts[i].name,
+                                   tag: _selectedContacts[i].name[0].toUpperCase(),
+                                   image: "assets/images/profile.png",
+                                   isSelected: false,
+                                   closed: false,
+                                   numOfMessage: "",
+                                   needInvite: false,
+
+                                 ));
+                           }
+                          }
                           Get.back();
                         },
-                        child: Container(padding: EdgeInsets.zero,
+                        child: Container(
                             width: w,
-                            height: (60/baseHeight) *h,//45 edit height
+                            height: (52/baseHeight) *h,//45 edit height
                             decoration:   BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(24.0), // Adjust radius as needed

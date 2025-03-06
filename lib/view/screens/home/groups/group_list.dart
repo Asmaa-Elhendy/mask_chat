@@ -125,7 +125,7 @@ class GroupList extends StatelessWidget {
                               child: ListTile(
                                 onTap: () {
                                   Get.find<MessagesController>().getGroupMessage(controller.groupsList[index]);
-                                  Get.to(GroupChat());
+                                  Get.to(GroupChat(current_group:controller.groupsList[index]));
                                 },
                                 leading: Container(
                                   width: 45,

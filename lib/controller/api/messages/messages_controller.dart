@@ -15,6 +15,7 @@ import '../auth/auth_controller.dart';
 class MessagesController extends GetxController{
   late ChatContact chatPerson;
   late Group chatGroup ;
+  var createChatloading = false.obs;
   final MessageService _messageService = MessageService();
   var loading = false.obs;
   List<Messages> messages = [];
@@ -52,13 +53,13 @@ class MessagesController extends GetxController{
     update();
 
   }
-  addMessage(Messages message){
-    // message.sender.id=-1;
-    // message.sender.name="me";
-    messages.add(message);
-    update();
-  }
-  var createChatloading = false.obs;
+  // addMessage(Messages message){
+  //   // message.sender.id=-1;
+  //   // message.sender.name="me";
+  //   messages.add(message);
+  //   update();
+  // }
+
   Future<void> createMessage(localizations,ChatContact contact,String token,String message) async {
     try {
    //   createChatloading.value = true;
