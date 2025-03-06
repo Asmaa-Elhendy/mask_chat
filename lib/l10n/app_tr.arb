@@ -73,7 +73,7 @@
   "warning_add_participants": "Lütfen Devam Etmek İçin \n Önce Katılımcıları Ekleyin!",
   "new_group": "Yeni Grup",
   "group_subject": "Grup Konusu",
-  "provide_subject_and_image": "Lütfen bir grup konusu ve isteğe bağlı grup resmi sağlayın",
+  "provide_subject_and_image": "Lütfen bir grup konusu belirtin",
   "participants": "Katılımcılar",
   "create_group": "Grup Oluştur",
   "enter_subject_warning": "Lütfen Konu Girin",
@@ -116,5 +116,6 @@
   "noChatsAvailable": "Mevcut Sohbet Yok",
   "pleaseEnterAvalidPhone": "Lütfen geçerli bir telefon numarası girin",
   "messageSentSuccessfully": "Mesaj Başarıyla Gönderildi",
-  "failedTosendMessage": "Mesaj Gönderilemedi"
+  "failedTosendMessage": "Mesaj Gönderilemedi",
+  "addToGroup": "Gruba Ekle"
 }

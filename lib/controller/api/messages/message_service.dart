@@ -101,4 +101,26 @@ class MessageService {
 
     return []; // Return an empty list on failure
   }
+
+  Future<String> sendGroupMessage(String token,String groupId,String message,bool ismasked) async {
+    final url = Uri.parse("${baseUrl}messages");
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json',    'Authorization': 'Bearer $token',},
+      body: jsonEncode({
+        "group_id": groupId,
+        "message": message,
+        "is_masked":ismasked
+      }),
+    );
+    log(response.statusCode.toString());
+    log(response.body);
+    if (response.statusCode == 201) {
+      return '201';
+    }else if(response.statusCode==200){
+      return '200';
+    }
+    return 'other';
+  }
 }

@@ -73,7 +73,7 @@
    "warning_add_participants": "Please Add Participants First To \n Continue!",
    "new_group": "New Group",
    "group_subject": "Group Subject",
-   "provide_subject_and_image": "Please provide a group subject and optional group image",
+   "provide_subject_and_image": "Please provide a group subject",
    "participants": "Participants",
    "create_group": "Create Group",
    "enter_subject_warning": "Please Enter Subject",
@@ -116,7 +116,8 @@
    "noChatsAvailable": "no Chats Available",
    "pleaseEnterAvalidPhone": "Please Enter a Valid Phone",
    "messageSentSuccessfully": "Message Sent Successfully",
-   "failedTosendMessage":  "Failed To Send Message"
+   "failedTosendMessage":  "Failed To Send Message",
+   "addToGroup": "Add to Group"
 }
 
 

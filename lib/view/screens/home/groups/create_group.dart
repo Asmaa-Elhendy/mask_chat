@@ -12,7 +12,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
 import '../../../../controller/api/groups/groups_controller.dart';
+import '../../../widgets/add_phone_number_for_group.dart';
 import '../../../widgets/back_icon.dart';
+import '../../add_phone_number.dart';
 import '../home.dart';
 
 class CreateGroup extends StatefulWidget {
@@ -118,20 +120,22 @@ class _CreateGroupState extends State<CreateGroup> {
                                 children: [
                                   GestureDetector(
                                     onTap: (){
-                                      _showImageSourceSelector(context,localizations);
+                                      // _showImageSourceSelector(context,localizations);
                                     },
 
                                     child: CircleAvatar(
                                       backgroundColor: pinkShade,
                                       radius: 35,
-                                      child:  _image!=null? Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(image: FileImage(_image!),
-                                              fit: BoxFit.cover
-                                          ),
-                                        ),
-                                      ):Icon(Icons.camera_alt,
+                                      child:
+                                      // _image!=null? Container(
+                                      //   decoration: BoxDecoration(
+                                      //     shape: BoxShape.circle,
+                                      //     image: DecorationImage(image: FileImage(_image!),
+                                      //         fit: BoxFit.cover
+                                      //     ),
+                                      //   ),
+                                      // ):
+                                      Icon(Icons.group,//Icons.camera_alt,
                                           color: ColorsPlatte().primary.redIcons),
                                     ),
                                   ),
@@ -181,14 +185,14 @@ class _CreateGroupState extends State<CreateGroup> {
                                 ],
                               ),
                               SizedBox(height: 8),
-                              Row(
+                              Row(mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   //  SizedBox(width:(90/baseWidth)*w),
-                                  Spacer(),
+                                 // Spacer(),
                                   Text(
                                     localizations.provide_subject_and_image,
                                     style: TextStyle(
-                                        fontFamily: "Roboto-Regular",
+                                        fontFamily: "Roboto-Regular",overflow: TextOverflow.ellipsis,
                                         color:
                                             ColorsPlatte().secondary.lightText6,
                                         fontSize: (12 / baseWidth) * w),
@@ -200,6 +204,32 @@ class _CreateGroupState extends State<CreateGroup> {
                               )
                             ],
                           ),
+                        ), Row(mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                              child: InkWell(
+                                onTap: (){
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        contentPadding: EdgeInsets.zero, // To avoid extra padding
+                                        content: SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.9, // Adjust width
+                                          height: MediaQuery.of(context).size.height * 0.6, // Adjust height
+                                          child: AddPhoneNumberGroup(), // Your screen inside dialog
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                },
+                                child: Image.asset("assets/images/add.png",color: redCheck,),
+                              ),
+                            ),
+                          ],
                         ),
                         Container(
                           width: w,
@@ -345,31 +375,31 @@ class _CreateGroupState extends State<CreateGroup> {
       ),
     );
   }
-  void _showImageSourceSelector(BuildContext context,localizations) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Wrap(
-          children: [
-            ListTile(
-              leading: Icon(Icons.photo),
-              title: Text(localizations.gallery),
-              onTap: () {
-                Navigator.of(context).pop();
-                _pickImage(ImageSource.gallery);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.camera),
-              title: Text(localizations.camera),
-              onTap: () {
-                Navigator.of(context).pop();
-                _pickImage(ImageSource.camera);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // void _showImageSourceSelector(BuildContext context,localizations) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => SafeArea(
+  //       child: Wrap(
+  //         children: [
+  //           ListTile(
+  //             leading: Icon(Icons.photo),
+  //             title: Text(localizations.gallery),
+  //             onTap: () {
+  //               Navigator.of(context).pop();
+  //               _pickImage(ImageSource.gallery);
+  //             },
+  //           ),
+  //           ListTile(
+  //             leading: Icon(Icons.camera),
+  //             title: Text(localizations.camera),
+  //             onTap: () {
+  //               // Navigator.of(context).pop();
+  //               // _pickImage(ImageSource.camera);
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

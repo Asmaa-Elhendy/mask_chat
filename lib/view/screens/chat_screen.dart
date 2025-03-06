@@ -444,7 +444,7 @@ print(contact);
                                 right: w * .033,
                                 bottom: h * .0145),
                             width: w,
-                            height: h * .65,
+                            height: h * .68,//.65 edit height
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(35),
@@ -803,7 +803,7 @@ print(contact);
 
                           ),
 
-                          SizedBox(height: h*.013,),
+                          SizedBox(height: h*.02,), //edit height
 
                           Row(
                             children: [
@@ -828,7 +828,7 @@ print(contact);
                                   child: Row(
                                     children: [
                                       // Emoji Icon
-                                   //   const Icon(Icons.emoji_emotions_outlined, color: emoji),
+                                     const Icon(Icons.emoji_emotions_outlined, color: emoji),
                                    //    InkWell(
                                    //        onTap: ()async{
                                    //          if(isrecording){
@@ -954,7 +954,7 @@ print(contact);
                                             // Send message functionality
                                             if(_controller.text!="") {
 
-                                              controller.createMessage(localizations, widget.contact!, user_token.value, _controller.text!);
+                                              controller.createChatMessage(localizations, widget.contact!, user_token.value, _controller.text!);
                                               // controller.addMessage(
                                               //
                                               //     Messages(

@@ -76,7 +76,7 @@
   "warning_add_participants": "يرجى إضافة المشاركين أولاً \n للمتابعة!",
   "new_group": "مجموعة جديدة",
   "group_subject": "موضوع المجموعة",
-  "provide_subject_and_image": "يرجى ادخال موضوع المجموعة وصورة اختيارية",
+  "provide_subject_and_image": "الرجاء تقديم موضوع المجموعة",
   "participants": "الأعضاء",
   "create_group": "إنشاء مجموعة",
   "enter_subject_warning": "يرجى إدخال الموضوع",
@@ -117,7 +117,8 @@
   "noChatsAvailable": "لا توجد محادثات متاحة",
   "pleaseEnterAvalidPhone": "الرجاء إدخال رقم هاتف صالح",
   "messageSentSuccessfully": "تم إرسال الرسالة بنجاح",
-  "failedTosendMessage": "فشل في إرسال الرسالة"
+  "failedTosendMessage": "فشل في إرسال الرسالة",
+  "addToGroup": "إضافة إلى المجموعة"
 
 
 }

@@ -77,7 +77,7 @@ class MessagesController extends GetxController{
   //   update();
   // }
 
-  Future<void> createMessage(localizations,ChatContact contact,String token,String message) async {
+  Future<void> createChatMessage(localizations,ChatContact contact,String token,String message) async {
     try {
    //   createChatloading.value = true;
       String statusCode = await _messageService.sendChatMessage(contact, token, message);
@@ -93,6 +93,25 @@ class MessagesController extends GetxController{
     }finally {
   //    createChatloading.value = false; // Stop loading
     //  update();
+    }
+  }
+
+  Future<void> createGroupMessage(localizations,String token,String message,String groupId,bool ismasked) async {
+    try {
+      //   createChatloading.value = true;
+      String statusCode = await _messageService.sendGroupMessage( token, groupId,message,ismasked);
+      if (statusCode=='201') {
+        //  SnackBarErrorWidget(localizations, localizations.messageSentSuccessfully,error: false);
+        getGroupMessages( token,groupId);
+      }
+      else {
+        //   SnackBarErrorWidget(localizations, localizations.failedTosendMessage);
+      }
+    } catch (e) {
+      //    SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
+    }finally {
+      //    createChatloading.value = false; // Stop loading
+      //  update();
     }
   }
 }

@@ -73,7 +73,7 @@
   "warning_add_participants": "Пожалуйста, сначала добавьте участников, чтобы \n продолжить!",
   "new_group": "Новая группа",
   "group_subject": "Тема группы",
-  "provide_subject_and_image": "Пожалуйста, укажите тему группы и, при желании, изображение группы",
+  "provide_subject_and_image": "Пожалуйста, укажите тему группы",
   "participants": "Участники",
   "create_group": "Создать группу",
   "enter_subject_warning": "Пожалуйста, введите тему",
@@ -116,7 +116,8 @@
   "noChatsAvailable": "нет доступных чатов",
   "pleaseEnterAvalidPhone": "Пожалуйста, введите действительный номер телефона",
   "messageSentSuccessfully": "Сообщение успешно отправлено",
-  "failedTosendMessage": "Не удалось отправить сообщение"
+  "failedTosendMessage": "Не удалось отправить сообщение",
+  "addToGroup": "Добавить в группу"
 
 
 

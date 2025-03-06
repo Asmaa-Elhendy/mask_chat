@@ -30,6 +30,9 @@ import '../../../../model/GroupMember.dart';
 import '../../../../model/gtroup.dart';
 import '../../../../model/messages.dart';
 import '../../../../model/user_model.dart';
+import '../../../widgets/add_group.dart';
+import 'add_group_participants.dart';
+import 'create_group.dart';
 
 class GroupChat extends StatefulWidget {
   Group current_group;
@@ -281,25 +284,27 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                           image: DecorationImage(
                                               scale: 1.5,
                                               // Adjust the scale
-                                              image: controller.chatGroup.image
-                                                      is String
-                                                  ? AssetImage(
-                                                      controller.chatGroup
-                                                                  .image ==
-                                                              ""
-                                                          ? "assets/images/categories/Closed friend.png"
-                                                          : controller
-                                                              .chatGroup.image,
-                                                    )
-                                                  : FileImage(
-                                                      controller
-                                                          .chatGroup.image,
-                                                      scale: 1.5,
-                                                      // fit: BoxFit.cover,
-                                                    ),
-                                              fit: BoxFit.cover),
+                                              image:
+                                              // controller.chatGroup.image
+                                              //         is String ?
+                                              AssetImage(
+                                                      // controller.chatGroup
+                                                      //             .image ==
+                                                      //         ""?
+                                              "assets/images/categories/Closed friend.png"
+                                                          // : controller
+                                                          //     .chatGroup.image,
+                                                  //  )
+                                                  // : FileImage(
+                                                  //     controller
+                                                  //         .chatGroup.image,
+                                                  //     scale: 1.5,
+                                                  //     // fit: BoxFit.cover,
+                                                  //   ),
+                                          //   , fit: BoxFit.cover
+                                              ),
                                         ),
-                                      ),
+                                      )),
                                       SizedBox(
                                         width: w * .028,
                                       ),
@@ -309,7 +314,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            controller.chatGroup.subject,
+                                            widget.current_group.subject,
                                             style: TextStyle(
                                               fontFamily: 'Roboto-Medium',
                                               color: Colors.white,
@@ -415,7 +420,9 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                   ),
                                   Spacer(),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: (){
+                                      Get.to(()=>CreateGroup());
+                                    },
                                     child: Image.asset("assets/images/add.png"),
                                   )
                                 ],
@@ -432,7 +439,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                   right: w * .033,
                                   bottom: h * .0145),
                               width: w,
-                              height: h * .6,
+                              height: h * .59,//edit height .6
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(35),
@@ -476,12 +483,13 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                                   .end,
                                                           children: [
                                                             Text(
-                                                              _tabController
-                                                                          .index ==
-                                                                      1
-                                                                  ? localizations
-                                                                      .anonymous
-                                                                  : controller
+                                                              // _tabController
+                                                              //             .index ==
+                                                              //         1
+                                                              //     ? localizations
+                                                              //         .anonymous
+                                                              //     :
+                                                              controller
                                                                       .groupMessages[
                                                                           index]
                                                                       .senderName,
@@ -677,12 +685,12 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                                   //     .image
                                                                   ),
                                                             ),
-                                                            _tabController
-                                                                        .index ==
-                                                                    1
-                                                                ? Image.asset(
-                                                                    "assets/images/mask.png")
-                                                                : SizedBox()
+                                                            // _tabController
+                                                            //             .index ==
+                                                            //         1
+                                                                // ? Image.asset(
+                                                                //     "assets/images/mask.png")
+                                                                // : SizedBox()
                                                           ],
                                                         ),
                                                       ],
@@ -845,7 +853,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                             ),
 
                             SizedBox(
-                              height: h * .022,
+                              height: h * .013, //edit height".022
                             ),
                             Row(
                               children: [
@@ -963,6 +971,10 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                             onPressed: () {
                                               // Send message functionality
                                               if (_controller.text != "") {
+                                                controller.createGroupMessage(
+                                                    localizations, user_token.value, _controller.text,widget.current_group.id.toString(), _tabController.index == 0?false:true);
+
+                                                FocusScope.of(context).unfocus();
                                                 // controller.addMessage(Messages(
                                                 //     // messageType: _attachment ??
                                                 //     //     Type.text,
