@@ -118,7 +118,11 @@
   "pleaseEnterAvalidPhone": "الرجاء إدخال رقم هاتف صالح",
   "messageSentSuccessfully": "تم إرسال الرسالة بنجاح",
   "failedTosendMessage": "فشل في إرسال الرسالة",
-  "addToGroup": "إضافة إلى المجموعة"
+  "addToGroup": "إضافة إلى المجموعة",
+  "youMustEnterGroupNameAndGroupMembers": "يجب عليك إدخال اسم المجموعة وأعضاء المجموعة",
+  "groupCreatedSuccessfully": "تم إنشاء المجموعة بنجاح",
+  "groupAlreadyExist": "المجموعة موجودة بالفعل",
+  "failedToCreateGroup": "فشل في إنشاء المجموعة"
 
 
 }

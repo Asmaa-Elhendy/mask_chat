@@ -117,5 +117,9 @@
   "pleaseEnterAvalidPhone": "Lütfen geçerli bir telefon numarası girin",
   "messageSentSuccessfully": "Mesaj Başarıyla Gönderildi",
   "failedTosendMessage": "Mesaj Gönderilemedi",
-  "addToGroup": "Gruba Ekle"
+  "addToGroup": "Gruba Ekle",
+  "youMustEnterGroupNameAndGroupMembers": "Grup adını ve grup üyelerini girmelisiniz",
+  "groupCreatedSuccessfully": "Grup Başarıyla Oluşturuldu",
+  "groupAlreadyExist": "Grup Zaten Mevcut",
+  "failedToCreateGroup": "Grup Oluşturulamadı"
 }

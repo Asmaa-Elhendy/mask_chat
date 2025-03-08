@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Whatsback/controller/api/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
+import '../../../../controller/api/auth/auth_service.dart';
 import '../../../../controller/api/groups/groups_controller.dart';
 import '../../../widgets/add_phone_number_for_group.dart';
 import '../../../widgets/back_icon.dart';
@@ -325,17 +327,30 @@ class _CreateGroupState extends State<CreateGroup> {
                       ]),
                     )
                   ])),
-              Align(
+           controller.createGroupLoading==true?
+     Center(child: CircularProgressIndicator(color: Colors.white,)):
+           Align(
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
-                      if(_subjectController.text!=""&&_subjectController.text.isNotEmpty){
-                      //  controller.addNewGroup(_subjectController.text, controller.selectedAddedeGroupMembers, _image);
-                        Get.offAll(Home(page: 1,));
+    if((_subjectController.text==""&&_subjectController.text.isEmpty)||controller.selectedAddedeGroupMembers.length==0){
+      SnackBarErrorWidget(localizations, localizations.youMustEnterGroupNameAndGroupMembers);
+    }else{
+      controller.createGroup(localizations, user_token.value, _subjectController.text,controller.selectedAddedeGroupMembers);
+      Get.back();
+      controller.clearSelectAddedContacts();
+        controller.fetchGroups(user_token.value);
 
-                      }else{
-                        dialogWarning(localizations.enter_subject_warning, w, h,localizations);
-                      }
+
+
+    }
+                      // if(_subjectController.text!=""&&_subjectController.text.isNotEmpty){
+                      // //  controller.addNewGroup(_subjectController.text, controller.selectedAddedeGroupMembers, _image);
+                      //   Get.offAll(Home(page: 1,));
+                      //
+                      // }else{
+                      //   dialogWarning(localizations.enter_subject_warning, w, h,localizations);
+                      // }
 
                     },
                     child: Container(

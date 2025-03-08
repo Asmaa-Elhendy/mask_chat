@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import '../../../model/GroupMember.dart';
 import '../../../model/gtroup.dart';
+import '../../../model/retrieve_contact.dart';
 import '../auth/auth_service.dart';
 
 class GroupService {
@@ -87,5 +89,29 @@ class GroupService {
     }
 
     return []; // Return an empty list in case of failure
+  }
+  static Future<String> createGroup(String token,String groupName,List<ContactModel> contacts) async {
+    List<String> selectedContactsIds=[];
+        contacts.forEach((ContactModel contact){
+        selectedContactsIds.add(contact.id.toString());
+    });
+    final url = Uri.parse("${baseUrl}groups");
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json',    'Authorization': 'Bearer $token',},
+      body: jsonEncode({
+        "name": groupName,
+        "members": selectedContactsIds
+      }),
+    );
+    log(response.statusCode.toString());
+    log(response.body);
+    if (response.statusCode == 201) {
+      return '201';
+    }else if(response.statusCode==200){
+      return '200';
+    }
+    return 'other';
   }
 }

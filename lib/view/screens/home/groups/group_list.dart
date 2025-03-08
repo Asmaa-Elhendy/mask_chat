@@ -67,12 +67,13 @@ class _GroupListState extends State<GroupList> {
           Container(
             padding: EdgeInsets.only(left: w * .035, right: w * .035, bottom: (13 / baseHeight) * h, top: (13 / baseHeight) * h),
             width: w,
-            height: h * .765,
+            height: h * .74,//edit groups height
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(35)),
             child: GetBuilder<GroupController>(
                 init: GroupController(),
+
                 builder: (controller) {
                   if (controller.loading==true) {
                     return Center(child: CircularProgressIndicator(color: redCheck,));

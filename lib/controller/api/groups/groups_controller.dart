@@ -15,6 +15,7 @@ import 'group_service.dart';
 
 class GroupController extends GetxController {
   var loading = false.obs; // Observable loading state
+  var createGroupLoading = false.obs;
   List<Contact> contacts = [];
   List<ChatContact> azItems = [];
   int idCounter = 1;
@@ -63,7 +64,24 @@ class GroupController extends GetxController {
     }
     update();
   }
-
+  Future<void> createGroup(localizations,String token,String groupName,List<ContactModel> contacts) async {
+    try {
+      createGroupLoading.value = true;
+      String statusCode = await GroupService.createGroup( token, groupName,contacts);
+      if (statusCode=='201') {
+        SnackBarErrorWidget(localizations, localizations.groupCreatedSuccessfully,error: false);
+      } else  if (statusCode=='200') {
+        SnackBarErrorWidget(localizations, localizations.groupAlreadyExist);
+      }
+      else {
+        SnackBarErrorWidget(localizations, localizations.failedToCreateGroup);
+      }
+    } catch (e) {
+      SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
+    }finally {
+      createGroupLoading.value = false; // Stop loading
+    }
+  }
   toggleClosed(int id) {
     int index = groupsList.indexWhere((contact) => contact.id == id);
     if (index != -1) {
@@ -93,6 +111,14 @@ class GroupController extends GetxController {
     selectedAddedeGroupMembers.add(contact);
 
       update();
+
+
+  }
+  clearSelectAddedContacts(){
+
+    selectedAddedeGroupMembers.clear();
+
+    update();
 
 
   }

@@ -117,7 +117,11 @@
   "pleaseEnterAvalidPhone": "Пожалуйста, введите действительный номер телефона",
   "messageSentSuccessfully": "Сообщение успешно отправлено",
   "failedTosendMessage": "Не удалось отправить сообщение",
-  "addToGroup": "Добавить в группу"
+  "addToGroup": "Добавить в группу",
+  "youMustEnterGroupNameAndGroupMembers": "Вы должны ввести имя группы и участников группы",
+  "groupCreatedSuccessfully": "Группа создана успешно",
+  "groupAlreadyExist": "Группа уже существует",
+  "failedToCreateGroup": "Не удалось создать группу"
 
 
 

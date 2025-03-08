@@ -117,7 +117,12 @@
    "pleaseEnterAvalidPhone": "Please Enter a Valid Phone",
    "messageSentSuccessfully": "Message Sent Successfully",
    "failedTosendMessage":  "Failed To Send Message",
-   "addToGroup": "Add to Group"
+   "addToGroup": "Add to Group",
+   "youMustEnterGroupNameAndGroupMembers": "You must enter group name and group Members",
+   "groupCreatedSuccessfully": "Group Created Successfully",
+   "groupAlreadyExist": "Group Already Exist",
+   "failedToCreateGroup": "Failed To Create Group"
+
 }
 
 
