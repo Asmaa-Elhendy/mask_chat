@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:Whatsback/controller/api/auth/auth_controller.dart';
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
+import 'package:Whatsback/controller/api/groups/groups_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -244,85 +245,91 @@ class _AddPhoneNumberGroupState extends State<AddPhoneNumberGroup> {
                         ),
                       ),SizedBox(height: h*.01,),
 
-                      GetBuilder<ChatsController>(
-                          init: ChatsController(),
-                          builder: (chat_controller) {
-                            if (chat_controller.createChatloading==true) {
-                              return Center(child: CircularProgressIndicator(color: Colors.white,));
-                            }
+                      GetBuilder<GroupController>(
+                          init: GroupController(),
+                        builder: (groupController) {
+                          return GetBuilder<ChatsController>(
+                              init: ChatsController(),
+                              builder: (chat_controller) {
+                                if (chat_controller.createChatloading==true) {
+                                  return Center(child: CircularProgressIndicator(color: Colors.white,));
+                                }
 
-                            return  Align(
-                                alignment: Alignment.bottomCenter,
-                                child: InkWell(
-                                  onTap: (){
+                                return  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: InkWell(
+                                      onTap: (){
 
-                                      //here handle create new chat
-                                      log("first 2");
-                                      if(phoneController.contactsList.length==0){
-                                        SnackBarErrorWidget(localizations, localizations.pleaseEnterAvalidPhone);
-                                      }else{
-                                        chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
-                                        Get.back();
-                                      }
+                                          //here handle add member to group not created yet
+                                          log("first 2");
+                                          if(phoneController.contactsList.length==0){
+                                            SnackBarErrorWidget(localizations, localizations.pleaseEnterAvalidPhone);
+                                          }else{
+                                            groupController.selectContactToAdd( phoneController.contactsList[0]);
+                                            Get.back();
+                                            phoneController.clearPhoneslist();
+                                          }
 
-                                      if ((_formKey.currentState!.validate())) {
-                                        //not understand
-                                        // controller.addContactsToClass(controller.selectedMask
-                                        //     .id, Contacts(isSelected: false,
-                                        //     id: controller.selectedMask.contacts.isEmpty
-                                        //         ? 0
-                                        //         : (controller.selectedMask.contacts[controller
-                                        //         .selectedMask.contacts.length - 1].id + 1),
-                                        //
-                                        //     tag: _nameController.text[0].toUpperCase(),
-                                        //     name: _nameController.text,
-                                        //     image: "assets/images/profile.png",
-                                        //     closed: false,
-                                        //     numOfMessage: ""));
+                                          if ((_formKey.currentState!.validate())) {
+                                            //not understand
+                                            // controller.addContactsToClass(controller.selectedMask
+                                            //     .id, Contacts(isSelected: false,
+                                            //     id: controller.selectedMask.contacts.isEmpty
+                                            //         ? 0
+                                            //         : (controller.selectedMask.contacts[controller
+                                            //         .selectedMask.contacts.length - 1].id + 1),
+                                            //
+                                            //     tag: _nameController.text[0].toUpperCase(),
+                                            //     name: _nameController.text,
+                                            //     image: "assets/images/profile.png",
+                                            //     closed: false,
+                                            //     numOfMessage: ""));
 
 
-                                      }
+                                          }
 
-                                   },
-                                  child: Container(
-                                    width: w,
-                                    height: (35/baseHeight) *h, //45
-                                    decoration:   BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(24.0), // Adjust radius as needed
-                                          topRight: Radius.circular(24.0),
+                                       },
+                                      child: Container(
+                                        width: w,
+                                        height: (35/baseHeight) *h, //45
+                                        decoration:   BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(24.0), // Adjust radius as needed
+                                              topRight: Radius.circular(24.0),
+                                            ),
+                                            gradient: controller.workWithChat?LinearGradient(
+                                              colors: [
+                                                Color(0xffd42336),
+                                                Color(0xffed4658) ],
+                                              stops: [
+                                                0,
+                                                1
+                                              ],
+                                              begin: Alignment(1.00, -0.00),
+                                              end: Alignment(-1.00, 0.00),
+                                              // angle: 270,
+                                              // scale: undefined,
+                                            ):null,
+                                            color: controller.workWithChat?null:controller.selectedMask.mainColor
                                         ),
-                                        gradient: controller.workWithChat?LinearGradient(
-                                          colors: [
-                                            Color(0xffd42336),
-                                            Color(0xffed4658) ],
-                                          stops: [
-                                            0,
-                                            1
-                                          ],
-                                          begin: Alignment(1.00, -0.00),
-                                          end: Alignment(-1.00, 0.00),
-                                          // angle: 270,
-                                          // scale: undefined,
-                                        ):null,
-                                        color: controller.workWithChat?null:controller.selectedMask.mainColor
-                                    ),
-                                    child:  Center(
-                                      child: Text(localizations.addToGroup,
-                                          style: TextStyle(
-                                            fontFamily: 'Roboto-Regular',
-                                            color: Colors.white,
-                                            fontSize: (18 / baseWidth) *w,
-                                            fontWeight: FontWeight.w400,
-                                            fontStyle: FontStyle.normal,
+                                        child:  Center(
+                                          child: Text(localizations.addToGroup,
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto-Regular',
+                                                color: Colors.white,
+                                                fontSize: (18 / baseWidth) *w,
+                                                fontWeight: FontWeight.w400,
+                                                fontStyle: FontStyle.normal,
 
 
-                                          )
+                                              )
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ));
-                          }),
+                                    ));
+                              });
+                        }
+                      ),
                     ],
                   ),
                 ),

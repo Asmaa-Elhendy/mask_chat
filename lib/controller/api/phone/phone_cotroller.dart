@@ -15,4 +15,8 @@ class PhoneController extends GetxController {
     contactsList.assignAll(contacts);
     isLoading.value = false;
   }
+  clearPhoneslist(){
+    contactsList.clear();
+    update();
+  }
 }

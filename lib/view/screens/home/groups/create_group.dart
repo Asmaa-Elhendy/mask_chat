@@ -270,7 +270,7 @@ class _CreateGroupState extends State<CreateGroup> {
                            // crossAxisSpacing: 10,
                                 childAspectRatio: 2/2.6
                           ),
-                          itemCount: controller.selectedContactsAddtoGroup
+                          itemCount: controller.selectedAddedeGroupMembers
                               .length, // Replace with actual participant count
                           itemBuilder: (context, index) {
                             return Column(
@@ -282,9 +282,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                       width: (50 / baseWidth) * w,
                                       child: CircleAvatar(
                                         radius: 25,
-                                        child: Image.asset(controller
-                                            .selectedContactsAddtoGroup[index]
-                                            .image),
+                                        child: Image.asset("assets/images/profile.png"),
                                       ),
                                     ),
                                     Positioned(
@@ -295,12 +293,13 @@ class _CreateGroupState extends State<CreateGroup> {
                                       child: GestureDetector(
                                         onTap: () {
                                           // Remove participant
-                                          controller.selectContactToAdd(
-                                              controller
-                                                  .selectedContactsAddtoGroup[
-                                                      index]
-                                                  .id,
-                                              false);
+                                          // controller.selectContactToAdd(
+                                          //     controller
+                                          //         .selectedAddedeGroupMembers[
+                                          //             index]
+                                          //         .id,
+                                          //     false);
+                                          controller.removeSelectedAddedMember(controller.selectedAddedeGroupMembers[index]);
                                         },
                                         child: CircleAvatar(
                                           radius: 10,
@@ -315,7 +314,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                 ),
                                 SizedBox(height: 4),
                                 Text(
-                                  '${controller.selectedContactsAddtoGroup[index].name}', // Replace with actual name
+                                  '${controller.selectedAddedeGroupMembers[index].name}', // Replace with actual name
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -331,7 +330,7 @@ class _CreateGroupState extends State<CreateGroup> {
                   child: InkWell(
                     onTap: () {
                       if(_subjectController.text!=""&&_subjectController.text.isNotEmpty){
-                        controller.addNewGroup(_subjectController.text, controller.selectedContactsAddtoGroup, _image);
+                      //  controller.addNewGroup(_subjectController.text, controller.selectedAddedeGroupMembers, _image);
                         Get.offAll(Home(page: 1,));
 
                       }else{
@@ -341,7 +340,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     },
                     child: Container(
                       width: w,
-                      height: (45 / baseHeight) * h,
+                      height: (55 / baseHeight) * h,//45
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft:

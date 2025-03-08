@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../model/contacts.dart';
 import '../../../model/gtroup.dart';
 import '../../../model/messages.dart';
+import '../../../model/retrieve_contact.dart';
 import '../auth/auth_service.dart';
 import 'group_service.dart';
 
@@ -86,60 +87,76 @@ class GroupController extends GetxController {
       SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
     }
   }
+ List <ContactModel> selectedAddedeGroupMembers=[];
+  selectContactToAdd(ContactModel contact){
 
-  fetchContacts() async {
-selectedContactsAddtoGroup=[];
-    // Fetch phone contacts
-    Iterable<Contact> fetchedContacts =
-    await ContactsService.getContacts(withThumbnails: true);
+    selectedAddedeGroupMembers.add(contact);
 
-    // Convert contacts to AZItems
-    List<ChatContact> items = fetchedContacts.map((contact) {
-      String displayName = contact.displayName ?? "Unnamed";
-      String tag = displayName[0].toUpperCase(); // First letter of the name
-
-      return ChatContact(
-        id:  idCounter++,
-        name: displayName,
-        userId: '0',contactId: '0',isMasked: '0',
-        tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",
-        closed: false,
-        image: "assets/images/profile.png",
-        numOfMessage: "0",
-        contact: contact,
-        isSelected: false,
-        needInvite: false,
-      );
-    }).toList();
-
-    // Sort the items by their tag
-    SuspensionUtil.sortListBySuspensionTag(items);
-    SuspensionUtil.setShowSuspensionStatus(items);
+      update();
 
 
-    contacts = fetchedContacts.toList();
-    azItems = items;
-    // azItems[0].needInvite=true;
-    // azItems[5].needInvite=true;
+  }
+  removeSelectedAddedMember(ContactModel contact){
+
+    selectedAddedeGroupMembers.remove(contact);
+
     update();
 
-  }
-  selectContactToAdd(int id,bool add){
-    int index = azItems.indexWhere((contact) => contact.id == id);
-
-    if(add){
-      selectedContactsAddtoGroup.add(azItems[index]);
-      azItems[index].isSelected=true;
-      update();
-
-    }else{
-      selectedContactsAddtoGroup.remove(azItems[index]);
-      azItems[index].isSelected=false;
-
-      update();
-    }
 
   }
+//   fetchContacts() async {
+// selectedContactsAddtoGroup=[];
+//     // Fetch phone contacts
+//     Iterable<Contact> fetchedContacts =
+//     await ContactsService.getContacts(withThumbnails: true);
+//
+//     // Convert contacts to AZItems
+//     List<ChatContact> items = fetchedContacts.map((contact) {
+//       String displayName = contact.displayName ?? "Unnamed";
+//       String tag = displayName[0].toUpperCase(); // First letter of the name
+//
+//       return ChatContact(
+//         id:  idCounter++,
+//         name: displayName,
+//         userId: '0',contactId: '0',isMasked: '0',
+//         tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",
+//         closed: false,
+//         image: "assets/images/profile.png",
+//         numOfMessage: "0",
+//         contact: contact,
+//         isSelected: false,
+//         needInvite: false,
+//       );
+//     }).toList();
+//
+//     // Sort the items by their tag
+//     SuspensionUtil.sortListBySuspensionTag(items);
+//     SuspensionUtil.setShowSuspensionStatus(items);
+//
+//
+//     contacts = fetchedContacts.toList();
+//     azItems = items;
+//     // azItems[0].needInvite=true;
+//     // azItems[5].needInvite=true;
+//     update();
+//
+//   }
+//   selectContactToAdd(int id,bool add){
+//     int index = azItems.indexWhere((contact) => contact.id == id);
+//
+//     if(add){
+//       selectedContactsAddtoGroup.add(azItems[index]);
+//       azItems[index].isSelected=true;
+//       update();
+//
+//     }else{
+//       selectedContactsAddtoGroup.remove(azItems[index]);
+//       azItems[index].isSelected=false;
+//
+//       update();
+//     }
+//
+//   }
   addNewGroup(String name,List<ChatContact> groupContacts, File? _image){
 
     groupsList.add(

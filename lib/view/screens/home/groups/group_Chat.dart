@@ -420,7 +420,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                   ),
                                   Spacer(),
                                   InkWell(
-                                    onTap: (){
+                                    onTap: (){//need to handle add member to group not add group here
                                       Get.to(()=>CreateGroup());
                                     },
                                     child: Image.asset("assets/images/add.png"),
@@ -678,7 +678,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                                   //             .image ==
                                                                   //         "image"
                                                                   // ?
-                                                                  "assets/images/profile.png"
+                                                                 "assets/images/profile.png"
                                                                   // : controller
                                                                   //     .messages[index]
                                                                   //     .senderId
@@ -706,7 +706,9 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                                               //             .senderId.image ==
                                                               //         "image"
                                                               //     ?
-                                                              "assets/images/profile.png"
+                                                              controller.groupMessages[index]
+                                                                  .senderName== "Anonymous"?
+                                                              "assets/images/mask.png"    :       "assets/images/profile.png"
                                                               // : controller
                                                               //     .messages[index]
                                                               //     .senderId

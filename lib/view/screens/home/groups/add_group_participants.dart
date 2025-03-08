@@ -192,12 +192,12 @@ class _AddGroupParticipantsState extends State<AddGroupParticipants> {
                                                                     .isSelected =
                                                                 value!;
                                                             if (value) {
-                                                              controller.selectContactToAdd(
-                                                                  controller
-                                                                      .azItems[
-                                                                          index]
-                                                                      .id,
-                                                                  value);
+                                                              // controller.selectContactToAdd(
+                                                              //     controller
+                                                              //         .azItems[
+                                                              //             index]
+                                                              //         .id,
+                                                              //     value);
                                                             }
                                                           }
                                                         },
