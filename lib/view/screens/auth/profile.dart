@@ -88,19 +88,19 @@ class _YourProfileState extends State<YourProfile> {
                                     ),
                                   ),
                               ):Image.asset("assets/images/profile.png")),
-                              GestureDetector(
-                               onTap:()=> _showImageSourceSelector(context,localizations),
-                                child: Container(
-                                  padding: const EdgeInsets.all(3),
-                                    margin: EdgeInsets.only(left: w*.01,top: h*.08),
-
-                                    decoration:  const BoxDecoration(
-                                        color: redCheck,
-                                      shape: BoxShape.circle
-                                    ),
-                                child: const Icon(Icons.edit,color: profileContainer,size: 15,)
-                                ),
-                              )
+                              // GestureDetector(
+                              //  onTap:()=> _showImageSourceSelector(context,localizations),
+                              //   child: Container(
+                              //     padding: const EdgeInsets.all(3),
+                              //       margin: EdgeInsets.only(left: w*.01,top: h*.08),
+                              //
+                              //       decoration:  const BoxDecoration(
+                              //           color: redCheck,
+                              //         shape: BoxShape.circle
+                              //       ),
+                              //   child: const Icon(Icons.edit,color: profileContainer,size: 15,)
+                              //   ),
+                              // )
 
                         ],
                       ),
