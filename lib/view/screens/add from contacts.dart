@@ -63,7 +63,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
       List<ChatContact> items = fetchedContacts.map((contact) {
         String displayName = contact.displayName ?? "Unnamed";
         String tag = displayName[0].toUpperCase(); // First letter of the name
-        return ChatContact(userId: '0',contactId: '0',isMasked: '0',
+        return ChatContact(userId: '0',contactId: '0',isMasked: '0',status: '',
           id:  idCounter++,
           name: displayName,
           tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",
@@ -274,7 +274,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
                            for(int i =0;i<_selectedContacts.length;i++){
                              controller.addContactsToClass(controller.selectedMask.id,
                                  ChatContact(userId: '0',contactId: '0',isMasked: '0',
-                                   id: _selectedContacts[i].id,
+                                   id: _selectedContacts[i].id,status: '',
                                    name: _selectedContacts[i].name,
                                    tag: _selectedContacts[i].name[0].toUpperCase(),
                                    image: "assets/images/profile.png",

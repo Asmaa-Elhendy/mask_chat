@@ -55,7 +55,8 @@ class ClassController extends GetxController {
 
     Class(
       id: 3,
-      contacts: [   ChatContact(
+      contacts: [
+        ChatContact(status:'',
             id: 5,
             name: "Tasneem Elattar",
             image: "assets/images/Oval2.png",
@@ -63,21 +64,21 @@ class ClassController extends GetxController {
             numOfMessage: "0",
             tag: "t",
             isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
-        ChatContact(name: "Armen R. Kane",
+        ChatContact(status:'',name: "Armen R. Kane",
             image: "assets/images/Oval.png",
             closed: false,
             numOfMessage: "0",
             tag: "A",
             id: 2,
             isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
-        ChatContact(name: "Tasneem Elattar",
+        ChatContact(status:'',name: "Tasneem Elattar",
             image: "assets/images/Oval4.png",
             closed: false,
             numOfMessage: "0",
             tag: "T",
             id: 3,
             isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
-        ChatContact(name: "Catt Corby",
+        ChatContact(status:'',name: "Catt Corby",
             image: "assets/images/Oval3.png",
             closed: true,
             numOfMessage: "0",
@@ -85,21 +86,21 @@ class ClassController extends GetxController {
             id: 4,
             isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
 
-        ChatContact(name: "batt Corby",
+        ChatContact(status:'',name: "batt Corby",
             image: "assets/images/Oval5.png",
             closed: true,
             numOfMessage: "0",
             tag: "B",
             id: 5,
             isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
-        ChatContact(name: "batt Corby",
+        ChatContact(status:'',name: "batt Corby",
             image: "assets/images/Oval2.png",
             closed: true,
             numOfMessage: "0",
             tag: "B",
             id: 6,
             isSelected: false,userId: '0',contactId: '0',isMasked: '0'),
-        ChatContact(name: "Catt Corby",
+        ChatContact(status:'',name: "Catt Corby",
             image: "assets/images/Oval.png",
             closed: true,
             numOfMessage: "0",
@@ -224,7 +225,7 @@ class ClassController extends GetxController {
      String displayName = contact.displayName ?? "Unnamed";
      String tag = displayName[0].toUpperCase(); // First letter of the name
      print("$index $displayName\n ");
-      return ChatContact(
+      return ChatContact(status: '',
           id:  idCounter++,userId: '0',contactId: '0',isMasked: '0',
           name: displayName,
           tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",

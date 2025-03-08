@@ -26,30 +26,31 @@ class AddContacts extends StatelessWidget {
       color: Colors.white,
       onSelected: (int result) {
         // Handle the selected option
-        if(result==0){
-          Future<bool> requestPermission() async {
-            PermissionStatus status = await Permission.contacts.request();
-            print("status$status");
-
-            return status.isGranted;
-          }
-          requestPermission();
-          Get.to(const AddFromContactes());
-        }else if(result == 1){
-          Get.to( AddPhoneNumber());
-        }
+        // if(result==0){
+        //   Future<bool> requestPermission() async {
+        //     PermissionStatus status = await Permission.contacts.request();
+        //     print("status$status");
+        //
+        //     return status.isGranted;
+        //   }
+        //   requestPermission();
+        //   Get.to(const AddFromContactes());
+        // }else if(result == 1){
+        //   Get.to( AddPhoneNumber());
+        // }
+        Get.to( AddPhoneNumber());
         print(result);
       },
       itemBuilder: (BuildContext context) => [
-        PopupMenuItem<int>(
-          value: 0,
-          child: tile(w,h,
-           Icon(Icons.perm_contact_calendar_outlined,color: myColor,),localizations.addFromContacts
-          ),
-        ),
-        const PopupMenuDivider(
-          height: .01,
-        ),
+        // PopupMenuItem<int>(
+        //   value: 0,
+        //   child: tile(w,h,
+        //    Icon(Icons.perm_contact_calendar_outlined,color: myColor,),localizations.addFromContacts
+        //   ),
+        // ),
+        // const PopupMenuDivider(
+        //   height: .01,
+        // ),
         PopupMenuItem<int>(
           value: 1,
           child: tile(w,h,

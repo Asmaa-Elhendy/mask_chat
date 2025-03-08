@@ -29,8 +29,14 @@ class RequestsController extends GetxController{
       loading.value = true; // Start loading
       List<ChatContact>  allChats = await _chatService.getChats(token);
       allChats.forEach((ChatContact contact){
-        contact.isMasked=='1'?requests.add(contact):null;
+
+        if(contact.status=='pending'){
+          requests.add(contact);
+          log(contact.id.toString());
+        }
       });
+      log('new requests');
+
     } catch (e) {
       print("Error fetching chats: $e");
     } finally {

@@ -322,7 +322,7 @@ print(contact);
                                         width: 35,
                                         height: 35,
                                         child:
-                                            Image.asset(controller.chatPerson.image)),
+                                            Image.asset(widget.unKnown==true?'assets/images/faces.png':widget.contact!.image)),
                                     SizedBox(
                                       width: w * .028,
                                     ),
@@ -363,14 +363,14 @@ print(contact);
                                       ],
                                     ),
                                     Spacer(),
-                                    widget.unKnown?InkWell(
-                                      onTap: () {
-                                        Get.off( AddPhoneNumber(unKnown: widget.person,));
-
-
-                                      },
-                                      child: Image.asset("assets/images/add.png"),
-                                    ):SizedBox()
+                                    // widget.unKnown?InkWell(
+                                    //   onTap: () {
+                                    //     Get.off( AddPhoneNumber(unKnown: widget.person,));
+                                    //
+                                    //
+                                    //   },
+                                    //   child: Image.asset("assets/images/add.png"),
+                                    // ):SizedBox()
                                   ],
                                 ),
                                 SizedBox(
@@ -485,10 +485,8 @@ print(contact);
                                               CrossAxisAlignment.end,
                                               children: [
                                                 Text(// need to check , here handle directions and name of sender messgae
-                                                  widget.isMask?
-                                                  "${localizations.anonymous}"
-                                                      :
-                                                (  controller.messages[index].senderId.toString()==widget.userModel?.id.toString())?
+
+                                                    controller.messages[index].senderId.toString()==widget.userModel?.id.toString()?
                                                       widget.userModel!.name:
                                                   widget.contact!.name,
                                                   style: TextStyle(
@@ -676,7 +674,7 @@ print(contact);
 
                                               ],
                                             ),
-                                              _tabController.index==1?  CircleAvatar(
+                                           ( controller.messages[index].senderId.toString()!=widget.userModel?.id.toString()&& widget.isMask==true)?  CircleAvatar(
 
                                                 backgroundImage: AssetImage( "assets/images/mask.png",)
 
@@ -706,7 +704,8 @@ print(contact);
                                              CrossAxisAlignment.start,
                                              children: [
                                                Text(
-                                                 controller.messages[index].senderId.toString()==widget.userModel?.id.toString()?widget.userModel!.name   :controller.messages[index]
+                                                 controller.messages[index].senderId.toString()==widget.userModel?.id.toString()?widget.userModel!.name   :
+                                                 controller.messages[index]
                                                      .senderName,
                                                  style: TextStyle(
                                                    fontFamily:

@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   List _pages = [
     chatList(),
     GroupList(),
-    ThreeDotsScreens(),
+    // ThreeDotsScreens(),
     Requests(),
 
   ];
@@ -74,7 +74,8 @@ class _HomeState extends State<Home> {
          body:  _pages[_currentIndex],
 
 
-        bottomNavigationBar:_currentIndex!=2? BottomNavigationBar(
+        bottomNavigationBar://_currentIndex!=2?
+        BottomNavigationBar(
 
           backgroundColor: Colors.transparent, // Transparent to blend with gradient
           selectedItemColor: Colors.white,
@@ -132,20 +133,20 @@ class _HomeState extends State<Home> {
               ),
               label: localizations.groups,
             ),
-             BottomNavigationBarItem(
-
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
-                child: SizedBox(
-                    width: (22/baseWidth)*w,
-
-                    height: (22/baseHeight)*h,
-                    child: Center(child: Icon(Icons.contact_page_outlined,
-                      size: (25/baseWidth)*w,
-                    ))),
-              ),
-              label: localizations.contacts,
-            ),
+            //  BottomNavigationBarItem(
+            //
+            //   icon: Padding(
+            //     padding: const EdgeInsets.only(bottom: 5.0),
+            //     child: SizedBox(
+            //         width: (22/baseWidth)*w,
+            //
+            //         height: (22/baseHeight)*h,
+            //         child: Center(child: Icon(Icons.contact_page_outlined,
+            //           size: (25/baseWidth)*w,
+            //         ))),
+            //   ),
+            //   label: localizations.contacts,
+            // ),
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom:( 5.0)),
@@ -180,7 +181,7 @@ class _HomeState extends State<Home> {
               Get.find<ChatsController>().sorting(); // Call sorting function
             }
           },
-        ):null,
+        )//:null,
       ),
     );
   }

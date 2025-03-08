@@ -9,6 +9,7 @@ class ChatContact  extends ISuspensionBean {
 String image;
 String numOfMessage;
 bool closed;
+String status;
 Contact? contact;
 final String tag;
 bool isSelected;
@@ -16,7 +17,7 @@ bool needInvite;
 bool talkingAnonymous;
 
 
-  ChatContact({this.talkingAnonymous=false,this.needInvite=false,required this.userId,required this.isMasked,required this.contactId,required this.isSelected,this.contact,required this.id,required this.tag,required this.name,required this.image,required this.closed,required this.numOfMessage});
+  ChatContact({this.talkingAnonymous=false,this.needInvite=false,required this.userId,required this.status,required this.isMasked,required this.contactId,required this.isSelected,this.contact,required this.id,required this.tag,required this.name,required this.image,required this.closed,required this.numOfMessage});
 
   @override
   String getSuspensionTag() {
@@ -31,6 +32,7 @@ bool talkingAnonymous;
       id: json['id'] as int,
       name: json['contact']?['name'] ?? '', // Extract name from contact
       image:json['is_masked']==1?'assets/images/faces.png' :'assets/images/profile.png', // Placeholder image
+      status: json['status'],
       numOfMessage: '0', // Default value
       closed: false, // Default value
       tag: '', // Default value
