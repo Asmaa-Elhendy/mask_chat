@@ -121,7 +121,9 @@
    "youMustEnterGroupNameAndGroupMembers": "You must enter group name and group Members",
    "groupCreatedSuccessfully": "Group Created Successfully",
    "groupAlreadyExist": "Group Already Exist",
-   "failedToCreateGroup": "Failed To Create Group"
+   "failedToCreateGroup": "Failed To Create Group",
+   "memberAlreadyExist": "Member Already Exist",
+   "failedToAddMember": "Failed To Add Member"
 
 }
 

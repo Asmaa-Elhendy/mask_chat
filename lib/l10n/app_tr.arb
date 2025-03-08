@@ -121,5 +121,7 @@
   "youMustEnterGroupNameAndGroupMembers": "Grup adını ve grup üyelerini girmelisiniz",
   "groupCreatedSuccessfully": "Grup Başarıyla Oluşturuldu",
   "groupAlreadyExist": "Grup Zaten Mevcut",
-  "failedToCreateGroup": "Grup Oluşturulamadı"
+  "failedToCreateGroup": "Grup Oluşturulamadı",
+  "memberAlreadyExist": "Üye Zaten Var",
+  "failedToAddMember": "Üye Ekleme Başarısız"
 }

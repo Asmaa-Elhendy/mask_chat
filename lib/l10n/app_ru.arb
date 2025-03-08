@@ -121,7 +121,9 @@
   "youMustEnterGroupNameAndGroupMembers": "Вы должны ввести имя группы и участников группы",
   "groupCreatedSuccessfully": "Группа создана успешно",
   "groupAlreadyExist": "Группа уже существует",
-  "failedToCreateGroup": "Не удалось создать группу"
+  "failedToCreateGroup": "Не удалось создать группу",
+  "memberAlreadyExist": "Участник уже существует",
+  "failedToAddMember": "Не удалось добавить участника"
 
 
 

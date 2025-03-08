@@ -114,4 +114,24 @@ class GroupService {
     }
     return 'other';
   }
+  static Future<String> createGroupMember(String token,String groupId,String userId) async {
+
+    final url = Uri.parse("${baseUrl}groups/$groupId/members");
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json',    'Authorization': 'Bearer $token',},
+      body: jsonEncode({
+        "user_id": userId
+      }),
+    );
+    log(response.statusCode.toString());
+    log(response.body);
+    if (response.statusCode == 201) {
+      return '201';
+    }else if(response.statusCode==200){
+      return '200';
+    }
+    return 'other';
+  }
 }

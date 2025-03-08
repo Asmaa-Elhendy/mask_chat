@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:Whatsback/controller/api/auth/auth_controller.dart';
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
+import 'package:Whatsback/controller/api/groups/groups_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -23,7 +24,9 @@ import 'home/home.dart';
 
 class AddPhoneNumber extends StatefulWidget {
   ChatContact? unKnown;
-  AddPhoneNumber({this.unKnown,super.key});
+  bool? fromChat;  // in case false then get from group chat screen to add group member
+  String? groupId;
+  AddPhoneNumber({this.unKnown,super.key,this.fromChat=true,this.groupId});
 
   @override
   State<AddPhoneNumber> createState() => _AddPhoneNumberState();
@@ -355,7 +358,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                   phoneController.checkPhoneNumber(_phoneNumberController.text,user_token.value);
                                 },
                               ),SizedBox(height: h*.04,),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  widget.fromChat==true?            Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Container(
                                     width: w * .4,
@@ -384,7 +387,7 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                     }),
                                   ),
                                 ],
-                              ),
+                              ):SizedBox(),
                             ],
                           ),
                         ),
@@ -479,108 +482,108 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                //          ),
                //        ),
                //      )),
-                GetBuilder<ChatsController>(
-                    init: ChatsController(),
-                    builder: (chat_controller) {
-                      if (chat_controller.createChatloading==true) {
-                        return Center(child: CircularProgressIndicator(color: Colors.white,));
-                      }
+             GetBuilder<GroupController>(
+            init: GroupController(),
+                  builder: (group_controller) {
+                    return GetBuilder<ChatsController>(
+                        init: ChatsController(),
+                        builder: (chat_controller) {
+                          if (chat_controller.createChatloading==true) {
+                            return Center(child: CircularProgressIndicator(color: Colors.white,));
+                          }else  if (group_controller.createMemberLoading==true) {
+                            return Center(child: CircularProgressIndicator(color: Colors.white,));
+                          }
 
-                      return  Align(
-                          alignment: Alignment.bottomCenter,
-                          child: InkWell(
-                            onTap: (){
-                              if(widget.unKnown!=null){
-                                log("first 1");
-                                Get.find<RequestsController>().deleteRequest(widget.unKnown!.id);
+                          return  Align(
+                              alignment: Alignment.bottomCenter,
+                              child: InkWell(
+                                onTap: (){
+                                  if(widget.unKnown!=null){
+                                    log("first 1");
+                                    Get.find<RequestsController>().deleteRequest(widget.unKnown!.id);
 
-                              }
-                              if(controller.workWithChat){
-                                //here handle create new chat
-                                log("first 2");
-                                if(phoneController.contactsList.length==0){
-                                  SnackBarErrorWidget(localizations, localizations.pleaseEnterAvalidPhone);
-                                }else{
-                                  chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
-                                  Get.back();
-                                }
+                                  }
+                                  if(phoneController.contactsList.length==0){
+                                    SnackBarErrorWidget(localizations, localizations.pleaseEnterAvalidPhone);
+                                  }else{
+                                    if(widget.fromChat==false){
+                                      group_controller.createGroupMember(localizations, user_token.value,widget.groupId.toString(),phoneController.contactsList[0].id.toString());
+                                      Get.back();
+                                      phoneController.clearPhoneslist();
+                                    }
+                                    else if(controller.workWithChat){
+                                      //here handle create new chat
+                                      log("first 2");
 
-                                if ((_formKey.currentState!.validate())) {
-                                  //not understand
-                                  // controller.addContactsToClass(controller.selectedMask
-                                  //     .id, Contacts(isSelected: false,
-                                  //     id: controller.selectedMask.contacts.isEmpty
-                                  //         ? 0
-                                  //         : (controller.selectedMask.contacts[controller
-                                  //         .selectedMask.contacts.length - 1].id + 1),
-                                  //
-                                  //     tag: _nameController.text[0].toUpperCase(),
-                                  //     name: _nameController.text,
-                                  //     image: "assets/images/profile.png",
-                                  //     closed: false,
-                                  //     numOfMessage: ""));
+                                      chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
+                                      Get.back();
+
+                                      phoneController.clearPhoneslist();
+                                      if ((_formKey.currentState!.validate())) {
+                                        //not understand
+                                        // controller.addContactsToClass(controller.selectedMask
+                                        //     .id, Contacts(isSelected: false,
+                                        //     id: controller.selectedMask.contacts.isEmpty
+                                        //         ? 0
+                                        //         : (controller.selectedMask.contacts[controller
+                                        //         .selectedMask.contacts.length - 1].id + 1),
+                                        //
+                                        //     tag: _nameController.text[0].toUpperCase(),
+                                        //     name: _nameController.text,
+                                        //     image: "assets/images/profile.png",
+                                        //     closed: false,
+                                        //     numOfMessage: ""));
 
 
-                                }
-                              }
-                              else {
-                                log("first 3");
-                                if ((_formKey.currentState!.validate())) {
-                                  controller.addContactsToClass(controller.selectedMask
-                                      .id, ChatContact(isSelected: false,userId: '0',contactId: '0',isMasked: '0',
-                                      id: controller.selectedMask.contacts.isEmpty
-                                          ? 0
-                                          : (controller.selectedMask.contacts[controller
-                                          .selectedMask.contacts.length - 1].id + 1),
+                                      }
+                                    }
+                                  }
 
-                                      tag: _nameController.text[0].toUpperCase(),
-                                      name: _nameController.text,
-                                      image: "assets/images/profile.png",
-                                      closed: false,
-                                      numOfMessage: ""));
 
-                                }
-                                Get.back();
-                              } },
-                            child: Container(
-                              width: w,
-                              height: (50/baseHeight) *h, //45
-                              decoration:   BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(24.0), // Adjust radius as needed
-                                    topRight: Radius.circular(24.0),
+                                 //   Get.back();
+                                   },
+                                child: Container(
+                                  width: w,
+                                  height: (50/baseHeight) *h, //45
+                                  decoration:   BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(24.0), // Adjust radius as needed
+                                        topRight: Radius.circular(24.0),
+                                      ),
+                                      gradient: controller.workWithChat?LinearGradient(
+                                        colors: [
+                                          Color(0xffd42336),
+                                          Color(0xffed4658) ],
+                                        stops: [
+                                          0,
+                                          1
+                                        ],
+                                        begin: Alignment(1.00, -0.00),
+                                        end: Alignment(-1.00, 0.00),
+                                        // angle: 270,
+                                        // scale: undefined,
+                                      ):null,
+                                      color: controller.workWithChat?null:controller.selectedMask.mainColor
                                   ),
-                                  gradient: controller.workWithChat?LinearGradient(
-                                    colors: [
-                                      Color(0xffd42336),
-                                      Color(0xffed4658) ],
-                                    stops: [
-                                      0,
-                                      1
-                                    ],
-                                    begin: Alignment(1.00, -0.00),
-                                    end: Alignment(-1.00, 0.00),
-                                    // angle: 270,
-                                    // scale: undefined,
-                                  ):null,
-                                  color: controller.workWithChat?null:controller.selectedMask.mainColor
-                              ),
-                              child:  Center(
-                                child: Text(controller.workWithChat?"${localizations.addToChats}":"${localizations.addTo} ${controller.selectedMask.name}",
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto-Regular',
-                                      color: Colors.white,
-                                      fontSize: (18 / baseWidth) *w,
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.normal,
+                                  child:  Center(
+                                    child: Text(widget.fromChat==false?localizations.addToGroup:controller.workWithChat?"${localizations.addToChats}":
+                                    "${localizations.addTo} ${controller.selectedMask.name}",
+                                        style: TextStyle(
+                                          fontFamily: 'Roboto-Regular',
+                                          color: Colors.white,
+                                          fontSize: (18 / baseWidth) *w,
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
 
 
-                                    )
+                                        )
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ));
-                    }),
+                              ));
+                        });
+                  }
+                ),
               ],
             ),
           ),

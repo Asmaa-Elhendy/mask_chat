@@ -103,26 +103,26 @@ class _GroupListState extends State<GroupList> {
                               endActionPane: ActionPane(
                                 motion: ScrollMotion(),
                                 children: [
-                                  Builder(
-                                    builder: (cont) {
-                                      return ElevatedButton(
-                                        onPressed: () {
-                                          controller.toggleClosed(controller.groupsList[index].id);
-                                          Slidable.of(cont)!.close();
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          shape: CircleBorder(),
-                                          backgroundColor: star,
-                                          padding: EdgeInsets.all(2),
-                                        ),
-                                        child: const Icon(
-                                          Icons.star,
-                                          color: Colors.white,
-                                          size: 30,
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                  // Builder(
+                                  //   builder: (cont) {
+                                  //     return ElevatedButton(
+                                  //       onPressed: () {
+                                  //         controller.toggleClosed(controller.groupsList[index].id);
+                                  //         Slidable.of(cont)!.close();
+                                  //       },
+                                  //       style: ElevatedButton.styleFrom(
+                                  //         shape: CircleBorder(),
+                                  //         backgroundColor: star,
+                                  //         padding: EdgeInsets.all(2),
+                                  //       ),
+                                  //       child: const Icon(
+                                  //         Icons.star,
+                                  //         color: Colors.white,
+                                  //         size: 30,
+                                  //       ),
+                                  //     );
+                                  //   },
+                                  // ),
                                   Builder(
                                     builder: (cont) {
                                       return ElevatedButton(
@@ -171,7 +171,7 @@ class _GroupListState extends State<GroupList> {
                                       fontSize: (15 / baseWidth) * w,
                                       fontWeight: FontWeight.w400,
                                     )),
-                                trailing: controller.groupsList[index].fav ? Icon(Icons.star, color: star) : SizedBox(),
+                           //     trailing: controller.groupsList[index].fav ? Icon(Icons.star, color: star) : SizedBox(),
                                 contentPadding: EdgeInsets.zero,
                               ),
                             ),

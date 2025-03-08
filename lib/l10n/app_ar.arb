@@ -122,7 +122,9 @@
   "youMustEnterGroupNameAndGroupMembers": "يجب عليك إدخال اسم المجموعة وأعضاء المجموعة",
   "groupCreatedSuccessfully": "تم إنشاء المجموعة بنجاح",
   "groupAlreadyExist": "المجموعة موجودة بالفعل",
-  "failedToCreateGroup": "فشل في إنشاء المجموعة"
+  "failedToCreateGroup": "فشل في إنشاء المجموعة",
+  "memberAlreadyExist": "العضو موجود بالفعل",
+  "failedToAddMember": "فشل في إضافة العضو"
 
 
 }

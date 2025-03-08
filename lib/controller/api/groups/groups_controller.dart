@@ -16,6 +16,7 @@ import 'group_service.dart';
 class GroupController extends GetxController {
   var loading = false.obs; // Observable loading state
   var createGroupLoading = false.obs;
+  var createMemberLoading = false.obs;
   List<Contact> contacts = [];
   List<ChatContact> azItems = [];
   int idCounter = 1;
@@ -80,6 +81,24 @@ class GroupController extends GetxController {
       SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
     }finally {
       createGroupLoading.value = false; // Stop loading
+    }
+  }
+  Future<void> createGroupMember(localizations,String token,String groupId,String userId) async {
+    try {
+      createMemberLoading.value = true;
+      String statusCode = await GroupService.createGroupMember(  token, groupId, userId);
+      if (statusCode=='201') {
+        SnackBarErrorWidget(localizations, localizations.groupCreatedSuccessfully,error: false);
+      } else  if (statusCode=='400') {
+        SnackBarErrorWidget(localizations, localizations.memberAlreadyExist);
+      }
+      else {
+        SnackBarErrorWidget(localizations, localizations.failedToAddMember);
+      }
+    } catch (e) {
+      SnackBarErrorWidget(localizations,localizations.somethingWentWrong);
+    }finally {
+      createMemberLoading.value = false; // Stop loading
     }
   }
   toggleClosed(int id) {

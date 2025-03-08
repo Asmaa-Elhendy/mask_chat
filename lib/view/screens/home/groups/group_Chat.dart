@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:Whatsback/controller/api/groups/groups_controller.dart';
+import 'package:Whatsback/view/screens/add_phone_number.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -421,7 +422,7 @@ class _GroupChatState extends State<GroupChat> with TickerProviderStateMixin {
                                   Spacer(),
                                   InkWell(
                                     onTap: (){//need to handle add member to group not add group here
-                                      Get.to(()=>CreateGroup());
+                                      Get.to(()=>AddPhoneNumber(fromChat: false,groupId:widget.current_group?.id.toString()));
                                     },
                                     child: Image.asset("assets/images/add.png"),
                                   )
