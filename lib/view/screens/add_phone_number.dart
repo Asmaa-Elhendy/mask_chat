@@ -516,9 +516,15 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
                                       log("first 2");
 
                                       chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
-                                      Get.back();
-
+                                     // chat_controller.fetchChats(user_token.value);
+                                     //  Get.back();
+                                      Get.offAll(Home(),binding: BindingsBuilder(() {
+                                        Get.put(ChatsController());
+                                      }));// Naviga
                                       phoneController.clearPhoneslist();
+
+
+
                                       if ((_formKey.currentState!.validate())) {
                                         //not understand
                                         // controller.addContactsToClass(controller.selectedMask
