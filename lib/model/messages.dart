@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'contacts.dart';
 
 // enum Type{   //handle in second version ,need storage
@@ -25,11 +27,17 @@ class Messages {
   // Convert JSON to Messages instance
 
 factory Messages.fromJson(Map<String, dynamic> json) {
+
+  String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(
+      DateTime.parse(json['created_at'])
+  );
+
+
   return Messages(
   //  messageType: json['message_type'] as String? ?? 'text', // Default to 'text'
     senderId: json['sender_id'].toString(),
     senderName: json['group_id']==null?'':json['sender_name'],
-    time: json['created_at'] as String? ?? '',
+    time:formattedDate as String? ?? '',
     isRead: false,
     message: json['message'],
     file: false,
