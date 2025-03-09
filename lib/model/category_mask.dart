@@ -7,7 +7,7 @@ class Class{
   var image;
   var icon;
   int contactsNum;
-  List<Contacts> contacts;
+  List<ChatContact> contacts;
   bool selected;
   Color? mainColor;
   Color? secondColor;

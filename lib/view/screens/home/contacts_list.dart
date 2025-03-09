@@ -1,3 +1,4 @@
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../const/colors.dart';
 import '../../../const/sizes.dart';
 import '../../../controller/masks_controller.dart';
-import '../../../controller/messages_controller.dart';
+import '../../../controller/api/messages/messages_controller.dart';
 import '../../widgets/Alert_ask.dart';
 import '../../widgets/back_icon.dart';
 import '../../widgets/empty_widget.dart';
@@ -76,7 +77,7 @@ class _ContactsListState extends State<ContactsList> {
                         fontStyle: FontStyle.normal,
                       )),
                   Spacer(),
-                   AddContacts(localizations: localizations,),
+                  // AddContacts(localizations: localizations,),
                 ],
               ),
             ),
@@ -143,7 +144,7 @@ class _ContactsListState extends State<ContactsList> {
 
                                   }else{
                                     Get.find<MessagesController>()
-                                        .getMessages(controller.azItems[index]);
+                                        .getMessages(controller.azItems[index],user_token.value);
                                     Get.to(Chat(person: controller.azItems[index],
                                     ));
                                   }

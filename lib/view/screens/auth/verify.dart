@@ -273,7 +273,7 @@ class _VerifyNumberState extends State<VerifyNumber> {
                 SizedBox(height: h* .136,),
 
                 Center(child: GeneralButton(localizations.verify, (){
-                  Get.offAll(const YourProfile());
+                //  Get.offAll(const YourProfile());
                 }, w, h))
 
 

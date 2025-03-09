@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +45,8 @@ class AddFromContactes extends StatefulWidget {
 
 class _AddFromContactesState extends State<AddFromContactes> {
   List<Contact> contacts = [];
-  List<Contacts> azItems = [];
-  List<Contacts> _selectedContacts = [];
+  List<ChatContact> azItems = [];
+  List<ChatContact> _selectedContacts = [];
   int idCounter = 1;
 
   @override
@@ -58,10 +60,10 @@ class _AddFromContactesState extends State<AddFromContactes> {
       await ContactsService.getContacts(withThumbnails: true);
 
       // Convert contacts to AZItems
-      List<Contacts> items = fetchedContacts.map((contact) {
+      List<ChatContact> items = fetchedContacts.map((contact) {
         String displayName = contact.displayName ?? "Unnamed";
         String tag = displayName[0].toUpperCase(); // First letter of the name
-        return Contacts(
+        return ChatContact(userId: '0',contactId: '0',isMasked: '0',status: '',
           id:  idCounter++,
           name: displayName,
           tag: RegExp(r'[A-Z]').hasMatch(tag) ? tag : "#",
@@ -200,7 +202,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
                             data: azItems,
                                       itemCount: azItems.length,
                                       itemBuilder: (context, index) {
-                                        Contacts item = azItems[index];
+                                        ChatContact item = azItems[index];
                                         return Column(
                                           children: [
                                             SizedBox(height: h*.01,),
@@ -223,7 +225,9 @@ class _AddFromContactesState extends State<AddFromContactes> {
                                             setState(() {
                                             item.isSelected = value!;
                                             if(value){
+
                                               _selectedContacts.add(item);
+                                          //    log(item.contact!.phones!.first.value.toString());
                                             }else{
                                               _selectedContacts.remove(item);
                                             }
@@ -269,8 +273,8 @@ class _AddFromContactesState extends State<AddFromContactes> {
 
                            for(int i =0;i<_selectedContacts.length;i++){
                              controller.addContactsToClass(controller.selectedMask.id,
-                                 Contacts(
-                                   id: _selectedContacts[i].id,
+                                 ChatContact(userId: '0',contactId: '0',isMasked: '0',
+                                   id: _selectedContacts[i].id,status: '',
                                    name: _selectedContacts[i].name,
                                    tag: _selectedContacts[i].name[0].toUpperCase(),
                                    image: "assets/images/profile.png",
@@ -286,7 +290,7 @@ class _AddFromContactesState extends State<AddFromContactes> {
                         },
                         child: Container(
                             width: w,
-                            height: (45/baseHeight) *h,
+                            height: (52/baseHeight) *h,//45 edit height
                             decoration:   BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(24.0), // Adjust radius as needed

@@ -1,21 +1,23 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:Whatsback/controller/chats_controller.dart';
+import 'package:Whatsback/controller/api/chats/chats_controller.dart';
 import 'package:Whatsback/view/screens/home/Requests.dart';
 import 'package:Whatsback/view/screens/login/three_dots_slides.dart';
 
 import '../../../const/colors.dart';
 import '../../../const/sizes.dart';
-import '../../../controller/groups_controller.dart';
+import '../../../controller/api/groups/groups_controller.dart';
 import 'chat_list.dart';
 import 'groups/group_list.dart';
 
 class Home extends StatefulWidget {
   int page;
-   Home({this.page=0,super.key});
+   Home({this.page=0,super.key,});
 
   @override
   State<Home> createState() => _HomeState();
@@ -26,13 +28,14 @@ class _HomeState extends State<Home> {
   List _pages = [
     chatList(),
     GroupList(),
-    ThreeDotsScreens(),
+    // ThreeDotsScreens(),
     Requests(),
 
   ];
   @override
   void initState() {
     Get.find<ChatsController>().sorting();
+
     if(widget.page==0){
 
     }else{
@@ -50,6 +53,7 @@ class _HomeState extends State<Home> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     final localizations = AppLocalizations.of(context)!;
+
     return Container(
       width: w,
       height: h,
@@ -70,7 +74,8 @@ class _HomeState extends State<Home> {
          body:  _pages[_currentIndex],
 
 
-        bottomNavigationBar:_currentIndex!=2? BottomNavigationBar(
+        bottomNavigationBar://_currentIndex!=2?
+        BottomNavigationBar(
 
           backgroundColor: Colors.transparent, // Transparent to blend with gradient
           selectedItemColor: Colors.white,
@@ -128,20 +133,20 @@ class _HomeState extends State<Home> {
               ),
               label: localizations.groups,
             ),
-             BottomNavigationBarItem(
-
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
-                child: SizedBox(
-                    width: (22/baseWidth)*w,
-
-                    height: (22/baseHeight)*h,
-                    child: Center(child: Icon(Icons.contact_page_outlined,
-                      size: (25/baseWidth)*w,
-                    ))),
-              ),
-              label: localizations.contacts,
-            ),
+            //  BottomNavigationBarItem(
+            //
+            //   icon: Padding(
+            //     padding: const EdgeInsets.only(bottom: 5.0),
+            //     child: SizedBox(
+            //         width: (22/baseWidth)*w,
+            //
+            //         height: (22/baseHeight)*h,
+            //         child: Center(child: Icon(Icons.contact_page_outlined,
+            //           size: (25/baseWidth)*w,
+            //         ))),
+            //   ),
+            //   label: localizations.contacts,
+            // ),
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom:( 5.0)),
@@ -169,8 +174,14 @@ class _HomeState extends State<Home> {
             setState(() {
               _currentIndex = index;
             });
+            if (index == 0) {
+              //solve issue of reinitialize chats controller
+              Get.delete<ChatsController>(); // Remove old instance
+              Get.put(ChatsController()); // Create new instance
+              Get.find<ChatsController>().sorting(); // Call sorting function
+            }
           },
-        ):null,
+        )//:null,
       ),
     );
   }

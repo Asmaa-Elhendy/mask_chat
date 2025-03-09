@@ -6,7 +6,7 @@ class Group{
   int  id;
 String subject;
 bool fav;
-List<Contacts> groupContacts;
+List<ChatContact> groupContacts;
 var image;
 // List<Messages> groupMessgaes;
 

@@ -1,19 +1,32 @@
+import 'dart:developer';
+
+import 'package:Whatsback/controller/api/auth/auth_controller.dart';
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
+import 'package:Whatsback/controller/api/groups/groups_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:Whatsback/model/contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:phone_text_field/phone_text_field.dart';
 
 
 import '../../const/colors.dart';
 import '../../const/sizes.dart';
+import '../../controller/api/chats/chats_controller.dart';
+import '../../controller/api/phone/phone_cotroller.dart';
+import '../../controller/language.dart';
 import '../../controller/masks_controller.dart';
 import '../../controller/requests_controller.dart';
+import '../../model/retrieve_contact.dart';
+import '../widgets/type_radio_button.dart';
 import 'home/home.dart';
 
 class AddPhoneNumber extends StatefulWidget {
-  Contacts? unKnown;
-  AddPhoneNumber({this.unKnown,super.key});
+  ChatContact? unKnown;
+  bool? fromChat;  // in case false then get from group chat screen to add group member
+  String? groupId;
+  AddPhoneNumber({this.unKnown,super.key,this.fromChat=true,this.groupId});
 
   @override
   State<AddPhoneNumber> createState() => _AddPhoneNumberState();
@@ -21,10 +34,12 @@ class AddPhoneNumber extends StatefulWidget {
 
 class _AddPhoneNumberState extends State<AddPhoneNumber> {
   final _formKey = GlobalKey<FormState>();
-
+  int groupValue = 0;
   // Controllers for text fields
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final languageController = Get.find<LanguageController>();
+  final PhoneController phoneController = Get.put(PhoneController());
 
   @override
   void initState() {
@@ -66,276 +81,519 @@ class _AddPhoneNumberState extends State<AddPhoneNumber> {
 
         child: Scaffold(
             backgroundColor: Colors.transparent,
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    Padding(padding: EdgeInsets.only(
-                    top: h * .042,
-                    left: w * .039,
-                    right: w * .05,
-                    bottom: h * .038),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: (){
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Padding(padding: EdgeInsets.only(
+                      top: h * .042,
+                      left: w * .039,
+                      right: w * .05,
+                      bottom: h * .038),// .038
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: (){
 
 
-                        Get.back();
+                          Get.back();
 
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios_new,
-                        color: Colors.white,
-                        size: (18 / baseWidth) * w,
-                      ),
-                    ),
-                    SizedBox(
-                      width: w * .017,
-                    ),
-                    Text(localizations.addPhoneNumber,
-                        style: TextStyle(
-                          fontFamily: 'Roboto-Medium',
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
                           color: Colors.white,
-                          fontSize: (21 / baseWidth) * w,
-                          fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.normal,
-                        )),
-
-
-                      ],
-                    ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: h*.079,left: w * .053, right: w * .044),
-                      width: w,
-                      height: h*.85,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(35),
-                      ),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: _nameController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return localizations.please_enter_name;
-                                }
-                                return null;
-                              },
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Medium',
-
-                                color: blackBoldText,
-
-                                fontSize: (16 / baseWidth) *w,
-
-                                fontWeight: FontWeight.w500,
-
-                                fontStyle: FontStyle.normal,
-                              ),
-                              decoration: InputDecoration(
-
-                                labelText: localizations.name,
-
-
-
-                                labelStyle: TextStyle(
-
-                                  fontFamily: 'Roboto-Medium',
-
-                                  color: lightText,
-
-                                  fontSize: (16 / baseWidth) * w,
-
-                                  fontWeight: FontWeight.w500,
-
-                                  fontStyle: FontStyle.normal,
-
-
-                                ),
-
-                                focusedBorder:  UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color:controller.workWithChat? redCheck:controller.selectedMask.mainColor!, // Underline color when focused
-                                    width: 2.0,
-                                  ),
-                                ),
-                                enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: underLine, // Default underline color
-                                    width: 1.0,
-                                  ),
-                                ),
-                                border: InputBorder.none, // Removes underline
-
-
-                              ),
-                              cursorColor: controller.workWithChat? redCheck:controller.selectedMask.mainColor!,
-                              // Cursor color when focuse
-                            ),
-                            SizedBox(
-                              height: h*.064,
-                            ),
-                            TextFormField(
-                              controller: _phoneNumberController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return localizations.please_enter_phone;
-                                }
-                                Get.back();
-                                return null;
-                              },
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Medium',
-
-                                color: blackBoldText,
-
-                                fontSize: (16 / baseWidth) *w,
-
-                                fontWeight: FontWeight.w500,
-
-                                fontStyle: FontStyle.normal,
-                              ),
-                              decoration: InputDecoration(
-
-                                labelText: localizations.phoneNumber,
-
-
-
-                                labelStyle: TextStyle(
-
-                                  fontFamily: 'Roboto-Medium',
-
-                                  color: lightText,
-
-                                  fontSize: (16 / baseWidth) * w,
-
-                                  fontWeight: FontWeight.w500,
-
-                                  fontStyle: FontStyle.normal,
-
-
-                                ),
-
-                                focusedBorder:  UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color:controller.workWithChat? redCheck:controller.selectedMask.mainColor!, // Underline color when focused
-                                    width: 2.0,
-                                  ),
-                                ),
-                                enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: underLine, // Default underline color
-                                    width: 1.0,
-                                  ),
-                                ),
-                                border: InputBorder.none, // Removes underline
-
-
-                              ),
-                              cursorColor: controller.workWithChat? redCheck:controller.selectedMask.mainColor!,
-                              // Cursor color when focuse
-                            ),
-
-                          ],
+                          size: (18 / baseWidth) * w,
                         ),
                       ),
+                      SizedBox(
+                        width: w * .017,
+                      ),
+                      Text(localizations.addPhoneNumber,
+                          style: TextStyle(
+                            fontFamily: 'Roboto-Medium',
+                            color: Colors.white,
+                            fontSize: (21 / baseWidth) * w,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.normal,
+                          )),
 
-                    )
-                  ],
-                ),
-              ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: InkWell(
-                    onTap: (){
-                      if(widget.unKnown!=null){
 
-                        Get.find<RequestsController>().deleteRequest(widget.unKnown!.id);
+                        ],
+                      ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: h*.079,left: w * .053, right: w * .044),
+                        width: w,
+                        height: h*.72,//.85  edit height
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              // TextFormField(
+                              //   controller: _nameController,
+                              //   validator: (value) {
+                              //     if (value == null || value.isEmpty) {
+                              //       return localizations.please_enter_name;
+                              //     }
+                              //     return null;
+                              //   },enabled: false,
+                              //   style: TextStyle(
+                              //     fontFamily: 'Roboto-Medium',
+                              //
+                              //     color: blackBoldText,
+                              //
+                              //     fontSize: (16 / baseWidth) *w,
+                              //
+                              //     fontWeight: FontWeight.w500,
+                              //
+                              //     fontStyle: FontStyle.normal,
+                              //   ),
+                              //   decoration: InputDecoration(
+                              //
+                              //     labelText: localizations.name,
+                              //
+                              //
+                              //
+                              //     labelStyle: TextStyle(
+                              //
+                              //       fontFamily: 'Roboto-Medium',
+                              //
+                              //       color: lightText,
+                              //
+                              //       fontSize: (16 / baseWidth) * w,
+                              //
+                              //       fontWeight: FontWeight.w500,
+                              //
+                              //       fontStyle: FontStyle.normal,
+                              //
+                              //
+                              //     ),
+                              //
+                              //     focusedBorder:  UnderlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //         color:controller.workWithChat? redCheck:controller.selectedMask.mainColor!, // Underline color when focused
+                              //         width: 2.0,
+                              //       ),
+                              //     ),
+                              //     enabledBorder: const UnderlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //         color: underLine, // Default underline color
+                              //         width: 1.0,
+                              //       ),
+                              //     ),
+                              //     border: InputBorder.none, // Removes underline
+                              //
+                              //
+                              //   ),
+                              //   cursorColor: controller.workWithChat? redCheck:controller.selectedMask.mainColor!,
+                              //   // Cursor color when focuse
+                              // ),
+                              Obx(() {
+                                if (phoneController.isLoading.value) {
+                                  return Center(child: CircularProgressIndicator(color: redCheck,));
+                                } else if (phoneController.contactsList.isEmpty) {
+                                  return Text('');
+                                } else {
+                                  return Column(
+                                    children: phoneController.contactsList.map<Widget>((ContactModel contact) {
+                                      return ListTile(
+                                        title: Text(contact.name),
+                                        subtitle: Text(contact.phone),
+                                        leading: Icon(Icons.person, color: Colors.blue),
+                                      );
+                                    }).toList(), // ✅ Ensure conversion to List<Widget>
+                                  );
+                                }
+                              }),
 
-                      }
-                      if(controller.workWithChat){
-                             if ((_formKey.currentState!.validate())) {
-                               controller.addContactsToClass(controller.selectedMask
-                                   .id, Contacts(isSelected: false,
-                                   id: controller.selectedMask.contacts.isEmpty
-                                       ? 0
-                                       : (controller.selectedMask.contacts[controller
-                                       .selectedMask.contacts.length - 1].id + 1),
+                              SizedBox(
+                                height: h*.064,
+                              ),
+                              // TextFormField(
+                              //   controller: _phoneNumberController,
+                              //   validator: (value) {
+                              //     if (value == null || value.isEmpty) {
+                              //       return localizations.please_enter_phone;
+                              //     }
+                              //     Get.back();
+                              //     return null;
+                              //   },
+                              //   style: TextStyle(
+                              //     fontFamily: 'Roboto-Medium',
+                              //
+                              //     color: blackBoldText,
+                              //
+                              //     fontSize: (16 / baseWidth) *w,
+                              //
+                              //     fontWeight: FontWeight.w500,
+                              //
+                              //     fontStyle: FontStyle.normal,
+                              //   ),
+                              //   decoration: InputDecoration(
+                              //
+                              //     labelText: localizations.phoneNumber,
+                              //
+                              //
+                              //     labelStyle: TextStyle(
+                              //
+                              //       fontFamily: 'Roboto-Medium',
+                              //
+                              //       color: Colors.black,//lightText,
+                              //
+                              //       fontSize: (16 / baseWidth) * w,
+                              //
+                              //       fontWeight: FontWeight.w500,
+                              //
+                              //       fontStyle: FontStyle.normal,
+                              //
+                              //
+                              //     ),
+                              //
+                              //     focusedBorder:  UnderlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //         color:controller.workWithChat? redCheck:controller.selectedMask.mainColor!, // Underline color when focused
+                              //         width: 2.0,
+                              //       ),
+                              //     ),
+                              //     enabledBorder: const UnderlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //         color: underLine, // Default underline color
+                              //         width: 1.0,
+                              //       ),
+                              //     ),
+                              //     border: InputBorder.none, // Removes underline
+                              //
+                              //
+                              //   ),
+                              //   cursorColor: controller.workWithChat? redCheck:controller.selectedMask.mainColor!,
+                              //   onChanged: (value){
+                              //    bool validMobileNumber = isValidPhoneNumber(value);
+                              //    //here send search mobile number request
+                              //   },
+                              //   // Cursor color when focuse
+                              // ),
 
-                                   tag: _nameController.text[0].toUpperCase(),
-                                   name: _nameController.text,
-                                   image: "assets/images/profile.png",
-                                   closed: false,
-                                   numOfMessage: ""));
-                              }
-                      }
-                      else {
-                        if ((_formKey.currentState!.validate())) {
-                          controller.addContactsToClass(controller.selectedMask
-                              .id, Contacts(isSelected: false,
-                              id: controller.selectedMask.contacts.isEmpty
-                                  ? 0
-                                  : (controller.selectedMask.contacts[controller
-                                  .selectedMask.contacts.length - 1].id + 1),
+                              PhoneTextField(
+                                locale:  Get
+                                    .find<LanguageController>()
+                                    .locale,
+                                showCountryCodeAsIcon:true,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(vertical: (10/baseHeight)*h),//12
 
-                              tag: _nameController.text[0].toUpperCase(),
-                              name: _nameController.text,
-                              image: "assets/images/profile.png",
-                              closed: false,
-                              numOfMessage: ""));
-                        }
-                        Get.back();
-                      } },
-                    child: Container(
-                      width: w,
-                      height: (45/baseHeight) *h,
-                      decoration:   BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24.0), // Adjust radius as needed
-                            topRight: Radius.circular(24.0),
-                          ),
-                          gradient: controller.workWithChat?LinearGradient(
-                            colors: [
-                              Color(0xffd42336),
-                              Color(0xffed4658) ],
-                            stops: [
-                              0,
-                              1
+                                  labelText: localizations.phone_number_label,
+                                  hintText: localizations.phone_number_label,
+
+                                  hintStyle:TextStyle(
+
+                                    fontFamily: 'Roboto_light',
+
+                                    color: ColorsPlatte().secondary.textFieldColor,
+
+                                    fontSize: (17 / baseWidth) * w,//18
+
+                                    fontWeight: FontWeight.w400,
+
+                                    fontStyle: FontStyle.normal,
+
+                                  ),
+                                  labelStyle: TextStyle(
+                                    fontFamily: 'Roboto-Medium',
+
+                                    color: Colors.black,
+
+                                    fontSize: (14 / baseWidth) * w,
+
+                                    fontWeight: FontWeight.w400,
+
+                                    fontStyle: FontStyle.normal,
+
+                                  ),
+
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: redCheck, // Underline color when focused
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  enabledBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: underLine, // Default underline color
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  border: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:underLine, // Default border color
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                ),
+                                searchFieldInputDecoration: InputDecoration(
+                                  filled: true,
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(),
+                                  ),
+                                  suffixIcon: const Icon(Icons.search),
+                                  hintText: localizations.searchCountry,
+                                ),
+                                initialCountryCode: "AE",
+                                onChanged: (phone) {
+                                  debugPrint(phone.completeNumber);
+                                  _phoneNumberController.text=phone.completeNumber;
+
+                                  log(_phoneNumberController.text);
+                                  phoneController.checkPhoneNumber(_phoneNumberController.text,user_token.value);
+                                },
+                              ),SizedBox(height: h*.04,),
+                  widget.fromChat==true?            Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    width: w * .4,
+                                    child: TypeRadioButton(
+                                        "regular",
+                                        w,
+                                        h,
+                                        0,
+                                        groupValue, (value) {
+                                      setState(() {
+                                        groupValue = 0;
+                                      });
+                                    }),
+                                  ),
+                                  Container(
+                                    width: w * .4,
+                                    child: TypeRadioButton(
+                                        "mask",
+                                        w,
+                                        h,
+                                        1,
+                                        groupValue, (value) {
+                                      setState(() {
+                                        groupValue = 1;
+                                      });
+                                    }),
+                                  ),
+                                ],
+                              ):SizedBox(),
                             ],
-                            begin: Alignment(1.00, -0.00),
-                            end: Alignment(-1.00, 0.00),
-                            // angle: 270,
-                            // scale: undefined,
-                          ):null,
-                          color: controller.workWithChat?null:controller.selectedMask.mainColor
-                      ),
-                      child:  Center(
-                        child: Text(controller.workWithChat?"${localizations.addToChats}":"${localizations.addTo} ${controller.selectedMask.name}",
-                            style: TextStyle(
-                              fontFamily: 'Roboto-Regular',
-                              color: Colors.white,
-                              fontSize: (18 / baseWidth) *w,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-
-
-                            )
+                          ),
                         ),
-                      ),
-                    ),
-                  ))
-            ],
+
+                      )
+                    ],
+                  ),
+                ),SizedBox(height: h*.01,),
+               //  Align(
+               //      alignment: Alignment.bottomCenter,
+               //      child: InkWell(
+               //        onTap: (){
+               //          if(widget.unKnown!=null){
+               // log("first 1");
+               //            Get.find<RequestsController>().deleteRequest(widget.unKnown!.id);
+               //
+               //          }
+               //          if(controller.workWithChat){
+               //            log("first 2");
+               //                 if ((_formKey.currentState!.validate())) {
+               //                   //not understand
+               //                   // controller.addContactsToClass(controller.selectedMask
+               //                   //     .id, Contacts(isSelected: false,
+               //                   //     id: controller.selectedMask.contacts.isEmpty
+               //                   //         ? 0
+               //                   //         : (controller.selectedMask.contacts[controller
+               //                   //         .selectedMask.contacts.length - 1].id + 1),
+               //                   //
+               //                   //     tag: _nameController.text[0].toUpperCase(),
+               //                   //     name: _nameController.text,
+               //                   //     image: "assets/images/profile.png",
+               //                   //     closed: false,
+               //                   //     numOfMessage: ""));
+               //
+               //
+               //                 }
+               //          }
+               //          else {
+               //            log("first 3");
+               //            if ((_formKey.currentState!.validate())) {
+               //              controller.addContactsToClass(controller.selectedMask
+               //                  .id, Contacts(isSelected: false,
+               //                  id: controller.selectedMask.contacts.isEmpty
+               //                      ? 0
+               //                      : (controller.selectedMask.contacts[controller
+               //                      .selectedMask.contacts.length - 1].id + 1),
+               //
+               //                  tag: _nameController.text[0].toUpperCase(),
+               //                  name: _nameController.text,
+               //                  image: "assets/images/profile.png",
+               //                  closed: false,
+               //                  numOfMessage: ""));
+               //
+               //            }
+               //            Get.back();
+               //          } },
+               //        child: Container(
+               //          width: w,
+               //          height: (45/baseHeight) *h, //45
+               //          decoration:   BoxDecoration(
+               //              borderRadius: BorderRadius.only(
+               //                topLeft: Radius.circular(24.0), // Adjust radius as needed
+               //                topRight: Radius.circular(24.0),
+               //              ),
+               //              gradient: controller.workWithChat?LinearGradient(
+               //                colors: [
+               //                  Color(0xffd42336),
+               //                  Color(0xffed4658) ],
+               //                stops: [
+               //                  0,
+               //                  1
+               //                ],
+               //                begin: Alignment(1.00, -0.00),
+               //                end: Alignment(-1.00, 0.00),
+               //                // angle: 270,
+               //                // scale: undefined,
+               //              ):null,
+               //              color: controller.workWithChat?null:controller.selectedMask.mainColor
+               //          ),
+               //          child:  Center(
+               //            child: Text(controller.workWithChat?"${localizations.addToChats}":"${localizations.addTo} ${controller.selectedMask.name}",
+               //                style: TextStyle(
+               //                  fontFamily: 'Roboto-Regular',
+               //                  color: Colors.white,
+               //                  fontSize: (18 / baseWidth) *w,
+               //                  fontWeight: FontWeight.w400,
+               //                  fontStyle: FontStyle.normal,
+               //
+               //
+               //                )
+               //            ),
+               //          ),
+               //        ),
+               //      )),
+             GetBuilder<GroupController>(
+            init: GroupController(),
+                  builder: (group_controller) {
+                    return GetBuilder<ChatsController>(
+                        init: ChatsController(),
+                        builder: (chat_controller) {
+                          if (chat_controller.createChatloading==true) {
+                            return Center(child: CircularProgressIndicator(color: Colors.white,));
+                          }else  if (group_controller.createMemberLoading==true) {
+                            return Center(child: CircularProgressIndicator(color: Colors.white,));
+                          }
+
+                          return  Align(
+                              alignment: Alignment.bottomCenter,
+                              child: InkWell(
+                                onTap: (){
+                                  if(widget.unKnown!=null){
+                                    log("first 1");
+                                    Get.find<RequestsController>().deleteRequest(widget.unKnown!.id);
+
+                                  }
+                                  if(phoneController.contactsList.length==0){
+                                    SnackBarErrorWidget(localizations, localizations.pleaseEnterAvalidPhone);
+                                  }else{
+                                    if(widget.fromChat==false){
+                                      group_controller.createGroupMember(localizations, user_token.value,widget.groupId.toString(),phoneController.contactsList[0].id.toString());
+                                      Get.back();
+                                      phoneController.clearPhoneslist();
+                                    }
+                                    else if(controller.workWithChat){
+                                      //here handle create new chat
+                                      log("first 2");
+
+                                      chat_controller.createChat(localizations, user_token.value, phoneController.contactsList[0],groupValue);
+                                      Get.back();
+
+                                      phoneController.clearPhoneslist();
+                                      if ((_formKey.currentState!.validate())) {
+                                        //not understand
+                                        // controller.addContactsToClass(controller.selectedMask
+                                        //     .id, Contacts(isSelected: false,
+                                        //     id: controller.selectedMask.contacts.isEmpty
+                                        //         ? 0
+                                        //         : (controller.selectedMask.contacts[controller
+                                        //         .selectedMask.contacts.length - 1].id + 1),
+                                        //
+                                        //     tag: _nameController.text[0].toUpperCase(),
+                                        //     name: _nameController.text,
+                                        //     image: "assets/images/profile.png",
+                                        //     closed: false,
+                                        //     numOfMessage: ""));
+
+
+                                      }
+                                    }
+                                  }
+
+
+                                 //   Get.back();
+                                   },
+                                child: Container(
+                                  width: w,
+                                  height: (50/baseHeight) *h, //45
+                                  decoration:   BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(24.0), // Adjust radius as needed
+                                        topRight: Radius.circular(24.0),
+                                      ),
+                                      gradient: controller.workWithChat?LinearGradient(
+                                        colors: [
+                                          Color(0xffd42336),
+                                          Color(0xffed4658) ],
+                                        stops: [
+                                          0,
+                                          1
+                                        ],
+                                        begin: Alignment(1.00, -0.00),
+                                        end: Alignment(-1.00, 0.00),
+                                        // angle: 270,
+                                        // scale: undefined,
+                                      ):null,
+                                      color: controller.workWithChat?null:controller.selectedMask.mainColor
+                                  ),
+                                  child:  Center(
+                                    child: Text(widget.fromChat==false?localizations.addToGroup:controller.workWithChat?"${localizations.addToChats}":
+                                    "${localizations.addTo} ${controller.selectedMask.name}",
+                                        style: TextStyle(
+                                          fontFamily: 'Roboto-Regular',
+                                          color: Colors.white,
+                                          fontSize: (18 / baseWidth) *w,
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
+
+
+                                        )
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        });
+                  }
+                ),
+              ],
+            ),
           ),
         )  );
       }
     );
 
+  }
+  bool isValidPhoneNumber(String phoneNumber) {
+    RegExp regex = RegExp(r'^\+?[1-9]\d{6,14}$'); // E.164 format
+    return regex.hasMatch(phoneNumber);
   }
 }

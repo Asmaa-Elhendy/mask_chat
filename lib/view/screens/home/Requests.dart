@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Whatsback/const/colors.dart';
@@ -6,12 +9,31 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 import '../../../const/sizes.dart';
-import '../../../controller/messages_controller.dart';
+import '../../../controller/api/messages/messages_controller.dart';
+import '../../../model/user_model.dart';
 import '../chat_screen.dart';
 
-class Requests extends StatelessWidget {
+class Requests extends StatefulWidget {
   const Requests({super.key});
 
+  @override
+  State<Requests> createState() => _RequestsState();
+}
+
+class _RequestsState extends State<Requests> {
+  UserModel? fetchedUser;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+
+  getUser() async {
+    final AuthService _userApiService = AuthService();
+    fetchedUser = await _userApiService.fetchUser(user_token.value);
+    setState(() {});
+
+  }
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -61,7 +83,7 @@ class Requests extends StatelessWidget {
             child: GetBuilder<RequestsController>(
               init: RequestsController(),
               builder: (controller) {
-                return controller.requests.isEmpty?
+                return controller.loading==true?Center(child: CircularProgressIndicator(color: redCheck,)):controller.requests.isEmpty?
 
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,12 +140,26 @@ class Requests extends StatelessWidget {
                         ListTile(
                         contentPadding: const EdgeInsets.all(0),
                         onTap: (){
-                          Get.find<MessagesController>().getMessages(controller.requests[index]);
-                          Get.to(Chat(person: controller.requests[index],newMask: controller.requests[index].talkingAnonymous,
-                          unKnown: true,
-                          ));
+                          Get.find<MessagesController>().getMessages(controller.requests[index],user_token.value);
+                          log(controller.requests[index].id.toString());
+                          log("new");
+                          // Get.to(Chat(person: controller.requests[index],isMask: true,
+                          // unKnown: true,
+                          // ));
 
-
+                          Get.to(Chat(
+                              person: controller.requests[index],
+                              isMask:true,//handle here ismask=true because backend return pending ans ismask=0
+                              // controller.requests[index]
+                              //     .isMasked ==
+                              //     '1'
+                              //     ? true
+                              //     : false,
+                              // chatcontroller
+                              //     .contacts[index]
+                              //     .talkingAnonymous,
+                              contact: controller.requests[index],unKnown: true,userModel: fetchedUser,
+                              ));
                         },
                         shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0),
@@ -131,10 +167,10 @@ class Requests extends StatelessWidget {
                         tileColor: Colors.white,
                         leading: CircleAvatar(
 
-                        child: Image.asset(request.image),
+                        child: Image.asset('assets/images/faces.png'),
                         ),
                         title: Text(
-                        request.name,
+                        localizations.anonymous,
                             style: TextStyle(
 
                               fontFamily: 'Roboto-Medium',

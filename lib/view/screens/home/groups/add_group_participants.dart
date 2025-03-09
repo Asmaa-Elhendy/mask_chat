@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../const/colors.dart';
 import '../../../../const/sizes.dart';
-import '../../../../controller/groups_controller.dart';
+import '../../../../controller/api/groups/groups_controller.dart';
 import '../../../widgets/Alert_ask.dart';
 import '../../../widgets/alert_warning.dart';
 import '../../../widgets/back_icon.dart';
@@ -192,12 +192,12 @@ class _AddGroupParticipantsState extends State<AddGroupParticipants> {
                                                                     .isSelected =
                                                                 value!;
                                                             if (value) {
-                                                              controller.selectContactToAdd(
-                                                                  controller
-                                                                      .azItems[
-                                                                          index]
-                                                                      .id,
-                                                                  value);
+                                                              // controller.selectContactToAdd(
+                                                              //     controller
+                                                              //         .azItems[
+                                                              //             index]
+                                                              //         .id,
+                                                              //     value);
                                                             }
                                                           }
                                                         },
@@ -215,7 +215,7 @@ class _AddGroupParticipantsState extends State<AddGroupParticipants> {
                                                         width: w * .04,
                                                       ),
                                                       Text(controller
-                                                          .azItems[index].name),
+                                                          .azItems[index].name,style: TextStyle(fontSize:w*.038,overflow: TextOverflow.ellipsis ),),
                                                     ],
                                                   ),
                                                   // title: Text(controller.azItems[index].name,
@@ -229,27 +229,27 @@ class _AddGroupParticipantsState extends State<AddGroupParticipants> {
                                                   //trailing: controller.people[index].closed?Icon(Icons.star,color: star,):SizedBox(),
                                                   contentPadding:
                                                       EdgeInsets.zero,
-                                                  trailing:
-                                                      controller.azItems[index]
-                                                              .needInvite
-                                                          ? TextButton(
-                                                              onPressed: () {},
-                                                              child: Text(
-                                                                localizations.invite,
-                                                                style: TextStyle(
-                                                                    color: ColorsPlatte()
-                                                                        .secondary
-                                                                        .invite,
-                                                                    fontFamily:
-                                                                        "Roboto-Medium",
-                                                                    fontSize:
-                                                                        (13 / baseWidth) *
-                                                                            w,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                              ))
-                                                          : SizedBox(),
+                                                  // trailing:  //need to edit invite feature to next level
+                                                  //     controller.azItems[index]
+                                                  //             .needInvite
+                                                  //         ? TextButton(
+                                                  //             onPressed: () {},
+                                                  //             child: Text(
+                                                  //               localizations.invite,
+                                                  //               style: TextStyle(
+                                                  //                   color: ColorsPlatte()
+                                                  //                       .secondary
+                                                  //                       .invite,
+                                                  //                   fontFamily:
+                                                  //                       "Roboto-Medium",
+                                                  //                   fontSize:
+                                                  //                       (13 / baseWidth) *
+                                                  //                           w,
+                                                  //                   fontWeight:
+                                                  //                       FontWeight
+                                                  //                           .w400),
+                                                  //             ))
+                                                  //         : SizedBox(),
                                                 ),
                                               ),
                                               SizedBox(

@@ -1,3 +1,4 @@
+import 'package:Whatsback/controller/api/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../const/sizes.dart';
 import '../../../controller/masks_controller.dart';
-import '../../../controller/messages_controller.dart';
+import '../../../controller/api/messages/messages_controller.dart';
 import '../../widgets/back_icon.dart';
 import '../../widgets/popuomeny_add_contacts.dart';
 import '../chat_screen.dart';
@@ -110,7 +111,7 @@ class _PeopleOnMaskState extends State<PeopleOnMask> {
                         child: ListTile(
 
                           onTap: (){
-                             Get.find<MessagesController>().getMessages(controller.selectedMask.contacts[index]);
+                             Get.find<MessagesController>().getMessages(controller.selectedMask.contacts[index],user_token.value);
                             Get.to(Chat(person:controller.selectedMask.contacts[index],));
                           },
 

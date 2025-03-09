@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,6 +13,8 @@ import 'package:Whatsback/view/widgets/general_button.dart';
 
 
 import '../../../const/colors.dart';
+import '../../../controller/api/auth/auth_controller.dart';
+import '../../../controller/api/auth/auth_service.dart';
 import '../../widgets/login_textField.dart';
 import '../auth/pick_language.dart';
 
@@ -22,9 +26,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController _phoneNumberController = TextEditingController();
+  //final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +41,8 @@ class _LoginState extends State<Login> {
       resizeToAvoidBottomInset: true,
 
       body: SingleChildScrollView(
-        reverse: true,
-        physics: const NeverScrollableScrollPhysics(),
+      //  reverse: true,
+      //  physics: const NeverScrollableScrollPhysics(),
         child: Stack(
           children: [
             Container(
@@ -111,94 +117,110 @@ class _LoginState extends State<Login> {
     );
   }
   Widget loginContent(w,h,localizations){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(localizations.signIn ,
-            style: TextStyle(
-              fontFamily: "Roboto-Medium",
-              fontWeight: FontWeight.w400,
-              fontSize: (24/baseWidth) *w,
-              color: blackBoldText,
-            ),
-            ),
-            Text(localizations.signInToContinue,
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(localizations.signIn ,
               style: TextStyle(
-                fontFamily: "Roboto-Light",
+                fontFamily: "Roboto-Medium",
                 fontWeight: FontWeight.w400,
-                fontSize: (16/baseWidth) *w,
-                color: lightText2,
-              ),
-            )
-          ],
-        ),
-        SizedBox(height: (7/baseHeight)*h,),
-        TextFieldsLogin(label: localizations.phoneNumber, controller: _phoneNumberController,hidden:  false,localizations: localizations,),
-        TextFieldsLogin(label: localizations.password, controller: _passwordController,hidden:true,localizations: localizations,),
-        SizedBox(height: 16,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            InkWell(
-              onTap: (){},
-              child: Text(localizations.forgetPassword,
-              style:  TextStyle(
-                color: ColorsPlatte().primary.redIcons,
-                fontFamily: "Roboto-Regular",
-                fontWeight: FontWeight.w400,
-                fontSize: (14/baseWidth) * w
+                fontSize: (24/baseWidth) *w,
+                color: blackBoldText,
               ),
               ),
-
-            ),
-
-          ],
-        ),
-        SizedBox(height: (25/baseHeight)*h,),
-        Center(
-          child: GeneralButton(localizations.signIn, (){
-            Get.offAll(Home());
-          }, w, h),
-        ),
-        SizedBox(height: (20/baseHeight)*h,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(localizations.newToWhatsBack,
-              style: TextStyle(
-                color: Colors.black,
-                  fontFamily: "Roboto-Regular",
-                  fontWeight: FontWeight.w400,
-                  fontSize: (14/baseWidth) * w
-              ),
-
-            ),
-            InkWell(
-              onTap: (){
-                Get.offAll(PickLanguage(localizations: localizations,));
-              },
-              child: Text(localizations.signUp,
+              Text(localizations.signInToContinue,
                 style: TextStyle(
-                    color: ColorsPlatte().primary.redIcons,
+                  fontFamily: "Roboto-Light",
+                  fontWeight: FontWeight.w400,
+                  fontSize: (16/baseWidth) *w,
+                  color: lightText2,
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: (7/baseHeight)*h,),
+          TextFieldsLogin(label: localizations.email, controller: _emailController,hidden:  false,localizations: localizations),
+          TextFieldsLogin(label: localizations.password, controller: _passwordController,hidden:true,localizations: localizations),
+          // SizedBox(height: 16,),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     InkWell(
+          //       onTap: (){},
+          //       child: Text(localizations.forgetPassword,
+          //       style:  TextStyle(
+          //         color: ColorsPlatte().primary.redIcons,
+          //         fontFamily: "Roboto-Regular",
+          //         fontWeight: FontWeight.w400,
+          //         fontSize: (14/baseWidth) * w
+          //       ),
+          //       ),
+          //
+          //     ),
+          //
+          //   ],
+          // ),
+          SizedBox(height: (25/baseHeight)*h,),
+      Obx(() => authController.isLoading.value
+          ? CircularProgressIndicator(color: redCheck,) // Show loading
+          :
+          Center(
+            child: GeneralButton(localizations.signIn, (){
+
+
+      if (_formKey.currentState!.validate()) {
+
+        String email = _emailController.text.trim();
+        String password = _passwordController.text.trim();
+        authController.login(email, password,localizations); // Call login
+
+      //  Get.offAll(Home());
+      }
+            }, w, h),
+          ),),
+          SizedBox(height: (20/baseHeight)*h,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(localizations.newToWhatsBack,
+                style: TextStyle(
+                  color: Colors.black,
                     fontFamily: "Roboto-Regular",
                     fontWeight: FontWeight.w400,
                     fontSize: (14/baseWidth) * w
                 ),
 
               ),
+              InkWell(
+                onTap: (){
 
-            )
+                  Get.offAll(PickLanguage(localizations: localizations,));
+                },
+                child: Text(localizations.signUp,
+                  style: TextStyle(
+                      color: ColorsPlatte().primary.redIcons,
+                      fontFamily: "Roboto-Regular",
+                      fontWeight: FontWeight.w400,
+                      fontSize: (14/baseWidth) * w
+                  ),
 
-          ],
-        )
+                ),
+
+              )
+
+            ],
+          )
 
 
 
 
-      ],
+        ],
+      ),
     );
 
   }
